@@ -1,1 +1,0 @@
-This is some lovely nice text. I wrote this pretty text to make sure we had some good test data upon which to test simple, dumb sentiment analysis in it's most basic, dictionary definition form.
