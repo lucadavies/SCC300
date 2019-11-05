@@ -30,6 +30,7 @@
         {
             this.BtnLoad = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
+            this.btnTokenize = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnLoad
@@ -47,14 +48,26 @@
             this.txtInput.Location = new System.Drawing.Point(12, 12);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
+            this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtInput.Size = new System.Drawing.Size(776, 397);
             this.txtInput.TabIndex = 1;
+            // 
+            // btnTokenize
+            // 
+            this.btnTokenize.Location = new System.Drawing.Point(93, 415);
+            this.btnTokenize.Name = "btnTokenize";
+            this.btnTokenize.Size = new System.Drawing.Size(75, 23);
+            this.btnTokenize.TabIndex = 2;
+            this.btnTokenize.Text = "Tokenize";
+            this.btnTokenize.UseVisualStyleBackColor = true;
+            this.btnTokenize.Click += new System.EventHandler(this.BtnTokenize_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnTokenize);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.BtnLoad);
             this.Name = "Form1";
@@ -69,6 +82,7 @@
 
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.TextBox txtInput;
+        private System.Windows.Forms.Button btnTokenize;
     }
 }
 
