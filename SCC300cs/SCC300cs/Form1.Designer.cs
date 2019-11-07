@@ -31,6 +31,7 @@
             this.BtnLoad = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.btnTokenize = new System.Windows.Forms.Button();
+            this.btnLem = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnLoad
@@ -62,11 +63,22 @@
             this.btnTokenize.UseVisualStyleBackColor = true;
             this.btnTokenize.Click += new System.EventHandler(this.BtnTokenize_Click);
             // 
+            // btnLem
+            // 
+            this.btnLem.Location = new System.Drawing.Point(174, 415);
+            this.btnLem.Name = "btnLem";
+            this.btnLem.Size = new System.Drawing.Size(75, 23);
+            this.btnLem.TabIndex = 3;
+            this.btnLem.Text = "Lemmatize";
+            this.btnLem.UseVisualStyleBackColor = true;
+            this.btnLem.Click += new System.EventHandler(this.btnLem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnLem);
             this.Controls.Add(this.btnTokenize);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.BtnLoad);
@@ -83,6 +95,7 @@
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.Button btnTokenize;
+        private System.Windows.Forms.Button btnLem;
     }
 }
 

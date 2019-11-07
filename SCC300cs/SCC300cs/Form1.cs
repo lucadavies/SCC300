@@ -15,6 +15,7 @@ namespace SCC300cs
     public partial class Form1 : Form
     {
         string inputText;
+        Document doc;
 
         public Form1()
         {
@@ -53,13 +54,28 @@ namespace SCC300cs
 
         private void BtnTokenize_Click(object sender, EventArgs e)
         {
-            Document doc = new Document(inputText);
+            doc = new Document(inputText);
             java.util.List sens = doc.sentences();
             txtInput.Clear();
             for (int i = 0; i < sens.size(); i++)
             {
                 txtInput.AppendText(sens.get(i).ToString());
                 txtInput.AppendText(Environment.NewLine);
+            }
+        }
+
+        private void btnLem_Click(object sender, EventArgs e)
+        {
+            java.util.List sens = doc.sentences();
+            txtInput.Clear();
+            for (int i = 0; i < sens.size(); i++)
+            {
+                //java.util.list lems = ((sentence)sens.get(i)).lemmas();
+                //for (int j = 0; j < lems.size(); j++)
+                //{
+                //    txtinput.appendtext(lems.get(j).tostring());
+                //    txtinput.appendtext(" ");
+                //}
             }
         }
 
