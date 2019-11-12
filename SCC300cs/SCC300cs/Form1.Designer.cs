@@ -32,6 +32,7 @@
             this.txtInput = new System.Windows.Forms.TextBox();
             this.btnTokenize = new System.Windows.Forms.Button();
             this.btnLem = new System.Windows.Forms.Button();
+            this.btnAnnotate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnLoad
@@ -73,11 +74,22 @@
             this.btnLem.UseVisualStyleBackColor = true;
             this.btnLem.Click += new System.EventHandler(this.btnLem_Click);
             // 
+            // btnAnnotate
+            // 
+            this.btnAnnotate.Location = new System.Drawing.Point(255, 415);
+            this.btnAnnotate.Name = "btnAnnotate";
+            this.btnAnnotate.Size = new System.Drawing.Size(75, 23);
+            this.btnAnnotate.TabIndex = 4;
+            this.btnAnnotate.Text = "Annotate";
+            this.btnAnnotate.UseVisualStyleBackColor = true;
+            this.btnAnnotate.Click += new System.EventHandler(this.BtnAnnotate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnAnnotate);
             this.Controls.Add(this.btnLem);
             this.Controls.Add(this.btnTokenize);
             this.Controls.Add(this.txtInput);
@@ -96,6 +108,7 @@
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.Button btnTokenize;
         private System.Windows.Forms.Button btnLem;
+        private System.Windows.Forms.Button btnAnnotate;
     }
 }
 
