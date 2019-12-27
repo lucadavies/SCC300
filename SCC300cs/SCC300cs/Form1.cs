@@ -127,7 +127,7 @@ namespace SCC300cs
             {
                 ind = resultsList.IndexOf(sar);
                 sLen = sents[ind].Length;
-                chart.Series["default"].Points.AddXY(ind, sar.Negative);
+                chart.Series["default"].Points.AddXY(ind, sar.Compound);
                 charCount += sLen;
             }
             txtInput.Text = inputText;

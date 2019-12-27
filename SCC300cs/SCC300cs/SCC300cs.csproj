@@ -200,6 +200,7 @@
     <Content Include="Text\GWR Castles.txt" />
     <Content Include="Text\Metamorphosis.txt" />
     <Content Include="Text\Silence In The Library.txt" />
+    <Content Include="Text\Cinderella.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
