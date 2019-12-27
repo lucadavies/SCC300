@@ -20,17 +20,17 @@ namespace SCC300cs
     public partial class Form1 : Form
     {
         string inputText;
-        StanfordCoreNLP pipeline;
+        string outputText;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
 
         public Form1()
         {
             InitializeComponent();
-            initPipeline();
+            InitPipeline();
         }
 
-        private void initPipeline()
+        private void InitPipeline()
         {
             var jarRoot = @"C:\Users\Luca\Documents\University\General\UG3\SCC300\SCC300cs\SCC300cs\stanford-corenlp-3.7.0-models";
 
@@ -41,24 +41,17 @@ namespace SCC300cs
 
             var CurDir = Environment.CurrentDirectory;
             Directory.SetCurrentDirectory(jarRoot);         //change working dir to locate models
-            pipeline = new StanfordCoreNLP(props);
             Directory.SetCurrentDirectory(CurDir);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Random rnd = new Random();
-            chart.Series["Default"].Points.Clear();
-            for (int i = 0; i < 100; i++)
-            {
-                chart.Series["Default"].Points.AddXY(i + 1, rnd.Next(i * 10, i * 20));
-            }
-            
+            chart.Series["default"].Points.Clear();
         }
 
         private void BtnLoad_Click(object sender, EventArgs e)
         {
-
+            panLoading.Visible = true;
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -77,14 +70,15 @@ namespace SCC300cs
                 inputText = Replace(inputText, m.Index + 2, m.Length - 4, " ");
             }
             txtInput.Text = inputText;
+            panLoading.Visible = false;
         }
 
-        private void BtnAnnotate_Click(object sender, EventArgs e)
+        private void BtnProcess_Click(object sender, EventArgs e)
         {
             if (txtInput.Text != "")
             {
                 panLoading.Visible = true;
-                bgWkrAnnotate.RunWorkerAsync();
+                bgWkrProcess.RunWorkerAsync();
             }
             else
             {
@@ -92,22 +86,11 @@ namespace SCC300cs
             }
         }
 
-        private void btnVaderSenti_Click(object sender, EventArgs e)
+        private void BgWkr_DoWork(object sender, DoWorkEventArgs e)
         {
-            panLoading.Visible = true;
-            bgWkrSenti.RunWorkerAsync();
-        }
-
-        private void bgWkrAnnotate_DoWork_AnnotateText(object sender, DoWorkEventArgs e)
-        {
+            bgWkrProcess.ReportProgress(0);
             edu.stanford.nlp.simple.Document doc = new edu.stanford.nlp.simple.Document(inputText);
-            e.Result = doc.sentences();
-        }
-
-        private void bgWkrAnnotate_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            java.util.List jSents = (java.util.List)e.Result;
-            txtInput.Text = "";
+            java.util.List jSents = doc.sentences();
             inputText = "";
             sents = new List<string>();
             for (java.util.Iterator itr = jSents.iterator(); itr.hasNext();)
@@ -115,35 +98,57 @@ namespace SCC300cs
                 sents.Add(((Sentence)itr.next()).text());
                 inputText = inputText + sents[sents.Count - 1] + Environment.NewLine;
             }
-            txtInput.Text = inputText;
-            panLoading.Visible = false;
-        }
-
-        private void bgWkrSenti_DoWork_AnalyseText(object Sender, DoWorkEventArgs e)
-        {
+            bgWkrProcess.ReportProgress(50);
             SentimentIntensityAnalyzer analyzer = new SentimentIntensityAnalyzer();
             SentimentAnalysisResults results;
             resultsList = new List<SentimentAnalysisResults>();
-            string op = "";
-            txtOutput.Text = "";
+            outputText = "";
             foreach (string s in sents)
             {
                 results = analyzer.PolarityScores(s);
                 resultsList.Add(results);
-                op = op + "Sentence [" + (sents.IndexOf(s) + 1) + "]: " + s + Environment.NewLine;
-                op = op + "Positive: " + results.Positive + " | ";
-                op = op + "Negative: " + results.Negative + " | ";
-                op = op + "Neutral: " + results.Neutral + " | ";
-                op = op + "Compound: " + results.Compound;
-                op = op + Environment.NewLine + Environment.NewLine;
+                outputText = outputText + "Sentence [" + (sents.IndexOf(s) + 1) + "]: " + s + Environment.NewLine;
+                outputText = outputText + "Positive: " + results.Positive + " | ";
+                outputText = outputText + "Negative: " + results.Negative + " | ";
+                outputText = outputText + "Neutral: " + results.Neutral + " | ";
+                outputText = outputText + "Compound: " + results.Compound;
+                outputText = outputText + Environment.NewLine + Environment.NewLine;
             }
-            e.Result = op;
+            bgWkrProcess.ReportProgress(100);
         }
 
-        private void bgWkrSenti_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BgWkr_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            txtOutput.Text = (string)e.Result;
+            chart.Series["default"].Points.Clear();
+            long charCount = 0;
+            int sLen = 0;
+            int ind = 0;
+            foreach (SentimentAnalysisResults sar in resultsList)
+            {
+                ind = resultsList.IndexOf(sar);
+                sLen = sents[ind].Length;
+                chart.Series["default"].Points.AddXY(ind, sar.Negative);
+                charCount += sLen;
+            }
+            txtInput.Text = inputText;
+            txtOutput.Text = outputText;
             panLoading.Visible = false;
+        }
+
+        private void bgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage)
+            {
+                case 0:
+                    lblLoading.Text = "Tokenising...";
+                    break;
+                case 50:
+                    lblLoading.Text = "Processing...";
+                    break;
+                case 100:
+                    lblLoading.Text = "Loading...";
+                    break;
+            }
         }
 
         private string Replace(string s, int index, int length, string replacement)

@@ -34,21 +34,21 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
-            this.btnAnnotate = new System.Windows.Forms.Button();
-            this.bgWkrAnnotate = new System.ComponentModel.BackgroundWorker();
+            this.btnProcess = new System.Windows.Forms.Button();
+            this.bgWkrProcess = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
             this.panLoading = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.lblLoading = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.btnVaderSenti = new System.Windows.Forms.Button();
-            this.bgWkrSenti = new System.ComponentModel.BackgroundWorker();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.panLoading.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -79,22 +79,23 @@
             this.txtInput.Size = new System.Drawing.Size(761, 376);
             this.txtInput.TabIndex = 1;
             // 
-            // btnAnnotate
+            // btnProcess
             // 
-            this.btnAnnotate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAnnotate.Location = new System.Drawing.Point(93, 426);
-            this.btnAnnotate.Name = "btnAnnotate";
-            this.btnAnnotate.Size = new System.Drawing.Size(75, 23);
-            this.btnAnnotate.TabIndex = 4;
-            this.btnAnnotate.Text = "Annotate";
-            this.btnAnnotate.UseVisualStyleBackColor = true;
-            this.btnAnnotate.Click += new System.EventHandler(this.BtnAnnotate_Click);
+            this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnProcess.Location = new System.Drawing.Point(93, 426);
+            this.btnProcess.Name = "btnProcess";
+            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.TabIndex = 4;
+            this.btnProcess.Text = "Process";
+            this.btnProcess.UseVisualStyleBackColor = true;
+            this.btnProcess.Click += new System.EventHandler(this.BtnProcess_Click);
             // 
-            // bgWkrAnnotate
+            // bgWkrProcess
             // 
-            this.bgWkrAnnotate.WorkerReportsProgress = true;
-            this.bgWkrAnnotate.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWkrAnnotate_DoWork_AnnotateText);
-            this.bgWkrAnnotate.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWkrAnnotate_RunWorkerCompleted);
+            this.bgWkrProcess.WorkerReportsProgress = true;
+            this.bgWkrProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWkr_DoWork);
+            this.bgWkrProcess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWkrProcess_ProgressChanged);
+            this.bgWkrProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkr_RunWorkerCompleted);
             // 
             // picLoading
             // 
@@ -109,7 +110,7 @@
             // panLoading
             // 
             this.panLoading.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.panLoading.Controls.Add(this.lblLoading);
+            this.panLoading.Controls.Add(this.panel1);
             this.panLoading.Controls.Add(this.picLoading);
             this.panLoading.Location = new System.Drawing.Point(300, 120);
             this.panLoading.Name = "panLoading";
@@ -117,17 +118,23 @@
             this.panLoading.TabIndex = 7;
             this.panLoading.Visible = false;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblLoading);
+            this.panel1.Location = new System.Drawing.Point(4, 210);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(199, 23);
+            this.panel1.TabIndex = 8;
+            // 
             // lblLoading
             // 
-            this.lblLoading.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLoading.AutoSize = true;
-            this.lblLoading.Location = new System.Drawing.Point(74, 206);
+            this.lblLoading.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLoading.Location = new System.Drawing.Point(0, 0);
             this.lblLoading.Name = "lblLoading";
-            this.lblLoading.Size = new System.Drawing.Size(54, 13);
+            this.lblLoading.Size = new System.Drawing.Size(199, 23);
             this.lblLoading.TabIndex = 7;
             this.lblLoading.Text = "Loading...";
+            this.lblLoading.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tabControl1
             // 
@@ -178,23 +185,6 @@
             this.txtOutput.Size = new System.Drawing.Size(761, 376);
             this.txtOutput.TabIndex = 0;
             // 
-            // btnVaderSenti
-            // 
-            this.btnVaderSenti.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnVaderSenti.Location = new System.Drawing.Point(174, 426);
-            this.btnVaderSenti.Name = "btnVaderSenti";
-            this.btnVaderSenti.Size = new System.Drawing.Size(75, 23);
-            this.btnVaderSenti.TabIndex = 9;
-            this.btnVaderSenti.Text = "Vader Senti.";
-            this.btnVaderSenti.UseVisualStyleBackColor = true;
-            this.btnVaderSenti.Click += new System.EventHandler(this.btnVaderSenti_Click);
-            // 
-            // bgWkrSenti
-            // 
-            this.bgWkrSenti.WorkerReportsProgress = true;
-            this.bgWkrSenti.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWkrSenti_DoWork_AnalyseText);
-            this.bgWkrSenti.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWkrSenti_RunWorkerCompleted);
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.chart);
@@ -219,9 +209,10 @@
             this.chart.Location = new System.Drawing.Point(6, 8);
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Legend = "Legend1";
-            series1.Name = "Default";
+            series1.Name = "default";
+            series1.YValuesPerPoint = 2;
             this.chart.Series.Add(series1);
             this.chart.Size = new System.Drawing.Size(760, 377);
             this.chart.TabIndex = 0;
@@ -232,10 +223,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(this.btnVaderSenti);
             this.Controls.Add(this.panLoading);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnAnnotate);
+            this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.BtnLoad);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(800, 500);
@@ -244,7 +234,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.panLoading.ResumeLayout(false);
-            this.panLoading.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -260,19 +250,18 @@
 
         private System.Windows.Forms.Button BtnLoad;
         private System.Windows.Forms.TextBox txtInput;
-        private System.Windows.Forms.Button btnAnnotate;
-        private System.ComponentModel.BackgroundWorker bgWkrAnnotate;
+        private System.Windows.Forms.Button btnProcess;
+        private System.ComponentModel.BackgroundWorker bgWkrProcess;
         private System.Windows.Forms.PictureBox picLoading;
         private System.Windows.Forms.Panel panLoading;
         private System.Windows.Forms.Label lblLoading;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button btnVaderSenti;
         private System.Windows.Forms.TextBox txtOutput;
-        private System.ComponentModel.BackgroundWorker bgWkrSenti;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
