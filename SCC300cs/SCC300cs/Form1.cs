@@ -21,6 +21,7 @@ namespace SCC300cs
     {
         string inputText;
         string outputText;
+        double granularity = -1;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
 
@@ -122,12 +123,25 @@ namespace SCC300cs
             chart.Series["default"].Points.Clear();
             long charCount = 0;
             int sLen = 0;
-            int ind = 0;
-            foreach (SentimentAnalysisResults sar in resultsList)
+            double totScore = 0;
+            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
+            int num = 0;    //current number of lines that have been summed
+            SentimentAnalysisResults sar;
+            for (int i = 0; i < resultsList.Count; i++)
             {
-                ind = resultsList.IndexOf(sar);
-                sLen = sents[ind].Length;
-                chart.Series["default"].Points.AddXY(ind, sar.Compound);
+                sar = resultsList[i];
+                sLen = sents[i].Length;
+                if (num == totNum || i + 1 == resultsList.Count)
+                {
+                    chart.Series["default"].Points.AddXY(i, totScore);
+                    num = 0;
+                    totScore = 0;
+                }
+                if (num < totNum)
+                {
+                    totScore += sar.Compound;
+                    num++;
+                }
                 charCount += sLen;
             }
             txtInput.Text = inputText;
@@ -147,6 +161,47 @@ namespace SCC300cs
                     break;
                 case 100:
                     lblLoading.Text = "Loading...";
+                    break;
+            }
+        }
+
+        private void tBarGran_ValueChanged(object sender, EventArgs e)
+        {
+
+            switch (tBarGran.Value)
+            {
+                case 0:
+                    granularity = -1;
+                    break;
+                case 1:
+                    granularity = 0.001;
+                    break;
+                case 2:
+                    granularity = 0.002;
+                    break;
+                case 3:
+                    granularity = 0.005;
+                    break;
+                case 4:
+                    granularity = 0.01;
+                    break;
+                case 5:
+                    granularity = 0.02;
+                    break;
+                case 6:
+                    granularity = 0.05;
+                    break;
+                case 7:
+                    granularity = 0.1;
+                    break;
+                case 8:
+                    granularity = 0.25;
+                    break;
+                case 9:
+                    granularity = 0.5;
+                    break;
+                case 10:
+                    granularity = 1;
                     break;
             }
         }

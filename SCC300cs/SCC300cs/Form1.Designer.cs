@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.Label label1;
+            System.Windows.Forms.Label label3;
+            System.Windows.Forms.GroupBox groupBox1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.tBarGran = new System.Windows.Forms.TrackBar();
             this.BtnLoad = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.btnProcess = new System.Windows.Forms.Button();
@@ -46,6 +50,11 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            label1 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tBarGran)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.panLoading.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -56,12 +65,52 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.SuspendLayout();
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(3, 51);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(53, 13);
+            label1.TabIndex = 10;
+            label1.Text = "Sentence";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(272, 51);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(62, 13);
+            label3.TabIndex = 12;
+            label3.Text = "Whole Text";
+            // 
+            // groupBox1
+            // 
+            groupBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            groupBox1.Controls.Add(label3);
+            groupBox1.Controls.Add(label1);
+            groupBox1.Controls.Add(this.tBarGran);
+            groupBox1.Location = new System.Drawing.Point(195, 425);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(336, 71);
+            groupBox1.TabIndex = 13;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Granulairty";
+            // 
+            // tBarGran
+            // 
+            this.tBarGran.LargeChange = 2;
+            this.tBarGran.Location = new System.Drawing.Point(6, 19);
+            this.tBarGran.Name = "tBarGran";
+            this.tBarGran.Size = new System.Drawing.Size(328, 45);
+            this.tBarGran.TabIndex = 9;
+            this.tBarGran.ValueChanged += new System.EventHandler(this.tBarGran_ValueChanged);
+            // 
             // BtnLoad
             // 
             this.BtnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnLoad.Location = new System.Drawing.Point(12, 426);
+            this.BtnLoad.Location = new System.Drawing.Point(12, 437);
             this.BtnLoad.Name = "BtnLoad";
-            this.BtnLoad.Size = new System.Drawing.Size(75, 23);
+            this.BtnLoad.Size = new System.Drawing.Size(75, 52);
             this.BtnLoad.TabIndex = 0;
             this.BtnLoad.Text = "Load";
             this.BtnLoad.UseVisualStyleBackColor = true;
@@ -76,15 +125,15 @@
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
             this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInput.Size = new System.Drawing.Size(761, 376);
+            this.txtInput.Size = new System.Drawing.Size(761, 375);
             this.txtInput.TabIndex = 1;
             // 
             // btnProcess
             // 
-            this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnProcess.Location = new System.Drawing.Point(93, 426);
+            this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnProcess.Location = new System.Drawing.Point(697, 437);
             this.btnProcess.Name = "btnProcess";
-            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.Size = new System.Drawing.Size(75, 52);
             this.btnProcess.TabIndex = 4;
             this.btnProcess.Text = "Process";
             this.btnProcess.UseVisualStyleBackColor = true;
@@ -112,7 +161,7 @@
             this.panLoading.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panLoading.Controls.Add(this.panel1);
             this.panLoading.Controls.Add(this.picLoading);
-            this.panLoading.Location = new System.Drawing.Point(300, 120);
+            this.panLoading.Location = new System.Drawing.Point(300, 100);
             this.panLoading.Name = "panLoading";
             this.panLoading.Size = new System.Drawing.Size(206, 236);
             this.panLoading.TabIndex = 7;
@@ -148,7 +197,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(781, 414);
+            this.tabControl1.Size = new System.Drawing.Size(781, 413);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPage1
@@ -157,7 +206,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(773, 388);
+            this.tabPage1.Size = new System.Drawing.Size(773, 387);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Raw";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -168,7 +217,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(773, 388);
+            this.tabPage2.Size = new System.Drawing.Size(773, 387);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Processed";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -190,7 +239,7 @@
             this.tabPage3.Controls.Add(this.chart);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(773, 388);
+            this.tabPage3.Size = new System.Drawing.Size(773, 387);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Results";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -209,12 +258,12 @@
             this.chart.Location = new System.Drawing.Point(6, 8);
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
             series1.Legend = "Legend1";
             series1.Name = "default";
             series1.YValuesPerPoint = 2;
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(760, 377);
+            this.chart.Size = new System.Drawing.Size(760, 408);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart";
             // 
@@ -222,7 +271,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(784, 508);
+            this.Controls.Add(groupBox1);
             this.Controls.Add(this.panLoading);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnProcess);
@@ -232,6 +282,9 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tBarGran)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.panLoading.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -262,6 +315,7 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TrackBar tBarGran;
     }
 }
 
