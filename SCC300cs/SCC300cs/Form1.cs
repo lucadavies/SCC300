@@ -21,6 +21,7 @@ namespace SCC300cs
     {
         string inputText;
         string outputText;
+        string textName = "";
         double granularity = -1;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
@@ -47,7 +48,7 @@ namespace SCC300cs
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            chart.Series["default"].Points.Clear();
+            chart.Series[0].Points.Clear();
         }
 
         private void BtnLoad_Click(object sender, EventArgs e)
@@ -61,6 +62,7 @@ namespace SCC300cs
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
+                    textName = ofd.SafeFileName;
                     inputText = File.ReadAllText(ofd.FileName);
                 }
             }
@@ -120,9 +122,9 @@ namespace SCC300cs
 
         private void BgWkr_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            chart.Series["default"].Points.Clear();
+            chart.Series[0].Points.Clear();
             long charCount = 0;
-            int sLen = 0;
+            //int sLen = 0;
             double totScore = 0;
             int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
             int num = 0;    //current number of lines that have been summed
@@ -130,10 +132,10 @@ namespace SCC300cs
             for (int i = 0; i < resultsList.Count; i++)
             {
                 sar = resultsList[i];
-                sLen = sents[i].Length;
+                //sLen = sents[i].Length;
                 if (num == totNum || i + 1 == resultsList.Count)
                 {
-                    chart.Series["default"].Points.AddXY(i, totScore);
+                    chart.Series[0].Points.AddXY(i, totScore / totNum);
                     num = 0;
                     totScore = 0;
                 }
@@ -142,14 +144,15 @@ namespace SCC300cs
                     totScore += sar.Compound;
                     num++;
                 }
-                charCount += sLen;
+                //charCount += sLen;
             }
+            chart.Series[0].Name = textName;
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;
         }
 
-        private void bgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             switch (e.ProgressPercentage)
             {
@@ -165,7 +168,7 @@ namespace SCC300cs
             }
         }
 
-        private void tBarGran_ValueChanged(object sender, EventArgs e)
+        private void TBarGran_ValueChanged(object sender, EventArgs e)
         {
 
             switch (tBarGran.Value)
