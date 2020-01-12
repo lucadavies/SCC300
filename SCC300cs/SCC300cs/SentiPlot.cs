@@ -17,7 +17,7 @@ using VaderSharp;
 
 namespace SCC300cs
 {
-    public partial class Form1 : Form
+    public partial class SentiPlot : Form
     {
         string inputText;
         string outputText;
@@ -26,7 +26,7 @@ namespace SCC300cs
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
 
-        public Form1()
+        public SentiPlot()
         {
             InitializeComponent();
             InitPipeline();
