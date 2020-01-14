@@ -278,7 +278,6 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.BtnLoad);
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "SentiPlot";
             this.Text = "SentiPlot";

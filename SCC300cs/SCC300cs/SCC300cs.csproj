@@ -201,6 +201,7 @@
     <Content Include="Text\Metamorphosis.txt" />
     <Content Include="Text\Silence In The Library.txt" />
     <Content Include="Text\Cinderella.txt" />
+    <Content Include="Text\TextFile1.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

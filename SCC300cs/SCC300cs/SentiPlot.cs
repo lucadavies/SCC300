@@ -14,6 +14,7 @@ using edu.stanford.nlp.ling;
 using edu.stanford.nlp.pipeline;
 using edu.stanford.nlp.simple;
 using VaderSharp;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace SCC300cs
 {
@@ -81,6 +82,7 @@ namespace SCC300cs
             if (txtInput.Text != "")
             {
                 panLoading.Visible = true;
+                btnProcess.Enabled = false;
                 bgWkrProcess.RunWorkerAsync();
             }
             else
@@ -146,10 +148,20 @@ namespace SCC300cs
                 }
                 //charCount += sLen;
             }
+            LabelBestWorst();
             chart.Series[0].Name = textName;
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;
+            btnProcess.Enabled = true;
+        }
+
+        private void LabelBestWorst()
+        {
+            DataPoint dp = chart.Series[0].Points.FindMaxByValue();
+            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)].Substring(0, 20) + "...";
+            dp = chart.Series[0].Points.FindMinByValue();
+            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)].Substring(0, 20) + "...";
         }
 
         private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
