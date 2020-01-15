@@ -159,9 +159,9 @@ namespace SCC300cs
         private void LabelBestWorst()
         {
             DataPoint dp = chart.Series[0].Points.FindMaxByValue();
-            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)].Substring(0, 20) + "...";
+            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)]; //label max. value
             dp = chart.Series[0].Points.FindMinByValue();
-            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)].Substring(0, 20) + "...";
+            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)]; //label min. value
         }
 
         private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
