@@ -124,44 +124,53 @@ namespace SCC300cs
 
         private void BgWkr_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            chart.Series[0].Points.Clear();
-            long charCount = 0;
+            chart.Series[0].Points.Clear(); //combined
+            chart.Series[1].Points.Clear(); //pos.
+            chart.Series[2].Points.Clear(); //neut.
+            chart.Series[3].Points.Clear(); //neg.
             //int sLen = 0;
             double totScore = 0;
             int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
             int num = 0;    //current number of lines that have been summed
             SentimentAnalysisResults sar;
-            for (int i = 0; i < resultsList.Count; i++)
+            for (int s = 0; s < 4; s++)
             {
-                sar = resultsList[i];
-                //sLen = sents[i].Length;
-                if (num == totNum || i + 1 == resultsList.Count)
+                for (int i = 0; i < resultsList.Count; i++)
                 {
-                    chart.Series[0].Points.AddXY(i, totScore / totNum);
-                    num = 0;
-                    totScore = 0;
+                    sar = resultsList[i];
+                    if (num == totNum || i + 1 == resultsList.Count)
+                    {
+                        chart.Series[0].Points.AddXY(i, totScore / totNum);
+                        num = 0;
+                        totScore = 0;
+                    }
+                    if (num < totNum)
+                    {
+                        if (s == 0)
+                            totScore += sar.Compound;
+                        else if (s == 1)
+                            totScore += sar.Positive;
+                        else if (s == 2)
+                            totScore += sar.Neutral;
+                        else if (s == 3)
+                            totScore += sar.Negative;
+                        num++;
+                    }
                 }
-                if (num < totNum)
-                {
-                    totScore += sar.Compound;
-                    num++;
-                }
-                //charCount += sLen;
+                //LabelBestWorst(s);
             }
-            LabelBestWorst();
-            chart.Series[0].Name = textName;
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;
             btnProcess.Enabled = true;
         }
 
-        private void LabelBestWorst()
+        private void LabelBestWorst(int sInd)
         {
-            DataPoint dp = chart.Series[0].Points.FindMaxByValue();
-            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)]; //label max. value
-            dp = chart.Series[0].Points.FindMinByValue();
-            dp.Label = sents[chart.Series[0].Points.IndexOf(dp)]; //label min. value
+            DataPoint dp = chart.Series[sInd].Points.FindMaxByValue();
+            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label max. value
+            dp = chart.Series[sInd].Points.FindMinByValue();
+            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label min. value
         }
 
         private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
