@@ -229,5 +229,14 @@ namespace SCC300cs
             builder.Append(s.Substring(index + length));
             return builder.ToString();
         }
+
+        private void chart_Click(object sender, EventArgs e)
+        {
+            if (sents.Count != 0 && resultsList.Count != 0)
+            {
+                PointDataViewer pdv = new PointDataViewer(sents, resultsList);
+                pdv.Show();
+            }
+        }
     }
 }

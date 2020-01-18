@@ -267,6 +267,7 @@
             this.chart.Size = new System.Drawing.Size(760, 329);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart";
+            this.chart.Click += new System.EventHandler(this.chart_Click);
             // 
             // SentiPlot
             // 
