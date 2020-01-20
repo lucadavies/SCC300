@@ -228,6 +228,7 @@ namespace SCC300cs
                     granularity = 1;
                     break;
             }
+            lblGran.Text = (granularity == -1 ? "1 Sentence" : granularity * 100 + "%");
         }
 
         private string Replace(string s, int index, int length, string replacement)
