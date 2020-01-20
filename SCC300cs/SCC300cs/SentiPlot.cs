@@ -133,14 +133,14 @@ namespace SCC300cs
             int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
             int num = 0;    //current number of lines that have been summed
             SentimentAnalysisResults sar;
-            for (int s = 0; s < 4; s++)
+            for (int s = 0; s < 4; s++) //loop to plot all result outputs
             {
-                for (int i = 0; i < resultsList.Count; i++)
+                for (int i = 0; i < resultsList.Count; i++) //loop for each result set
                 {
                     sar = resultsList[i];
                     if (num == totNum || i + 1 == resultsList.Count)
                     {
-                        chart.Series[0].Points.AddXY(i, totScore / totNum);
+                        chart.Series[s].Points.AddXY(i, totScore / totNum);
                         num = 0;
                         totScore = 0;
                     }
