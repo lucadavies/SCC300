@@ -161,6 +161,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphCompare.cs" />
     <Compile Include="PointDataViewer.cs">
       <SubType>Form</SubType>
     </Compile>

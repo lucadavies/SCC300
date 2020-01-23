@@ -22,7 +22,6 @@ namespace SCC300cs
     {
         string inputText;
         string outputText;
-        string textName = "";
         double granularity = -1;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
@@ -33,6 +32,9 @@ namespace SCC300cs
             InitPipeline();
         }
 
+        /// <summary>
+        /// Initialises CoreNLP pipeline to tokenise the input into sentences
+        /// </summary>
         private void InitPipeline()
         {
             var jarRoot = @"C:\Users\Luca\Documents\University\General\UG3\SCC300\SCC300cs\SCC300cs\stanford-corenlp-3.7.0-models";
@@ -63,7 +65,6 @@ namespace SCC300cs
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    textName = ofd.SafeFileName;
                     inputText = File.ReadAllText(ofd.FileName);
                 }
             }
@@ -157,8 +158,9 @@ namespace SCC300cs
                         num++;
                     }
                 }
-                //LabelBestWorst(s);
+                LabelBestWorst(s);
             }
+
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;
@@ -240,7 +242,7 @@ namespace SCC300cs
             return builder.ToString();
         }
 
-        private void chart_Click(object sender, EventArgs e)
+        private void Chart_Click(object sender, EventArgs e)
         {
             if (sents.Count != 0 && resultsList.Count != 0)
             {
