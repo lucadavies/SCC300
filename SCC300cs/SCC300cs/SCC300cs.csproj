@@ -201,11 +201,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shapes\BadToWorse.csv" />
+    <None Include="Shapes\BoyMeetsGirl.csv" />
+    <None Include="Shapes\Cinderella.csv" />
+    <None Include="Shapes\Creation.csv" />
+    <None Include="Shapes\ManInHole.csv" />
+    <None Include="Shapes\OldTestament.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Shapes\BadToWorse.png" />
+    <Content Include="Shapes\BoyMeetsGirl.png" />
+    <Content Include="Shapes\Cinderella.png" />
+    <Content Include="Shapes\Creation.png" />
+    <Content Include="Shapes\ManInHole.png" />
+    <Content Include="Shapes\OldTestament.png" />
     <Content Include="Text\GWR Castles Short.txt" />
     <Content Include="Text\GWR Castles.txt" />
     <Content Include="Text\Hamlet.txt" />
