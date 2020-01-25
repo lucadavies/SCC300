@@ -31,17 +31,28 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            this.dgvSenti = new System.Windows.Forms.DataGridView();
-            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTxt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.colScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvSenti = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.SuspendLayout();
+            // 
+            // colTxt
+            // 
+            this.colTxt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTxt.HeaderText = "Text";
+            this.colTxt.Name = "colTxt";
+            // 
+            // colScore
+            // 
+            this.colScore.HeaderText = "Score";
+            this.colScore.Name = "colScore";
+            // 
+            // colNum
+            // 
+            this.colNum.HeaderText = "Num";
+            this.colNum.Name = "colNum";
             // 
             // dgvSenti
             // 
@@ -80,67 +91,24 @@
             this.dgvSenti.Size = new System.Drawing.Size(800, 450);
             this.dgvSenti.TabIndex = 0;
             // 
-            // colNum
-            // 
-            this.colNum.HeaderText = "Num";
-            this.colNum.Name = "colNum";
-            // 
-            // colScore
-            // 
-            this.colScore.HeaderText = "Score";
-            this.colScore.Name = "colScore";
-            // 
-            // colTxt
-            // 
-            this.colTxt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colTxt.HeaderText = "Text";
-            this.colTxt.Name = "colTxt";
-            // 
-            // chart
-            // 
-            this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.AxisX.Title = "Beginning / Electricity";
-            chartArea1.AxisY.Title = "Good / Bad";
-            chartArea1.Name = "ChartArea1";
-            this.chart.ChartAreas.Add(chartArea1);
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom;
-            legend1.Name = "Legend1";
-            this.chart.Legends.Add(legend1);
-            this.chart.Location = new System.Drawing.Point(20, 61);
-            this.chart.Name = "chart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Color = System.Drawing.Color.Red;
-            series1.Legend = "Legend1";
-            series1.Name = "Negative";
-            this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(760, 329);
-            this.chart.TabIndex = 1;
-            this.chart.Text = "chart";
-            // 
             // PointDataViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.chart);
             this.Controls.Add(this.dgvSenti);
             this.Name = "PointDataViewer";
             this.Text = "PointDataViewer";
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgvSenti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTxt;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colScore;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
+        private System.Windows.Forms.DataGridView dgvSenti;
     }
 }

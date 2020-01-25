@@ -21,10 +21,12 @@ namespace SCC300cs
     public partial class SentiPlot : Form
     {
         string inputText;
+        List<string> inputChapters;
         string outputText;
         double granularity = -1;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
+        
 
         public SentiPlot()
         {
@@ -59,23 +61,61 @@ namespace SCC300cs
             panLoading.Visible = true;
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                ofd.FilterIndex = 2;
+                ofd.Filter = "Text files (*.txt,*.html)|*.txt;*.html|All files (*.*)|*.*";
+                ofd.FilterIndex = 0;
                 ofd.RestoreDirectory = true;
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     inputText = File.ReadAllText(ofd.FileName);
+                    if (Path.GetExtension(ofd.FileName).Equals(".txt"))
+                    {
+                        inputText = LoadFromTxt(inputText);
+                    }
+                    else if (Path.GetExtension(ofd.FileName).Equals(".html"))
+                    {
+                        inputText = LoadFromHTML(inputText);
+                    }
                 }
             }
-            Regex rgx = new Regex("[^\r\n]{2}\r\n[^\r\n]{2}");
-            MatchCollection mc = rgx.Matches(inputText);
-            foreach (Match m in mc.Cast<Match>().Reverse())
-            {
-                inputText = Replace(inputText, m.Index + 2, m.Length - 4, " ");
-            }
+            
             txtInput.Text = inputText;
             panLoading.Visible = false;
+        }
+
+        private string LoadFromTxt(string i)
+        {
+            Regex rgx = new Regex("[^\r\n]{2}\r\n[^\r\n]{2}");
+            MatchCollection mc = rgx.Matches(i);
+            foreach (Match m in mc.Cast<Match>().Reverse())
+            {
+                i = Replace(i, m.Index + 2, m.Length - 4, " ");
+            }
+            return i;
+        }
+
+        private string LoadFromHTML(string i)
+        {
+            Regex rgx = new Regex("<h[0-9]>.*</h[0-9]>"); //match on header sections to get chapters
+            Regex body = new Regex("body>");
+            try
+            {
+                i = body.Split(i)[1];
+            }
+            catch (IndexOutOfRangeException)
+            {
+                MessageBox.Show("HTML file imporperly formatted", "SentiPlot");
+                return "";
+            }
+            string[] chaps = rgx.Split(i);
+            rgx = new Regex("<[^>]*>|(&nbsp)"); //match on html tags or "&nbsp
+            string ret = "";
+            for (int ind = 0; ind < chaps.Length; ind++)
+            {
+                chaps[ind] = rgx.Replace(chaps[ind], "");
+                ret += chaps[ind] + " ";
+            }
+            return ret;
         }
 
         private void BtnProcess_Click(object sender, EventArgs e)

@@ -218,12 +218,14 @@
     <Content Include="Shapes\Creation.png" />
     <Content Include="Shapes\ManInHole.png" />
     <Content Include="Shapes\OldTestament.png" />
-    <Content Include="Text\GWR Castles Short.txt" />
-    <Content Include="Text\GWR Castles.txt" />
-    <Content Include="Text\Hamlet.txt" />
-    <Content Include="Text\Metamorphosis.txt" />
-    <Content Include="Text\Silence In The Library.txt" />
-    <Content Include="Text\Cinderella.txt" />
+    <Content Include="Text\HTML\Cinderella.html" />
+    <Content Include="Text\Text\GWR Castles Short.txt" />
+    <Content Include="Text\Text\GWR Castles.txt" />
+    <Content Include="Text\Text\Hamlet.txt" />
+    <Content Include="Text\HTML\Hamlet.html" />
+    <Content Include="Text\Text\Metamorphosis.txt" />
+    <Content Include="Text\Text\Silence In The Library.txt" />
+    <Content Include="Text\Text\Cinderella.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
