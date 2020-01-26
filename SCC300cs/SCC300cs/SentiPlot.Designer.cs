@@ -143,7 +143,7 @@
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
             this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInput.Size = new System.Drawing.Size(761, 375);
+            this.txtInput.Size = new System.Drawing.Size(761, 328);
             this.txtInput.TabIndex = 1;
             // 
             // btnProcess

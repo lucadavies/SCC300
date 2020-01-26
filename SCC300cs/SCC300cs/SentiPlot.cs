@@ -85,11 +85,11 @@ namespace SCC300cs
 
         private string LoadFromHTML(string input)
         {
-            Regex rgx = new Regex("<h[0-9]>.*</h[0-9]>");                           //match on header sections to get chapters
             Regex body = new Regex("body>");                                        //match both <body> and </body> tags
             Regex pre = new Regex("<pre(.|\n)+?</pre>");                            //match whole <pre></pre> sections
-            Regex htmlTags = new Regex("<[^>]*>|(&nbsp;)");                          //match on html tags or "&nbsp;"
-            try
+            Regex headers = new Regex("<h[0-9]>.*</h[0-9]>");                       //match on header sections to get chapters
+            Regex htmlTags = new Regex("<[^>]*>");                                  //match on html tags
+           try
             {
                 bgWkrLoad.ReportProgress(0);
                 input = body.Split(input)[1];                                       //split on "body>" to give three sections, pre-, mid- and post-body, take 1 for content
@@ -104,7 +104,7 @@ namespace SCC300cs
             bgWkrLoad.ReportProgress(50);
             input = HttpUtility.HtmlDecode(input);                                  //decode HTML special characters
             bgWkrLoad.ReportProgress(75);
-            string[] chaps = rgx.Split(input);                                      //split on header tags to split into chapters
+            string[] chaps = headers.Split(input);                                      //split on header tags to split into chapters
             string ret = "";
             bgWkrLoad.ReportProgress(100);
             for (int ind = 0; ind < chaps.Length; ind++)
