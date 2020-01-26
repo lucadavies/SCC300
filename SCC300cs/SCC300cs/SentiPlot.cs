@@ -9,12 +9,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using org.ejml.simple;
-using edu.stanford.nlp.ling;
-using edu.stanford.nlp.pipeline;
 using edu.stanford.nlp.simple;
 using VaderSharp;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Web;
 
 namespace SCC300cs
 {
@@ -34,6 +32,11 @@ namespace SCC300cs
             InitPipeline();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            chart.Series[0].Points.Clear();
+        }
+
         /// <summary>
         /// Initialises CoreNLP pipeline to tokenise the input into sentences
         /// </summary>
@@ -47,18 +50,12 @@ namespace SCC300cs
             props.setProperty("ner.useSUTime", "0");
 
             var CurDir = Environment.CurrentDirectory;
-            Directory.SetCurrentDirectory(jarRoot);         //change working dir to locate models
+            Directory.SetCurrentDirectory(jarRoot);                                 //change working dir to locate models
             Directory.SetCurrentDirectory(CurDir);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            chart.Series[0].Points.Clear();
         }
 
         private void BtnLoad_Click(object sender, EventArgs e)
         {
-            panLoading.Visible = true;
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "Text files (*.txt,*.html)|*.txt;*.html|All files (*.*)|*.*";
@@ -68,19 +65,11 @@ namespace SCC300cs
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     inputText = File.ReadAllText(ofd.FileName);
-                    if (Path.GetExtension(ofd.FileName).Equals(".txt"))
-                    {
-                        inputText = LoadFromTxt(inputText);
-                    }
-                    else if (Path.GetExtension(ofd.FileName).Equals(".html"))
-                    {
-                        inputText = LoadFromHTML(inputText);
-                    }
+                    panLoading.Visible = true;
+                    BtnLoad.Enabled = false;
+                    bgWkrLoad.RunWorkerAsync(argument: Path.GetExtension(ofd.FileName));
                 }
             }
-            
-            txtInput.Text = inputText;
-            panLoading.Visible = false;
         }
 
         private string LoadFromTxt(string i)
@@ -94,28 +83,53 @@ namespace SCC300cs
             return i;
         }
 
-        private string LoadFromHTML(string i)
+        private string LoadFromHTML(string input)
         {
-            Regex rgx = new Regex("<h[0-9]>.*</h[0-9]>"); //match on header sections to get chapters
-            Regex body = new Regex("body>");
+            Regex rgx = new Regex("<h[0-9]>.*</h[0-9]>");                           //match on header sections to get chapters
+            Regex body = new Regex("body>");                                        //match both <body> and </body> tags
+            Regex pre = new Regex("<pre(.|\n)+?</pre>");                            //match whole <pre></pre> sections
+            Regex htmlTags = new Regex("<[^>]*>|(&nbsp;)");                          //match on html tags or "&nbsp;"
             try
             {
-                i = body.Split(i)[1];
+                bgWkrLoad.ReportProgress(0);
+                input = body.Split(input)[1];                                       //split on "body>" to give three sections, pre-, mid- and post-body, take 1 for content
             }
             catch (IndexOutOfRangeException)
             {
                 MessageBox.Show("HTML file imporperly formatted", "SentiPlot");
                 return "";
             }
-            string[] chaps = rgx.Split(i);
-            rgx = new Regex("<[^>]*>|(&nbsp)"); //match on html tags or "&nbsp
+            bgWkrLoad.ReportProgress(25);
+            input = pre.Replace(input, "");                                         //remove full <pre>,/pre> sections
+            bgWkrLoad.ReportProgress(50);
+            input = HttpUtility.HtmlDecode(input);                                  //decode HTML special characters
+            bgWkrLoad.ReportProgress(75);
+            string[] chaps = rgx.Split(input);                                      //split on header tags to split into chapters
             string ret = "";
+            bgWkrLoad.ReportProgress(100);
             for (int ind = 0; ind < chaps.Length; ind++)
             {
-                chaps[ind] = rgx.Replace(chaps[ind], "");
-                ret += chaps[ind] + " ";
+                chaps[ind] = htmlTags.Replace(chaps[ind], "");                           //remove all remaining HTML tags
+                ret += LoadFromTxt(chaps[ind] + " ");
             }
             return ret;
+        }
+
+        private void LabelBestWorst(int sInd)
+        {
+            DataPoint dp = chart.Series[sInd].Points.FindMaxByValue();
+            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label max. value
+            dp = chart.Series[sInd].Points.FindMinByValue();
+            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label min. value
+        }
+
+        private string Replace(string s, int index, int length, string replacement)
+        {
+            var builder = new StringBuilder();
+            builder.Append(s.Substring(0, index));
+            builder.Append(replacement);
+            builder.Append(s.Substring(index + length));
+            return builder.ToString();
         }
 
         private void BtnProcess_Click(object sender, EventArgs e)
@@ -129,105 +143,6 @@ namespace SCC300cs
             else
             {
                 MessageBox.Show("Please load text to be processed.", "Error");
-            }
-        }
-
-        private void BgWkr_DoWork(object sender, DoWorkEventArgs e)
-        {
-            bgWkrProcess.ReportProgress(0);
-            edu.stanford.nlp.simple.Document doc = new edu.stanford.nlp.simple.Document(inputText);
-            java.util.List jSents = doc.sentences();
-            inputText = "";
-            sents = new List<string>();
-            for (java.util.Iterator itr = jSents.iterator(); itr.hasNext();)
-            {
-                sents.Add(((Sentence)itr.next()).text());
-                inputText = inputText + sents[sents.Count - 1] + Environment.NewLine;
-            }
-            bgWkrProcess.ReportProgress(50);
-            SentimentIntensityAnalyzer analyzer = new SentimentIntensityAnalyzer();
-            SentimentAnalysisResults results;
-            resultsList = new List<SentimentAnalysisResults>();
-            outputText = "";
-            foreach (string s in sents)
-            {
-                results = analyzer.PolarityScores(s);
-                resultsList.Add(results);
-                outputText = outputText + "Sentence [" + (sents.IndexOf(s) + 1) + "]: " + s + Environment.NewLine;
-                outputText = outputText + "Positive: " + results.Positive + " | ";
-                outputText = outputText + "Negative: " + results.Negative + " | ";
-                outputText = outputText + "Neutral: " + results.Neutral + " | ";
-                outputText = outputText + "Compound: " + results.Compound;
-                outputText = outputText + Environment.NewLine + Environment.NewLine;
-            }
-            bgWkrProcess.ReportProgress(100);
-        }
-
-        private void BgWkr_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            chart.Series[0].Points.Clear(); //combined
-            chart.Series[1].Points.Clear(); //pos.
-            chart.Series[2].Points.Clear(); //neut.
-            chart.Series[3].Points.Clear(); //neg.
-            //int sLen = 0;
-            double totScore = 0;
-            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
-            int num = 0;    //current number of lines that have been summed
-            SentimentAnalysisResults sar;
-            for (int s = 0; s < 4; s++) //loop to plot all result outputs
-            {
-                for (int i = 0; i < resultsList.Count; i++) //loop for each result set
-                {
-                    sar = resultsList[i];
-                    if (num == totNum || i + 1 == resultsList.Count)
-                    {
-                        chart.Series[s].Points.AddXY(i, totScore / totNum);
-                        num = 0;
-                        totScore = 0;
-                    }
-                    if (num < totNum)
-                    {
-                        if (s == 0)
-                            totScore += sar.Compound;
-                        else if (s == 1)
-                            totScore += sar.Positive;
-                        else if (s == 2)
-                            totScore += sar.Neutral;
-                        else if (s == 3)
-                            totScore += sar.Negative;
-                        num++;
-                    }
-                }
-                LabelBestWorst(s);
-            }
-
-            txtInput.Text = inputText;
-            txtOutput.Text = outputText;
-            panLoading.Visible = false;
-            btnProcess.Enabled = true;
-        }
-
-        private void LabelBestWorst(int sInd)
-        {
-            DataPoint dp = chart.Series[sInd].Points.FindMaxByValue();
-            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label max. value
-            dp = chart.Series[sInd].Points.FindMinByValue();
-            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label min. value
-        }
-
-        private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            switch (e.ProgressPercentage)
-            {
-                case 0:
-                    lblLoading.Text = "Tokenising...";
-                    break;
-                case 50:
-                    lblLoading.Text = "Processing...";
-                    break;
-                case 100:
-                    lblLoading.Text = "Loading...";
-                    break;
             }
         }
 
@@ -273,15 +188,6 @@ namespace SCC300cs
             lblGran.Text = (granularity == -1 ? "1 Sentence" : granularity * 100 + "%");
         }
 
-        private string Replace(string s, int index, int length, string replacement)
-        {
-            var builder = new StringBuilder();
-            builder.Append(s.Substring(0, index));
-            builder.Append(replacement);
-            builder.Append(s.Substring(index + length));
-            return builder.ToString();
-        }
-
         private void Chart_Click(object sender, EventArgs e)
         {
             if (sents.Count != 0 && resultsList.Count != 0)
@@ -289,6 +195,139 @@ namespace SCC300cs
                 PointDataViewer pdv = new PointDataViewer(sents, resultsList);
                 pdv.Show();
             }
+        }
+
+        private void BgWkrProcess_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bgWkrProcess.ReportProgress(0);
+            Document doc = new Document(inputText);
+            java.util.List jSents = doc.sentences();
+            inputText = "";
+            sents = new List<string>();
+            for (java.util.Iterator itr = jSents.iterator(); itr.hasNext();)
+            {
+                sents.Add(((Sentence)itr.next()).text());
+                inputText = inputText + sents[sents.Count - 1] + Environment.NewLine;
+            }
+            bgWkrProcess.ReportProgress(50);
+            SentimentIntensityAnalyzer analyzer = new SentimentIntensityAnalyzer();
+            SentimentAnalysisResults results;
+            resultsList = new List<SentimentAnalysisResults>();
+            outputText = "";
+            foreach (string s in sents)
+            {
+                results = analyzer.PolarityScores(s);
+                resultsList.Add(results);
+                outputText = outputText + "Sentence [" + (sents.IndexOf(s) + 1) + "]: " + s + Environment.NewLine;
+                outputText = outputText + "Positive: " + results.Positive + " | ";
+                outputText = outputText + "Negative: " + results.Negative + " | ";
+                outputText = outputText + "Neutral: " + results.Neutral + " | ";
+                outputText = outputText + "Compound: " + results.Compound;
+                outputText = outputText + Environment.NewLine + Environment.NewLine;
+            }
+            bgWkrProcess.ReportProgress(100);
+        }
+
+        private void BgWkrProcess_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage)
+            {
+                case 0:
+                    lblLoading.Text = "Tokenising...";
+                    break;
+                case 50:
+                    lblLoading.Text = "Processing...";
+                    break;
+                case 100:
+                    lblLoading.Text = "Loading...";
+                    break;
+            }
+        }
+
+        private void BgWkrProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            chart.Series[0].Points.Clear(); //combined
+            chart.Series[1].Points.Clear(); //pos.
+            chart.Series[2].Points.Clear(); //neut.
+            chart.Series[3].Points.Clear(); //neg.
+            //int sLen = 0;
+            double totScore = 0;
+            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
+            int num = 0;    //current number of lines that have been summed
+            SentimentAnalysisResults sar;
+            for (int s = 0; s < 4; s++) //loop to plot all result outputs
+            {
+                for (int i = 0; i < resultsList.Count; i++) //loop for each result set
+                {
+                    sar = resultsList[i];
+                    if (num == totNum || i + 1 == resultsList.Count)
+                    {
+                        chart.Series[s].Points.AddXY(i, totScore / totNum);
+                        num = 0;
+                        totScore = 0;
+                    }
+                    if (num < totNum)
+                    {
+                        if (s == 0)
+                            totScore += sar.Compound;
+                        else if (s == 1)
+                            totScore += sar.Positive;
+                        else if (s == 2)
+                            totScore += sar.Neutral;
+                        else if (s == 3)
+                            totScore += sar.Negative;
+                        num++;
+                    }
+                }
+                LabelBestWorst(s);
+            }
+
+            txtInput.Text = inputText;
+            txtOutput.Text = outputText;
+            panLoading.Visible = false;
+            btnProcess.Enabled = true;
+        }
+
+        private void BgWkrLoad_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (e.Argument.Equals(".txt"))
+            {
+                e.Result = LoadFromTxt(inputText);
+            }
+            else if (e.Argument.Equals(".html"))
+            {
+                e.Result = LoadFromHTML(inputText);
+            }
+        }
+
+        private void BgWkrLoad_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage)
+            {
+                case 0:
+                    lblLoading.Text = "Removing excess HTML...";
+                    break;
+                case 25:
+                    lblLoading.Text = "Removing Gutenberg metadata...";
+                    break;
+                case 50:
+                    lblLoading.Text = "Decoding HTML characters...";
+                    break;
+                case 75:
+                    lblLoading.Text = "Chapter splitting...";
+                    break;
+                case 100:
+                    lblLoading.Text = "Removing remaining HTML tags...";
+                    break;
+            }
+        }
+
+        private void BgWkrLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            inputText = (string)e.Result;
+            txtInput.Text = inputText;
+            panLoading.Visible = false;
+            BtnLoad.Enabled = true;
         }
     }
 }

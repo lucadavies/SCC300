@@ -54,6 +54,7 @@
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.bgWkrLoad = new System.ComponentModel.BackgroundWorker();
             label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -159,9 +160,9 @@
             // bgWkrProcess
             // 
             this.bgWkrProcess.WorkerReportsProgress = true;
-            this.bgWkrProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWkr_DoWork);
+            this.bgWkrProcess.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWkrProcess_DoWork);
             this.bgWkrProcess.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BgWkrProcess_ProgressChanged);
-            this.bgWkrProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkr_RunWorkerCompleted);
+            this.bgWkrProcess.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkrProcess_RunWorkerCompleted);
             // 
             // picLoading
             // 
@@ -305,6 +306,13 @@
             this.chart.Text = "chart";
             this.chart.Click += new System.EventHandler(this.Chart_Click);
             // 
+            // bgWkrLoad
+            // 
+            this.bgWkrLoad.WorkerReportsProgress = true;
+            this.bgWkrLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWkrLoad_DoWork);
+            this.bgWkrLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BgWkrLoad_ProgressChanged);
+            this.bgWkrLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkrLoad_RunWorkerCompleted);
+            // 
             // SentiPlot
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,6 +323,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.BtnLoad);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "SentiPlot";
             this.Text = "SentiPlot";
@@ -354,6 +363,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TrackBar tBarGran;
         private System.Windows.Forms.Label lblGran;
+        private System.ComponentModel.BackgroundWorker bgWkrLoad;
     }
 }
 
