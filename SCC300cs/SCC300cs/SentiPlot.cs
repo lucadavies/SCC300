@@ -34,7 +34,6 @@ namespace SCC300cs
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            chart.Series[0].Points.Clear();
         }
 
         /// <summary>
@@ -115,14 +114,6 @@ namespace SCC300cs
             return ret;
         }
 
-        private void LabelBestWorst(int sInd)
-        {
-            DataPoint dp = chart.Series[sInd].Points.FindMaxByValue();
-            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label max. value
-            dp = chart.Series[sInd].Points.FindMinByValue();
-            dp.Label = sents[chart.Series[sInd].Points.IndexOf(dp)]; //label min. value
-        }
-
         private string Replace(string s, int index, int length, string replacement)
         {
             var builder = new StringBuilder();
@@ -188,15 +179,6 @@ namespace SCC300cs
             lblGran.Text = (granularity == -1 ? "1 Sentence" : granularity * 100 + "%");
         }
 
-        private void Chart_Click(object sender, EventArgs e)
-        {
-            if (sents.Count != 0 && resultsList.Count != 0)
-            {
-                PointDataViewer pdv = new PointDataViewer(sents, resultsList);
-                pdv.Show();
-            }
-        }
-
         private void BgWkrProcess_DoWork(object sender, DoWorkEventArgs e)
         {
             bgWkrProcess.ReportProgress(0);
@@ -246,42 +228,7 @@ namespace SCC300cs
 
         private void BgWkrProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            chart.Series[0].Points.Clear(); //combined
-            chart.Series[1].Points.Clear(); //pos.
-            chart.Series[2].Points.Clear(); //neut.
-            chart.Series[3].Points.Clear(); //neg.
-            //int sLen = 0;
-            double totScore = 0;
-            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
-            int num = 0;    //current number of lines that have been summed
-            SentimentAnalysisResults sar;
-            for (int s = 0; s < 4; s++) //loop to plot all result outputs
-            {
-                for (int i = 0; i < resultsList.Count; i++) //loop for each result set
-                {
-                    sar = resultsList[i];
-                    if (num == totNum || i + 1 == resultsList.Count)
-                    {
-                        chart.Series[s].Points.AddXY(i, totScore / totNum);
-                        num = 0;
-                        totScore = 0;
-                    }
-                    if (num < totNum)
-                    {
-                        if (s == 0)
-                            totScore += sar.Compound;
-                        else if (s == 1)
-                            totScore += sar.Positive;
-                        else if (s == 2)
-                            totScore += sar.Neutral;
-                        else if (s == 3)
-                            totScore += sar.Negative;
-                        num++;
-                    }
-                }
-                LabelBestWorst(s);
-            }
-
+            ResultsViewer res = new ResultsViewer(sents, resultsList, granularity);
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;

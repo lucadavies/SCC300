@@ -163,11 +163,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphCompare.cs" />
-    <Compile Include="PointDataViewer.cs">
+    <Compile Include="ResultsViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PointDataViewer.Designer.cs">
-      <DependentUpon>PointDataViewer.cs</DependentUpon>
+    <Compile Include="ResultsViewer.Designer.cs">
+      <DependentUpon>ResultsViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="SentiPlot.cs">
       <SubType>Form</SubType>
@@ -177,8 +177,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="PointDataViewer.resx">
-      <DependentUpon>PointDataViewer.cs</DependentUpon>
+    <EmbeddedResource Include="ResultsViewer.resx">
+      <DependentUpon>ResultsViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SentiPlot.resx">
       <DependentUpon>SentiPlot.cs</DependentUpon>
