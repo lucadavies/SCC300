@@ -39,8 +39,9 @@ namespace SCC300cs
                     sar = resultsList[i];
                     if (num == totNum || i + 1 == resultsList.Count)
                     {
-                        chart.Series[s].Points.AddXY(i, totScore / totNum);
-                        //chart.Series[s].Points.AddXY((i / resultsList.Count) * 100, totScore / totNum);
+
+                        chart.Series[s].Points.AddXY((i / (double)resultsList.Count) * 100, totScore / totNum);
+                        Console.WriteLine("X: {0}, Y: {1}", i / (double)resultsList.Count * 100, totScore / totNum);
                         num = 0;
                         totScore = 0;
                     }
@@ -78,6 +79,54 @@ namespace SCC300cs
             dp.Label = sents[s.Points.IndexOf(dp)]; //label max. value
             dp = s.Points.FindMinByValue();
             dp.Label = sents[s.Points.IndexOf(dp)]; //label min. value
+        }
+
+        private void ChkBoxComb_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBoxComb.Checked)
+            {
+                chart.Series["Combined"].Enabled = true;
+            }
+            else
+            {
+                chart.Series["Combined"].Enabled = false;
+            }
+        }
+
+        private void ChkBxPos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBxPos.Checked)
+            {
+                chart.Series["Positive"].Enabled = true;
+            }
+            else
+            {
+                chart.Series["Positive"].Enabled = false;
+            }
+        }
+
+        private void ChkBxNeut_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBxNeut.Checked)
+            {
+                chart.Series["Neutral"].Enabled = true;
+            }
+            else
+            {
+                chart.Series["Neutral"].Enabled = false;
+            }
+        }
+
+        private void ChkBxNeg_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBxNeg.Checked)
+            {
+                chart.Series["Negative"].Enabled = true;
+            }
+            else
+            {
+                chart.Series["Negative"].Enabled = false;
+            }
         }
     }
 }

@@ -35,7 +35,6 @@
             this.lblGran = new System.Windows.Forms.Label();
             this.tBarGran = new System.Windows.Forms.TrackBar();
             this.BtnLoad = new System.Windows.Forms.Button();
-            this.txtInput = new System.Windows.Forms.TextBox();
             this.btnProcess = new System.Windows.Forms.Button();
             this.bgWkrProcess = new System.ComponentModel.BackgroundWorker();
             this.picLoading = new System.Windows.Forms.PictureBox();
@@ -43,11 +42,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblLoading = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.bgWkrLoad = new System.ComponentModel.BackgroundWorker();
+            this.txtInput = new System.Windows.Forms.TextBox();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -57,8 +56,8 @@
             this.panLoading.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -98,9 +97,11 @@
             this.lblGran.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblGran.Location = new System.Drawing.Point(134, 51);
+            this.lblGran.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblGran.Location = new System.Drawing.Point(131, 48);
             this.lblGran.Name = "lblGran";
-            this.lblGran.Size = new System.Drawing.Size(67, 13);
+            this.lblGran.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.lblGran.Size = new System.Drawing.Size(71, 16);
             this.lblGran.TabIndex = 13;
             this.lblGran.Text = "1 Sentence";
             this.lblGran.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -124,18 +125,6 @@
             this.BtnLoad.Text = "Load";
             this.BtnLoad.UseVisualStyleBackColor = true;
             this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
-            // 
-            // txtInput
-            // 
-            this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtInput.Location = new System.Drawing.Point(6, 6);
-            this.txtInput.Multiline = true;
-            this.txtInput.Name = "txtInput";
-            this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInput.Size = new System.Drawing.Size(761, 328);
-            this.txtInput.TabIndex = 1;
             // 
             // btnProcess
             // 
@@ -201,24 +190,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(2, 9);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(781, 366);
             this.tabControl1.TabIndex = 8;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.txtInput);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(773, 340);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Raw";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -243,21 +220,35 @@
             this.txtOutput.Size = new System.Drawing.Size(761, 376);
             this.txtOutput.TabIndex = 0;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(773, 340);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Results";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // bgWkrLoad
             // 
             this.bgWkrLoad.WorkerReportsProgress = true;
             this.bgWkrLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.BgWkrLoad_DoWork);
             this.bgWkrLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BgWkrLoad_ProgressChanged);
             this.bgWkrLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkrLoad_RunWorkerCompleted);
+            // 
+            // txtInput
+            // 
+            this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInput.Location = new System.Drawing.Point(6, 6);
+            this.txtInput.Multiline = true;
+            this.txtInput.Name = "txtInput";
+            this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInput.Size = new System.Drawing.Size(761, 328);
+            this.txtInput.TabIndex = 1;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.txtInput);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(773, 340);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Raw";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // SentiPlot
             // 
@@ -281,10 +272,10 @@
             this.panLoading.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -292,21 +283,20 @@
         #endregion
 
         private System.Windows.Forms.Button BtnLoad;
-        private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.Button btnProcess;
         private System.ComponentModel.BackgroundWorker bgWkrProcess;
         private System.Windows.Forms.PictureBox picLoading;
         private System.Windows.Forms.Panel panLoading;
         private System.Windows.Forms.Label lblLoading;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox txtOutput;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TrackBar tBarGran;
         private System.Windows.Forms.Label lblGran;
         private System.ComponentModel.BackgroundWorker bgWkrLoad;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TextBox txtInput;
     }
 }
 
