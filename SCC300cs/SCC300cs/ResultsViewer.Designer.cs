@@ -43,12 +43,12 @@
             this.chkBxNeg = new System.Windows.Forms.CheckBox();
             this.chkBxNeut = new System.Windows.Forms.CheckBox();
             this.chkBxPos = new System.Windows.Forms.CheckBox();
-            this.chkBoxComb = new System.Windows.Forms.CheckBox();
+            this.chkBoxCom = new System.Windows.Forms.CheckBox();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tbPgTable = new System.Windows.Forms.TabPage();
             this.dgvSenti = new System.Windows.Forms.DataGridView();
             this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colComb = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNeut = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -128,18 +128,18 @@
             this.chkBxPos.UseVisualStyleBackColor = true;
             this.chkBxPos.CheckedChanged += new System.EventHandler(this.ChkBxPos_CheckedChanged);
             // 
-            // chkBoxComb
+            // chkBoxCom
             // 
-            this.chkBoxComb.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkBoxComb.AutoSize = true;
-            this.chkBoxComb.Checked = true;
-            this.chkBoxComb.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBoxComb.Location = new System.Drawing.Point(6, 20);
-            this.chkBoxComb.Name = "chkBoxComb";
-            this.chkBoxComb.Size = new System.Drawing.Size(15, 14);
-            this.chkBoxComb.TabIndex = 2;
-            this.chkBoxComb.UseVisualStyleBackColor = true;
-            this.chkBoxComb.CheckedChanged += new System.EventHandler(this.ChkBoxComb_CheckedChanged);
+            this.chkBoxCom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkBoxCom.AutoSize = true;
+            this.chkBoxCom.Checked = true;
+            this.chkBoxCom.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxCom.Location = new System.Drawing.Point(6, 20);
+            this.chkBoxCom.Name = "chkBoxCom";
+            this.chkBoxCom.Size = new System.Drawing.Size(15, 14);
+            this.chkBoxCom.TabIndex = 2;
+            this.chkBoxCom.UseVisualStyleBackColor = true;
+            this.chkBoxCom.CheckedChanged += new System.EventHandler(this.ChkBoxCom_CheckedChanged);
             // 
             // chart
             // 
@@ -166,7 +166,7 @@
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             series1.Legend = "Legend1";
-            series1.Name = "Combined";
+            series1.Name = "Compound";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
             series1.YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             series2.ChartArea = "ChartArea1";
@@ -204,7 +204,7 @@
             this.tbPgTable.Location = new System.Drawing.Point(4, 22);
             this.tbPgTable.Name = "tbPgTable";
             this.tbPgTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPgTable.Size = new System.Drawing.Size(792, 424);
+            this.tbPgTable.Size = new System.Drawing.Size(776, 435);
             this.tbPgTable.TabIndex = 1;
             this.tbPgTable.Text = "Table";
             this.tbPgTable.UseVisualStyleBackColor = true;
@@ -224,7 +224,7 @@
             this.dgvSenti.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSenti.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colNum,
-            this.colComb,
+            this.colCom,
             this.colPos,
             this.colNeg,
             this.colNeut,
@@ -248,7 +248,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSenti.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvSenti.Size = new System.Drawing.Size(786, 418);
+            this.dgvSenti.Size = new System.Drawing.Size(770, 429);
             this.dgvSenti.TabIndex = 1;
             // 
             // colNum
@@ -257,11 +257,11 @@
             this.colNum.Name = "colNum";
             this.colNum.Width = 50;
             // 
-            // colComb
+            // colCom
             // 
-            this.colComb.HeaderText = "Combined";
-            this.colComb.Name = "colComb";
-            this.colComb.Width = 60;
+            this.colCom.HeaderText = "Compound";
+            this.colCom.Name = "colCom";
+            this.colCom.Width = 60;
             // 
             // colPos
             // 
@@ -296,7 +296,7 @@
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.chkBxNeg);
-            this.panel1.Controls.Add(this.chkBoxComb);
+            this.panel1.Controls.Add(this.chkBoxCom);
             this.panel1.Controls.Add(this.chkBxNeut);
             this.panel1.Controls.Add(this.chkBxPos);
             this.panel1.Location = new System.Drawing.Point(0, 393);
@@ -312,7 +312,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Combined";
+            this.label1.Text = "Compound";
             // 
             // label2
             // 
@@ -369,7 +369,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
         private System.Windows.Forms.DataGridView dgvSenti;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colComb;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCom;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPos;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNeg;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNeut;
@@ -377,7 +377,7 @@
         private System.Windows.Forms.CheckBox chkBxNeg;
         private System.Windows.Forms.CheckBox chkBxNeut;
         private System.Windows.Forms.CheckBox chkBxPos;
-        private System.Windows.Forms.CheckBox chkBoxComb;
+        private System.Windows.Forms.CheckBox chkBoxCom;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

@@ -24,6 +24,8 @@ namespace SCC300cs
         double granularity = -1;
         List<string> sents;
         List<SentimentAnalysisResults> resultsList;
+        List<List<SentimentAnalysisResults>> chapterResultsList;
+        List<List<string>> chapterSents;
         
 
         public SentiPlot()
@@ -88,6 +90,7 @@ namespace SCC300cs
             Regex pre = new Regex("<pre(.|\n)+?</pre>");                            //match whole <pre></pre> sections
             Regex headers = new Regex("<h[0-9]>.*</h[0-9]>");                       //match on header sections to get chapters
             Regex htmlTags = new Regex("<[^>]*>");                                  //match on html tags
+            inputChapters = new List<string>();
            try
             {
                 bgWkrLoad.ReportProgress(0);
@@ -104,12 +107,14 @@ namespace SCC300cs
             input = HttpUtility.HtmlDecode(input);                                  //decode HTML special characters
             bgWkrLoad.ReportProgress(75);
             string[] chaps = headers.Split(input);                                      //split on header tags to split into chapters
+            string ch;
             string ret = "";
             bgWkrLoad.ReportProgress(100);
             for (int ind = 0; ind < chaps.Length; ind++)
             {
-                chaps[ind] = htmlTags.Replace(chaps[ind], "");                           //remove all remaining HTML tags
-                ret += LoadFromTxt(chaps[ind] + " ");
+                ch = htmlTags.Replace(chaps[ind], "");                           //remove all remaining HTML tags
+                inputChapters.Add(ch);
+                ret += LoadFromTxt(ch + " ");
             }
             return ret;
         }
@@ -182,30 +187,46 @@ namespace SCC300cs
         private void BgWkrProcess_DoWork(object sender, DoWorkEventArgs e)
         {
             bgWkrProcess.ReportProgress(0);
-            Document doc = new Document(inputText);
-            java.util.List jSents = doc.sentences();
+            Document doc;
+            java.util.List jSents;
+            chapterSents = new List<List<string>>();
             inputText = "";
-            sents = new List<string>();
-            for (java.util.Iterator itr = jSents.iterator(); itr.hasNext();)
+            for (int i = 0; i < inputChapters.Count; i++)
             {
-                sents.Add(((Sentence)itr.next()).text());
-                inputText = inputText + sents[sents.Count - 1] + Environment.NewLine;
+                doc = new Document(inputChapters[i]);
+                jSents = doc.sentences();
+                List<string> cSents = new List<string>();
+                for (java.util.Iterator itr = jSents.iterator(); itr.hasNext();)
+                {
+                    cSents.Add(((Sentence)itr.next()).text());
+                    inputText = inputText + cSents[cSents.Count - 1] + Environment.NewLine;
+                }
+                chapterSents.Add(cSents);
             }
+
             bgWkrProcess.ReportProgress(50);
             SentimentIntensityAnalyzer analyzer = new SentimentIntensityAnalyzer();
             SentimentAnalysisResults results;
-            resultsList = new List<SentimentAnalysisResults>();
             outputText = "";
-            foreach (string s in sents)
+            List<SentimentAnalysisResults> temp = new List<SentimentAnalysisResults>();
+            chapterResultsList = new List<List<SentimentAnalysisResults>>();
+            sents = new List<string>();
+            foreach (List<string> outputChapter in chapterSents)
             {
-                results = analyzer.PolarityScores(s);
-                resultsList.Add(results);
-                outputText = outputText + "Sentence [" + (sents.IndexOf(s) + 1) + "]: " + s + Environment.NewLine;
-                outputText = outputText + "Positive: " + results.Positive + " | ";
-                outputText = outputText + "Negative: " + results.Negative + " | ";
-                outputText = outputText + "Neutral: " + results.Neutral + " | ";
-                outputText = outputText + "Compound: " + results.Compound;
-                outputText = outputText + Environment.NewLine + Environment.NewLine;
+                temp.Clear();
+                foreach (string c in outputChapter)
+                {
+                    results = analyzer.PolarityScores(c);
+                    sents.Add(c);
+                    outputText = outputText + "Chapter [" + chapterSents.IndexOf(outputChapter) + "] Sentence [" + (outputChapter.IndexOf(c) + 1) + "]: " + c + Environment.NewLine;
+                    outputText = outputText + "Positive: " + results.Positive + " | ";
+                    outputText = outputText + "Negative: " + results.Negative + " | ";
+                    outputText = outputText + "Neutral: " + results.Neutral + " | ";
+                    outputText = outputText + "Compound: " + results.Compound;
+                    outputText = outputText + Environment.NewLine + Environment.NewLine;
+                    temp.Add(results);
+                }
+                chapterResultsList.Add(new List<SentimentAnalysisResults>(temp));
             }
             bgWkrProcess.ReportProgress(100);
         }
@@ -228,7 +249,7 @@ namespace SCC300cs
 
         private void BgWkrProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            ResultsViewer res = new ResultsViewer(sents, resultsList, granularity);
+            new ResultsViewer(sents, chapterResultsList, granularity);
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;

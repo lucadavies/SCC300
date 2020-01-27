@@ -16,80 +16,147 @@ namespace SCC300cs
     {
         List<string> sents;
         double granularity = -1;
-        List<SentimentAnalysisResults> resultsList;
+        int chapters = 0;
+        private enum ResultType
+        {
+            COMPOUND,
+            POSITIVE,
+            NEUTRAL,
+            NEGATIVE
+        }
 
-        public ResultsViewer(List<string> sents, List<SentimentAnalysisResults> resultsList, double granularity)
+        public ResultsViewer(List<string> sents, List<List<SentimentAnalysisResults>> resultsList, double granularity)
         {
             InitializeComponent();
             this.sents = sents;
-            this.resultsList = resultsList;
             this.granularity = granularity;
-            chart.Series[0].Points.Clear(); //combined
-            chart.Series[1].Points.Clear(); //pos.
-            chart.Series[2].Points.Clear(); //neut.
-            chart.Series[3].Points.Clear(); //neg.
+            chart.Series["Compound"].Points.Clear(); //compound
+            chart.Series["Positive"].Points.Clear(); //pos.
+            chart.Series["Neutral"].Points.Clear(); //neut.
+            chart.Series["Negative"].Points.Clear(); //neg.
+            foreach (List<SentimentAnalysisResults> cRes in resultsList)
+            {
+                AddChapter(cRes);
+            }
+            Show();
+        }
+
+        public void AddChapter(List<SentimentAnalysisResults> res)
+        {
+            Series chap = new Series()
+            {
+                Name = "Ch" + (chapters + 1),
+                LegendText = "Ch" + (chapters + 1),
+                ChartType = SeriesChartType.Spline,
+            };
+            int pageNum = chapters / 5;
+            if (chapters % 5 == 0)
+            {
+                NewTab("Ch" + (chapters  + 1) + "-" + (chapters + 5));
+            }
+            PlotResults(res, ResultType.COMPOUND, chap);
+            foreach (Control c in tabCtrlResults.TabPages[(chapters / 5) + 2].Controls)
+            {
+                if (c is Chart)
+                {
+                    ((Chart)c).Series.Add(chap);
+                }
+            }
+            chapters++;
+        }
+
+        private void PlotResults(List<SentimentAnalysisResults> res, ResultType type, Series s)
+        {
             double totScore = 0;
             int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
             int num = 0;    //current number of lines that have been summed
             SentimentAnalysisResults sar;
-            for (int s = 0; s < 4; s++) //loop to plot all result outputs
+            for (int i = 0; i < res.Count; i++) //loop for each result set
             {
-                for (int i = 0; i < resultsList.Count; i++) //loop for each result set
+                sar = res[i];
+                if (num == totNum || i + 1 == res.Count)
                 {
-                    sar = resultsList[i];
-                    if (num == totNum || i + 1 == resultsList.Count)
-                    {
 
-                        chart.Series[s].Points.AddXY((i / (double)resultsList.Count) * 100, totScore / totNum);
-                        Console.WriteLine("X: {0}, Y: {1}", i / (double)resultsList.Count * 100, totScore / totNum);
-                        num = 0;
-                        totScore = 0;
-                    }
-                    if (num < totNum)
-                    {
-                        if (s == 0)
-                            totScore += sar.Compound;
-                        else if (s == 1)
-                            totScore += sar.Positive;
-                        else if (s == 2)
-                            totScore += sar.Neutral;
-                        else if (s == 3)
-                            totScore += sar.Negative;
-                        num++;
-                    }
+                    s.Points.AddXY((i / (double)res.Count) * 100, totScore / totNum);
+                    num = 0;
+                    totScore = 0;
                 }
-                LabelBestWorst(chart.Series[s]);
+                if (num < totNum)
+                {
+                    switch (type)
+                    {
+                        case ResultType.COMPOUND:
+                            totScore += sar.Compound;
+                            break;
+                        case ResultType.POSITIVE:
+                            totScore += sar.Positive;
+                            break;
+                        case ResultType.NEUTRAL:
+                            totScore += sar.Neutral;
+                            break;
+                        case ResultType.NEGATIVE:
+                            totScore += sar.Negative;
+                            break;
+                    }
+                    num++;
+                }
             }
-            for (int i = 0; i < resultsList.Count; i++)
-            {
-                dgvSenti.Rows.Add(i, resultsList[i].Compound, resultsList[i].Positive, resultsList[i].Negative, resultsList[i].Neutral, sents[i]);
-            }
-            LabelBestWorst(chart.Series[chart.Series.Count - 1]);
-            Show();
+            LabelBestWorst(s);
         }
 
-        public void AddResultSet()
+        public void NewTab(string name)
         {
-            
+            TabPage t = new TabPage
+            {
+                Name = "tbPg" + name,
+                Text = name
+            };
+            Chart c = new Chart
+            {
+                Palette = ChartColorPalette.BrightPastel,
+                Dock = DockStyle.Fill
+            };
+            c.Legends.Add(new Legend()
+            {
+                Docking = Docking.Bottom
+            });
+            ChartArea ca = new ChartArea();
+            ca.AxisX.Maximum = 100D;
+            ca.AxisX.Minimum = 0D;
+            ca.AxisX.Title = "Beginning / Electricity";
+            ca.AxisY.InterlacedColor = System.Drawing.Color.White;
+            ca.AxisY.Interval = 0.25D;
+            ca.AxisY.LabelAutoFitMinFontSize = 5;
+            ca.AxisY.Maximum = 1D;
+            ca.AxisY.Minimum = -1D;
+            ca.AxisY.Title = "Good / Bad";
+            ca.Name = "chartArea" + name;
+            c.ChartAreas.Add(ca);
+
+            t.Controls.Add(c);
+            tabCtrlResults.TabPages.Add(t);
         }
 
         private void LabelBestWorst(Series s)
         {
-            DataPoint dp = s.Points.FindMaxByValue();
-            dp.Label = sents[s.Points.IndexOf(dp)]; //label max. value
-            dp = s.Points.FindMinByValue();
-            dp.Label = sents[s.Points.IndexOf(dp)]; //label min. value
+            if (s.Points.Count > 0)
+            {
+                DataPoint dp = s.Points.FindMaxByValue();
+                dp.Label = sents[s.Points.IndexOf(dp)]; //label max. value
+                dp = s.Points.FindMinByValue();
+                dp.Label = sents[s.Points.IndexOf(dp)]; //label min. value
+            }
         }
 
-        private void ChkBoxComb_CheckedChanged(object sender, EventArgs e)
+        private void ChkBoxCom_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkBoxComb.Checked)
+            if (chkBoxCom.Checked)
             {
-                chart.Series["Combined"].Enabled = true;
+                chart.Series["Compound"].Enabled = true;
             }
             else
             {
-                chart.Series["Combined"].Enabled = false;
+                chart.Series["Compound"].Enabled = false;
             }
         }
 
