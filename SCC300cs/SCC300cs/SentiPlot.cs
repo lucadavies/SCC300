@@ -75,20 +75,15 @@ namespace SCC300cs
 
         private string LoadFromTxt(string i)
         {
-            Regex rgx = new Regex("[^\r\n]{2}\r\n[^\r\n]{2}");
-            MatchCollection mc = rgx.Matches(i);
-            foreach (Match m in mc.Cast<Match>().Reverse())
-            {
-                i = Replace(i, m.Index + 2, m.Length - 4, " ");
-            }
-            return i;
+            Regex rgx = new Regex("\\s+");
+            return rgx.Replace(i, " ");
         }
 
         private string LoadFromHTML(string input)
         {
             Regex body = new Regex("body>");                                        //match both <body> and </body> tags
-            Regex pre = new Regex("<pre(.|\n)+?</pre>");                            //match whole <pre></pre> sections
-            Regex headers = new Regex("<h[0-9]>.*</h[0-9]>");                       //match on header sections to get chapters
+            Regex pre = new Regex("<pre(.|\\r\\n)+?</pre>");                            //match whole <pre></pre> sections
+            Regex headers = new Regex("<h[0-9]>");                                  //match on header sections to get chapters
             Regex htmlTags = new Regex("<[^>]*>");                                  //match on html tags
             inputChapters = new List<string>();
            try

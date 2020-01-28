@@ -25,7 +25,7 @@ namespace SCC300cs
             NEGATIVE
         }
 
-        public ResultsViewer(List<string> sents, List<List<SentimentAnalysisResults>> resultsList, double granularity)
+        public ResultsViewer(List<string> sents, List<List<SentimentAnalysisResults>> chaptersResultsList, double granularity)
         {
             InitializeComponent();
             this.sents = sents;
@@ -34,10 +34,11 @@ namespace SCC300cs
             chart.Series["Positive"].Points.Clear(); //pos.
             chart.Series["Neutral"].Points.Clear(); //neut.
             chart.Series["Negative"].Points.Clear(); //neg.
-            foreach (List<SentimentAnalysisResults> cRes in resultsList)
+            foreach (List<SentimentAnalysisResults> cRes in chaptersResultsList)
             {
                 AddChapter(cRes);
             }
+            GraphAll(chaptersResultsList);
             Show();
         }
 
@@ -49,7 +50,6 @@ namespace SCC300cs
                 LegendText = "Ch" + (chapters + 1),
                 ChartType = SeriesChartType.Spline,
             };
-            int pageNum = chapters / 5;
             if (chapters % 5 == 0)
             {
                 NewTab("Ch" + (chapters  + 1) + "-" + (chapters + 5));
@@ -104,6 +104,28 @@ namespace SCC300cs
             LabelBestWorst(s);
         }
 
+        private void AddResultsToTable(List<SentimentAnalysisResults> res)
+        {
+            for (int i = 0; i < res.Count; i++)
+            {
+                dgvSenti.Rows.Add(i, res[i].Compound, res[i].Positive, res[i].Negative, res[i].Neutral, sents[i]);
+            }
+        }
+
+        private void GraphAll(List<List<SentimentAnalysisResults>> res)
+        {
+            List<SentimentAnalysisResults> allRes = new List<SentimentAnalysisResults>();
+            foreach (List<SentimentAnalysisResults> s in res)
+            {
+                allRes.AddRange(s);
+            }
+            PlotResults(allRes, ResultType.COMPOUND, chart.Series["Compound"]);
+            PlotResults(allRes, ResultType.POSITIVE, chart.Series["Positive"]);
+            PlotResults(allRes, ResultType.NEUTRAL, chart.Series["Neutral"]);
+            PlotResults(allRes, ResultType.NEGATIVE, chart.Series["Negative"]);
+            AddResultsToTable(allRes);
+        }
+
         public void NewTab(string name)
         {
             TabPage t = new TabPage
@@ -121,15 +143,17 @@ namespace SCC300cs
                 Docking = Docking.Bottom
             });
             ChartArea ca = new ChartArea();
+            ca.AxisX.Interval = 10;
             ca.AxisX.Maximum = 100D;
             ca.AxisX.Minimum = 0D;
-            ca.AxisX.Title = "Beginning / Electricity";
-            ca.AxisY.InterlacedColor = System.Drawing.Color.White;
+            //ca.AxisX.Title = "Beginning / Electricity (%)";
+            ca.AxisX.Title = "Beginning / End (%)";
+            ca.AxisY.InterlacedColor = Color.White;
             ca.AxisY.Interval = 0.25D;
             ca.AxisY.LabelAutoFitMinFontSize = 5;
             ca.AxisY.Maximum = 1D;
             ca.AxisY.Minimum = -1D;
-            ca.AxisY.Title = "Good / Bad";
+            ca.AxisY.Title = "Good / Bad (Sentiment)";
             ca.Name = "chartArea" + name;
             c.ChartAreas.Add(ca);
 
@@ -194,6 +218,26 @@ namespace SCC300cs
             {
                 chart.Series["Negative"].Enabled = false;
             }
+        }
+
+        private void LblCom_Click(object sender, EventArgs e)
+        {
+            ChkBoxCom_CheckedChanged(sender, e);
+        }
+
+        private void LblPos_Click(object sender, EventArgs e)
+        {
+            ChkBxPos_CheckedChanged(sender, e);
+        }
+
+        private void LblNeut_Click(object sender, EventArgs e)
+        {
+            ChkBxNeut_CheckedChanged(sender, e);
+        }
+
+        private void LblNeg_Click(object sender, EventArgs e)
+        {
+            ChkBxNeg_CheckedChanged(sender, e);
         }
     }
 }

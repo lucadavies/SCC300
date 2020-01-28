@@ -40,10 +40,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResultsViewer));
             this.tabCtrlResults = new System.Windows.Forms.TabControl();
             this.tbPg = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblNeg = new System.Windows.Forms.Label();
+            this.lblNeut = new System.Windows.Forms.Label();
+            this.lblPos = new System.Windows.Forms.Label();
+            this.lblCom = new System.Windows.Forms.Label();
             this.chkBxNeg = new System.Windows.Forms.CheckBox();
+            this.chkBoxCom = new System.Windows.Forms.CheckBox();
             this.chkBxNeut = new System.Windows.Forms.CheckBox();
             this.chkBxPos = new System.Windows.Forms.CheckBox();
-            this.chkBoxCom = new System.Windows.Forms.CheckBox();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tbPgTable = new System.Windows.Forms.TabPage();
             this.dgvSenti = new System.Windows.Forms.DataGridView();
@@ -53,17 +58,12 @@
             this.colNeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colNeut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTxt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabCtrlResults.SuspendLayout();
             this.tbPg.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             this.tbPgTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).BeginInit();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabCtrlResults
@@ -89,6 +89,64 @@
             this.tbPg.Text = "Graph";
             this.tbPg.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.lblNeg);
+            this.panel1.Controls.Add(this.lblNeut);
+            this.panel1.Controls.Add(this.lblPos);
+            this.panel1.Controls.Add(this.lblCom);
+            this.panel1.Controls.Add(this.chkBxNeg);
+            this.panel1.Controls.Add(this.chkBoxCom);
+            this.panel1.Controls.Add(this.chkBxNeut);
+            this.panel1.Controls.Add(this.chkBxPos);
+            this.panel1.Location = new System.Drawing.Point(0, 393);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(778, 42);
+            this.panel1.TabIndex = 6;
+            // 
+            // lblNeg
+            // 
+            this.lblNeg.AutoSize = true;
+            this.lblNeg.Location = new System.Drawing.Point(269, 20);
+            this.lblNeg.Name = "lblNeg";
+            this.lblNeg.Size = new System.Drawing.Size(50, 13);
+            this.lblNeg.TabIndex = 9;
+            this.lblNeg.Text = "Negative";
+            this.lblNeg.Click += new System.EventHandler(this.LblNeg_Click);
+            // 
+            // lblNeut
+            // 
+            this.lblNeut.AutoSize = true;
+            this.lblNeut.Location = new System.Drawing.Point(191, 20);
+            this.lblNeut.Name = "lblNeut";
+            this.lblNeut.Size = new System.Drawing.Size(41, 13);
+            this.lblNeut.TabIndex = 8;
+            this.lblNeut.Text = "Neutral";
+            this.lblNeut.Click += new System.EventHandler(this.LblNeut_Click);
+            // 
+            // lblPos
+            // 
+            this.lblPos.AutoSize = true;
+            this.lblPos.Location = new System.Drawing.Point(111, 20);
+            this.lblPos.Name = "lblPos";
+            this.lblPos.Size = new System.Drawing.Size(44, 13);
+            this.lblPos.TabIndex = 7;
+            this.lblPos.Text = "Positive";
+            this.lblPos.Click += new System.EventHandler(this.LblPos_Click);
+            // 
+            // lblCom
+            // 
+            this.lblCom.AutoSize = true;
+            this.lblCom.Location = new System.Drawing.Point(20, 20);
+            this.lblCom.Name = "lblCom";
+            this.lblCom.Size = new System.Drawing.Size(58, 13);
+            this.lblCom.TabIndex = 6;
+            this.lblCom.Text = "Compound";
+            this.lblCom.Click += new System.EventHandler(this.LblCom_Click);
+            // 
             // chkBxNeg
             // 
             this.chkBxNeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -101,6 +159,19 @@
             this.chkBxNeg.TabIndex = 5;
             this.chkBxNeg.UseVisualStyleBackColor = true;
             this.chkBxNeg.CheckedChanged += new System.EventHandler(this.ChkBxNeg_CheckedChanged);
+            // 
+            // chkBoxCom
+            // 
+            this.chkBoxCom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkBoxCom.AutoSize = true;
+            this.chkBoxCom.Checked = true;
+            this.chkBoxCom.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkBoxCom.Location = new System.Drawing.Point(6, 20);
+            this.chkBoxCom.Name = "chkBoxCom";
+            this.chkBoxCom.Size = new System.Drawing.Size(15, 14);
+            this.chkBoxCom.TabIndex = 2;
+            this.chkBoxCom.UseVisualStyleBackColor = true;
+            this.chkBoxCom.CheckedChanged += new System.EventHandler(this.ChkBoxCom_CheckedChanged);
             // 
             // chkBxNeut
             // 
@@ -128,25 +199,13 @@
             this.chkBxPos.UseVisualStyleBackColor = true;
             this.chkBxPos.CheckedChanged += new System.EventHandler(this.ChkBxPos_CheckedChanged);
             // 
-            // chkBoxCom
-            // 
-            this.chkBoxCom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkBoxCom.AutoSize = true;
-            this.chkBoxCom.Checked = true;
-            this.chkBoxCom.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkBoxCom.Location = new System.Drawing.Point(6, 20);
-            this.chkBoxCom.Name = "chkBoxCom";
-            this.chkBoxCom.Size = new System.Drawing.Size(15, 14);
-            this.chkBoxCom.TabIndex = 2;
-            this.chkBoxCom.UseVisualStyleBackColor = true;
-            this.chkBoxCom.CheckedChanged += new System.EventHandler(this.ChkBoxCom_CheckedChanged);
-            // 
             // chart
             // 
             this.chart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.AxisX.Maximum = 100D;
+            chartArea1.AxisX.MaximumAutoSize = 100F;
             chartArea1.AxisX.Minimum = 0D;
             chartArea1.AxisX.Title = "Beginning / Electricity";
             chartArea1.AxisY.InterlacedColor = System.Drawing.Color.White;
@@ -204,7 +263,7 @@
             this.tbPgTable.Location = new System.Drawing.Point(4, 22);
             this.tbPgTable.Name = "tbPgTable";
             this.tbPgTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPgTable.Size = new System.Drawing.Size(776, 435);
+            this.tbPgTable.Size = new System.Drawing.Size(776, 379);
             this.tbPgTable.TabIndex = 1;
             this.tbPgTable.Text = "Table";
             this.tbPgTable.UseVisualStyleBackColor = true;
@@ -248,7 +307,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSenti.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvSenti.Size = new System.Drawing.Size(770, 429);
+            this.dgvSenti.Size = new System.Drawing.Size(770, 373);
             this.dgvSenti.TabIndex = 1;
             // 
             // colNum
@@ -287,60 +346,6 @@
             this.colTxt.HeaderText = "Text";
             this.colTxt.Name = "colTxt";
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.chkBxNeg);
-            this.panel1.Controls.Add(this.chkBoxCom);
-            this.panel1.Controls.Add(this.chkBxNeut);
-            this.panel1.Controls.Add(this.chkBxPos);
-            this.panel1.Location = new System.Drawing.Point(0, 393);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(778, 42);
-            this.panel1.TabIndex = 6;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Compound";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(118, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Positive";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(198, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(41, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Neutral";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(276, 20);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Negative";
-            // 
             // ResultsViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,11 +358,11 @@
             this.Text = "Results";
             this.tabCtrlResults.ResumeLayout(false);
             this.tbPg.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
             this.tbPgTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -379,9 +384,9 @@
         private System.Windows.Forms.CheckBox chkBxPos;
         private System.Windows.Forms.CheckBox chkBoxCom;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblNeg;
+        private System.Windows.Forms.Label lblNeut;
+        private System.Windows.Forms.Label lblPos;
+        private System.Windows.Forms.Label lblCom;
     }
 }
