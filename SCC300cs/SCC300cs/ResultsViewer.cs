@@ -17,6 +17,7 @@ namespace SCC300cs
         List<string> sents;
         double granularity = -1;
         int chapters = 0;
+        int chapterOffset = 0;
         private enum ResultType
         {
             COMPOUND,
@@ -34,10 +35,14 @@ namespace SCC300cs
             chart.Series["Positive"].Points.Clear(); //pos.
             chart.Series["Neutral"].Points.Clear(); //neut.
             chart.Series["Negative"].Points.Clear(); //neg.
+            chart.Series["Positive"].Enabled = false;
+            chart.Series["Neutral"].Enabled = false;
+            chart.Series["Negative"].Enabled = false;
             foreach (List<SentimentAnalysisResults> cRes in chaptersResultsList)
             {
                 AddChapter(cRes);
             }
+            chapterOffset = 0;
             GraphAll(chaptersResultsList);
             Show();
         }
@@ -63,12 +68,27 @@ namespace SCC300cs
                 }
             }
             chapters++;
+            chapterOffset += res.Count;
+        }
+
+        private void GraphAll(List<List<SentimentAnalysisResults>> res)
+        {
+            List<SentimentAnalysisResults> allRes = new List<SentimentAnalysisResults>();
+            foreach (List<SentimentAnalysisResults> s in res)
+            {
+                allRes.AddRange(s);
+            }
+            PlotResults(allRes, ResultType.COMPOUND, chart.Series["Compound"]);
+            PlotResults(allRes, ResultType.POSITIVE, chart.Series["Positive"]);
+            PlotResults(allRes, ResultType.NEUTRAL, chart.Series["Neutral"]);
+            PlotResults(allRes, ResultType.NEGATIVE, chart.Series["Negative"]);
+            AddResultsToTable(allRes);
         }
 
         private void PlotResults(List<SentimentAnalysisResults> res, ResultType type, Series s)
         {
             double totScore = 0;
-            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * sents.Count))); //total number of lines to sum sentiment values for
+            int totNum = (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * res.Count))); //total number of lines to sum sentiment values for
             int num = 0;    //current number of lines that have been summed
             SentimentAnalysisResults sar;
             for (int i = 0; i < res.Count; i++) //loop for each result set
@@ -101,7 +121,7 @@ namespace SCC300cs
                     num++;
                 }
             }
-            LabelBestWorst(s);
+            LabelBestWorst(s, totNum);
         }
 
         private void AddResultsToTable(List<SentimentAnalysisResults> res)
@@ -110,20 +130,6 @@ namespace SCC300cs
             {
                 dgvSenti.Rows.Add(i, res[i].Compound, res[i].Positive, res[i].Negative, res[i].Neutral, sents[i]);
             }
-        }
-
-        private void GraphAll(List<List<SentimentAnalysisResults>> res)
-        {
-            List<SentimentAnalysisResults> allRes = new List<SentimentAnalysisResults>();
-            foreach (List<SentimentAnalysisResults> s in res)
-            {
-                allRes.AddRange(s);
-            }
-            PlotResults(allRes, ResultType.COMPOUND, chart.Series["Compound"]);
-            PlotResults(allRes, ResultType.POSITIVE, chart.Series["Positive"]);
-            PlotResults(allRes, ResultType.NEUTRAL, chart.Series["Neutral"]);
-            PlotResults(allRes, ResultType.NEGATIVE, chart.Series["Negative"]);
-            AddResultsToTable(allRes);
         }
 
         public void NewTab(string name)
@@ -161,15 +167,30 @@ namespace SCC300cs
             tabCtrlResults.TabPages.Add(t);
         }
 
-        private void LabelBestWorst(Series s)
+        private void LabelBestWorst(Series s, int totNum)
         {
             if (s.Points.Count > 0)
             {
+                string l = "";
+                int sentIndex;
                 DataPoint dp = s.Points.FindMaxByValue();
-                dp.Label = sents[s.Points.IndexOf(dp)]; //label max. value
+                sentIndex = s.Points.IndexOf(dp);
+                for (int i = 0; i < totNum && (sentIndex + chapterOffset + i) < s.Points.Count; i++)
+                {
+                    l += sents[s.Points.IndexOf(dp) + chapterOffset + i];
+                }
+                dp.Label = (l.Length > 50 ? l.Substring(0, 47) + "..." : l);        //label max. value with abreviated sentence
+                dp.LabelToolTip = l;                                                //label max. value with full sentence
                 dp = s.Points.FindMinByValue();
-                dp.Label = sents[s.Points.IndexOf(dp)]; //label min. value
-            }
+                sentIndex = s.Points.IndexOf(dp);
+                l = sents[sentIndex + chapterOffset];
+                for (int i = 0; i < totNum && (sentIndex + chapterOffset + i) < s.Points.Count; i++)
+                {
+                    l += sents[s.Points.IndexOf(dp) + chapterOffset + i];
+                }
+                dp.Label = (l.Length > 50 ? l.Substring(0, 47) + "..." : l);        //label max. value with abreviated sentence
+                dp.LabelToolTip = l;                                                //label max. value with full sentence
+            }            
         }
 
         private void ChkBoxCom_CheckedChanged(object sender, EventArgs e)

@@ -151,8 +151,6 @@
             // 
             this.chkBxNeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBxNeg.AutoSize = true;
-            this.chkBxNeg.Checked = true;
-            this.chkBxNeg.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBxNeg.Location = new System.Drawing.Point(255, 20);
             this.chkBxNeg.Name = "chkBxNeg";
             this.chkBxNeg.Size = new System.Drawing.Size(15, 14);
@@ -177,8 +175,6 @@
             // 
             this.chkBxNeut.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBxNeut.AutoSize = true;
-            this.chkBxNeut.Checked = true;
-            this.chkBxNeut.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBxNeut.Location = new System.Drawing.Point(177, 20);
             this.chkBxNeut.Name = "chkBxNeut";
             this.chkBxNeut.Size = new System.Drawing.Size(15, 14);
@@ -190,8 +186,6 @@
             // 
             this.chkBxPos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBxPos.AutoSize = true;
-            this.chkBxPos.Checked = true;
-            this.chkBxPos.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkBxPos.Location = new System.Drawing.Point(97, 20);
             this.chkBxPos.Name = "chkBxPos";
             this.chkBxPos.Size = new System.Drawing.Size(15, 14);
@@ -207,7 +201,7 @@
             chartArea1.AxisX.Maximum = 100D;
             chartArea1.AxisX.MaximumAutoSize = 100F;
             chartArea1.AxisX.Minimum = 0D;
-            chartArea1.AxisX.Title = "Beginning / Electricity";
+            chartArea1.AxisX.Title = "Beginning / End (%)";
             chartArea1.AxisY.InterlacedColor = System.Drawing.Color.White;
             chartArea1.AxisY.Interval = 0.25D;
             chartArea1.AxisY.LabelAutoFitMinFontSize = 5;
@@ -223,7 +217,7 @@
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            series1.Color = System.Drawing.Color.Blue;
             series1.Legend = "Legend1";
             series1.Name = "Compound";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Int32;
@@ -263,7 +257,7 @@
             this.tbPgTable.Location = new System.Drawing.Point(4, 22);
             this.tbPgTable.Name = "tbPgTable";
             this.tbPgTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPgTable.Size = new System.Drawing.Size(776, 379);
+            this.tbPgTable.Size = new System.Drawing.Size(776, 435);
             this.tbPgTable.TabIndex = 1;
             this.tbPgTable.Text = "Table";
             this.tbPgTable.UseVisualStyleBackColor = true;
@@ -307,7 +301,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSenti.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvSenti.Size = new System.Drawing.Size(770, 373);
+            this.dgvSenti.Size = new System.Drawing.Size(770, 429);
             this.dgvSenti.TabIndex = 1;
             // 
             // colNum
