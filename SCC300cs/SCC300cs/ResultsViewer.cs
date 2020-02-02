@@ -14,6 +14,7 @@ namespace SCC300cs
 {
     public partial class ResultsViewer : Form
     {
+        string textName;
         List<string> sents;
         double granularity = -1;
         int chapters = 0;
@@ -26,9 +27,10 @@ namespace SCC300cs
             NEGATIVE
         }
 
-        public ResultsViewer(List<string> sents, List<List<SentimentAnalysisResults>> chaptersResultsList, double granularity)
+        public ResultsViewer(string textName, List<string> sents, List<List<SentimentAnalysisResults>> chaptersResultsList, double granularity)
         {
             InitializeComponent();
+            this.textName = textName;
             this.sents = sents;
             this.granularity = granularity;
             chart.Series["Compound"].Points.Clear(); //compound
@@ -38,6 +40,7 @@ namespace SCC300cs
             chart.Series["Positive"].Enabled = false;
             chart.Series["Neutral"].Enabled = false;
             chart.Series["Negative"].Enabled = false;
+            chart.Titles[0].Text = textName;
             foreach (List<SentimentAnalysisResults> cRes in chaptersResultsList)
             {
                 AddChapter(cRes);
@@ -47,6 +50,10 @@ namespace SCC300cs
             Show();
         }
 
+        /// <summary>
+        /// Adds a new chapter to this ResultsViewer
+        /// </summary>
+        /// <param name="res"> The List of SentimentAnalysisResults produced by the chapter</param>
         public void AddChapter(List<SentimentAnalysisResults> res)
         {
             Series chap = new Series()
@@ -259,6 +266,21 @@ namespace SCC300cs
         private void LblNeg_Click(object sender, EventArgs e)
         {
             ChkBxNeg_CheckedChanged(sender, e);
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "JPEG files (*.txt)|*jpeg";
+                sfd.FilterIndex = 0;
+                sfd.RestoreDirectory = true;
+                sfd.FileName = textName;
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    chart.SaveImage(sfd.FileName + ".jpeg", ChartImageFormat.Jpeg);
+                }
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ namespace SCC300cs
 {
     public partial class SentiPlot : Form
     {
+        string textName;
         string inputText;
         List<string> inputChapters;
         string outputText;
@@ -66,6 +67,7 @@ namespace SCC300cs
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     inputText = File.ReadAllText(ofd.FileName);
+                    textName = Path.GetFileNameWithoutExtension(ofd.SafeFileName);
                     panLoading.Visible = true;
                     BtnLoad.Enabled = false;
                     bgWkrLoad.RunWorkerAsync(argument: Path.GetExtension(ofd.FileName));
@@ -244,7 +246,7 @@ namespace SCC300cs
 
         private void BgWkrProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            new ResultsViewer(sents, chapterResultsList, granularity);
+            new ResultsViewer(textName, sents, chapterResultsList, granularity);
             txtInput.Text = inputText;
             txtOutput.Text = outputText;
             panLoading.Visible = false;

@@ -34,6 +34,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -41,6 +42,7 @@
             this.tabCtrlResults = new System.Windows.Forms.TabControl();
             this.tbPg = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.lblNeg = new System.Windows.Forms.Label();
             this.lblNeut = new System.Windows.Forms.Label();
             this.lblPos = new System.Windows.Forms.Label();
@@ -93,6 +95,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.lblNeg);
             this.panel1.Controls.Add(this.lblNeut);
             this.panel1.Controls.Add(this.lblPos);
@@ -106,6 +109,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(778, 42);
             this.panel1.TabIndex = 6;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(693, 15);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 10;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // lblNeg
             // 
@@ -250,6 +263,9 @@
             this.chart.Size = new System.Drawing.Size(770, 387);
             this.chart.TabIndex = 1;
             this.chart.Text = "chart";
+            title1.Name = "titleAll";
+            title1.Text = "<>";
+            this.chart.Titles.Add(title1);
             // 
             // tbPgTable
             // 
@@ -382,5 +398,6 @@
         private System.Windows.Forms.Label lblNeut;
         private System.Windows.Forms.Label lblPos;
         private System.Windows.Forms.Label lblCom;
+        private System.Windows.Forms.Button btnSave;
     }
 }
