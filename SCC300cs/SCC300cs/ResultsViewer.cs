@@ -41,6 +41,7 @@ namespace SCC300cs
             chart.Series["Neutral"].Enabled = false;
             chart.Series["Negative"].Enabled = false;
             chart.Titles[0].Text = textName;
+            chart.Series[0].Points.AddXY(1, 0);
             foreach (List<SentimentAnalysisResults> cRes in chaptersResultsList)
             {
                 AddChapter(cRes);

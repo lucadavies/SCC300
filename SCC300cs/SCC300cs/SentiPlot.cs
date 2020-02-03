@@ -24,7 +24,6 @@ namespace SCC300cs
         string outputText;
         double granularity = -1;
         List<string> sents;
-        List<SentimentAnalysisResults> resultsList;
         List<List<SentimentAnalysisResults>> chapterResultsList;
         List<List<string>> chapterSents;
         
@@ -81,6 +80,11 @@ namespace SCC300cs
             return rgx.Replace(i, " ");
         }
 
+        /// <summary>
+        /// Project Gutenberg appears to not hold a standard format (RE: pre tags)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private string LoadFromHTML(string input)
         {
             Regex body = new Regex("body>");                                        //match both <body> and </body> tags
