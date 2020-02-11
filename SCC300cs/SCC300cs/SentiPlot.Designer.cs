@@ -41,12 +41,9 @@
             this.panLoading = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblLoading = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtOutput = new System.Windows.Forms.TextBox();
             this.bgWkrLoad = new System.ComponentModel.BackgroundWorker();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtInput = new System.Windows.Forms.TextBox();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -55,9 +52,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
             this.panLoading.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -183,43 +178,6 @@
             this.lblLoading.Text = "Loading...";
             this.lblLoading.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(2, 9);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(781, 366);
-            this.tabControl1.TabIndex = 8;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.txtOutput);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(773, 340);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Processed";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // txtOutput
-            // 
-            this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOutput.Location = new System.Drawing.Point(6, 6);
-            this.txtOutput.Multiline = true;
-            this.txtOutput.Name = "txtOutput";
-            this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(761, 376);
-            this.txtOutput.TabIndex = 0;
-            // 
             // bgWkrLoad
             // 
             this.bgWkrLoad.WorkerReportsProgress = true;
@@ -227,28 +185,30 @@
             this.bgWkrLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.BgWkrLoad_ProgressChanged);
             this.bgWkrLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.BgWkrLoad_RunWorkerCompleted);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.txtInput);
+            this.groupBox2.Location = new System.Drawing.Point(12, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(760, 360);
+            this.groupBox2.TabIndex = 14;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Text";
+            // 
             // txtInput
             // 
             this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtInput.Location = new System.Drawing.Point(6, 6);
+            this.txtInput.Location = new System.Drawing.Point(6, 19);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
             this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInput.Size = new System.Drawing.Size(761, 328);
-            this.txtInput.TabIndex = 1;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.txtInput);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(773, 340);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Raw";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.txtInput.Size = new System.Drawing.Size(748, 335);
+            this.txtInput.TabIndex = 2;
             // 
             // SentiPlot
             // 
@@ -257,9 +217,9 @@
             this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(groupBox1);
             this.Controls.Add(this.panLoading);
-            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnProcess);
             this.Controls.Add(this.BtnLoad);
+            this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "SentiPlot";
@@ -271,11 +231,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.panLoading.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -288,14 +245,11 @@
         private System.Windows.Forms.PictureBox picLoading;
         private System.Windows.Forms.Panel panLoading;
         private System.Windows.Forms.Label lblLoading;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TrackBar tBarGran;
         private System.Windows.Forms.Label lblGran;
         private System.ComponentModel.BackgroundWorker bgWkrLoad;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtInput;
     }
 }

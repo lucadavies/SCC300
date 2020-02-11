@@ -21,7 +21,6 @@ namespace SCC300cs
         string textName;
         string inputText;
         List<string> inputChapters;
-        string outputText;
         double granularity = -1;
         List<string> sents;
         List<List<SentimentAnalysisResults>> chapterResultsList;
@@ -208,7 +207,6 @@ namespace SCC300cs
             bgWkrProcess.ReportProgress(50);
             SentimentIntensityAnalyzer analyzer = new SentimentIntensityAnalyzer();
             SentimentAnalysisResults results;
-            outputText = "";
             List<SentimentAnalysisResults> temp = new List<SentimentAnalysisResults>();
             chapterResultsList = new List<List<SentimentAnalysisResults>>();
             sents = new List<string>();
@@ -219,12 +217,6 @@ namespace SCC300cs
                 {
                     results = analyzer.PolarityScores(c);
                     sents.Add(c);
-                    outputText = outputText + "Chapter [" + chapterSents.IndexOf(outputChapter) + "] Sentence [" + (outputChapter.IndexOf(c) + 1) + "]: " + c + Environment.NewLine;
-                    outputText = outputText + "Positive: " + results.Positive + " | ";
-                    outputText = outputText + "Negative: " + results.Negative + " | ";
-                    outputText = outputText + "Neutral: " + results.Neutral + " | ";
-                    outputText = outputText + "Compound: " + results.Compound;
-                    outputText = outputText + Environment.NewLine + Environment.NewLine;
                     temp.Add(results);
                 }
                 chapterResultsList.Add(new List<SentimentAnalysisResults>(temp));
@@ -252,7 +244,6 @@ namespace SCC300cs
         {
             new ResultsViewer(textName, sents, chapterResultsList, granularity);
             txtInput.Text = inputText;
-            txtOutput.Text = outputText;
             panLoading.Visible = false;
             btnProcess.Enabled = true;
         }
