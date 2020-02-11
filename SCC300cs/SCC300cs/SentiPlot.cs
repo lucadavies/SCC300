@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.IO;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using edu.stanford.nlp.simple;
 using VaderSharp;
-using System.Windows.Forms.DataVisualization.Charting;
 using System.Web;
 
 namespace SCC300cs
@@ -117,15 +112,6 @@ namespace SCC300cs
                 ret += LoadFromTxt(ch + " ");
             }
             return ret;
-        }
-
-        private string Replace(string s, int index, int length, string replacement)
-        {
-            var builder = new StringBuilder();
-            builder.Append(s.Substring(0, index));
-            builder.Append(replacement);
-            builder.Append(s.Substring(index + length));
-            return builder.ToString();
         }
 
         private void BtnProcess_Click(object sender, EventArgs e)
