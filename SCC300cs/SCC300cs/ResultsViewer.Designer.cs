@@ -52,20 +52,21 @@
             this.chkBxNeut = new System.Windows.Forms.CheckBox();
             this.chkBxPos = new System.Windows.Forms.CheckBox();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tbPgTable = new System.Windows.Forms.TabPage();
             this.dgvSenti = new System.Windows.Forms.DataGridView();
-            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCom = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNeut = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTxt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNeut = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNeg = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCom = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tbPgTable = new System.Windows.Forms.TabPage();
+            this.chkBoxHideSenti = new System.Windows.Forms.CheckBox();
             this.tabCtrlResults.SuspendLayout();
             this.tbPg.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
-            this.tbPgTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).BeginInit();
+            this.tbPgTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabCtrlResults
@@ -268,21 +269,13 @@
             title1.Text = "<>";
             this.chart.Titles.Add(title1);
             // 
-            // tbPgTable
-            // 
-            this.tbPgTable.Controls.Add(this.dgvSenti);
-            this.tbPgTable.Location = new System.Drawing.Point(4, 22);
-            this.tbPgTable.Name = "tbPgTable";
-            this.tbPgTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tbPgTable.Size = new System.Drawing.Size(776, 435);
-            this.tbPgTable.TabIndex = 1;
-            this.tbPgTable.Text = "Table";
-            this.tbPgTable.UseVisualStyleBackColor = true;
-            // 
             // dgvSenti
             // 
             this.dgvSenti.AllowUserToAddRows = false;
             this.dgvSenti.AllowUserToDeleteRows = false;
+            this.dgvSenti.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -307,7 +300,6 @@
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvSenti.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvSenti.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvSenti.Location = new System.Drawing.Point(3, 3);
             this.dgvSenti.Name = "dgvSenti";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -318,32 +310,14 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvSenti.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvSenti.Size = new System.Drawing.Size(770, 429);
+            this.dgvSenti.Size = new System.Drawing.Size(770, 403);
             this.dgvSenti.TabIndex = 1;
             // 
-            // colNum
+            // colTxt
             // 
-            this.colNum.HeaderText = "Num";
-            this.colNum.Name = "colNum";
-            this.colNum.Width = 50;
-            // 
-            // colCom
-            // 
-            this.colCom.HeaderText = "Compound";
-            this.colCom.Name = "colCom";
-            this.colCom.Width = 60;
-            // 
-            // colPos
-            // 
-            this.colPos.HeaderText = "Positive";
-            this.colPos.Name = "colPos";
-            this.colPos.Width = 60;
-            // 
-            // colNeg
-            // 
-            this.colNeg.HeaderText = "Negative";
-            this.colNeg.Name = "colNeg";
-            this.colNeg.Width = 60;
+            this.colTxt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colTxt.HeaderText = "Text";
+            this.colTxt.Name = "colTxt";
             // 
             // colNeut
             // 
@@ -351,11 +325,53 @@
             this.colNeut.Name = "colNeut";
             this.colNeut.Width = 60;
             // 
-            // colTxt
+            // colNeg
             // 
-            this.colTxt.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colTxt.HeaderText = "Text";
-            this.colTxt.Name = "colTxt";
+            this.colNeg.HeaderText = "Negative";
+            this.colNeg.Name = "colNeg";
+            this.colNeg.Width = 60;
+            // 
+            // colPos
+            // 
+            this.colPos.HeaderText = "Positive";
+            this.colPos.Name = "colPos";
+            this.colPos.Width = 60;
+            // 
+            // colCom
+            // 
+            this.colCom.HeaderText = "Compound";
+            this.colCom.Name = "colCom";
+            this.colCom.Width = 60;
+            // 
+            // colNum
+            // 
+            this.colNum.HeaderText = "Num";
+            this.colNum.Name = "colNum";
+            this.colNum.Width = 50;
+            // 
+            // tbPgTable
+            // 
+            this.tbPgTable.Controls.Add(this.chkBoxHideSenti);
+            this.tbPgTable.Controls.Add(this.dgvSenti);
+            this.tbPgTable.Location = new System.Drawing.Point(4, 22);
+            this.tbPgTable.Name = "tbPgTable";
+            this.tbPgTable.Padding = new System.Windows.Forms.Padding(3);
+            this.tbPgTable.Size = new System.Drawing.Size(776, 435);
+            this.tbPgTable.TabIndex = 1;
+            this.tbPgTable.Text = "Table";
+            this.tbPgTable.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxHideSenti
+            // 
+            this.chkBoxHideSenti.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chkBoxHideSenti.AutoSize = true;
+            this.chkBoxHideSenti.Location = new System.Drawing.Point(8, 412);
+            this.chkBoxHideSenti.Name = "chkBoxHideSenti";
+            this.chkBoxHideSenti.Size = new System.Drawing.Size(141, 17);
+            this.chkBoxHideSenti.TabIndex = 2;
+            this.chkBoxHideSenti.Text = "Hide Sentiment Columns";
+            this.chkBoxHideSenti.UseVisualStyleBackColor = true;
+            this.chkBoxHideSenti.CheckedChanged += new System.EventHandler(this.chkBoxHideSenti_CheckedChanged);
             // 
             // ResultsViewer
             // 
@@ -372,8 +388,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
-            this.tbPgTable.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSenti)).EndInit();
+            this.tbPgTable.ResumeLayout(false);
+            this.tbPgTable.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -381,15 +398,7 @@
         #endregion
         private System.Windows.Forms.TabControl tabCtrlResults;
         private System.Windows.Forms.TabPage tbPg;
-        private System.Windows.Forms.TabPage tbPgTable;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart;
-        private System.Windows.Forms.DataGridView dgvSenti;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCom;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNeg;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNeut;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTxt;
         private System.Windows.Forms.CheckBox chkBxNeg;
         private System.Windows.Forms.CheckBox chkBxNeut;
         private System.Windows.Forms.CheckBox chkBxPos;
@@ -400,5 +409,14 @@
         private System.Windows.Forms.Label lblPos;
         private System.Windows.Forms.Label lblCom;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TabPage tbPgTable;
+        private System.Windows.Forms.CheckBox chkBoxHideSenti;
+        private System.Windows.Forms.DataGridView dgvSenti;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCom;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNeg;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNeut;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTxt;
     }
 }

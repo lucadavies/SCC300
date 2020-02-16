@@ -86,6 +86,7 @@ namespace SCC300cs
             PlotResults(allRes, ResultType.NEUTRAL, chart.Series["Neutral"]);
             PlotResults(allRes, ResultType.NEGATIVE, chart.Series["Negative"]);
             AddResultsToTable(allRes);
+            //Add100RandomToTable(allRes);
         }
 
         private void PlotResults(List<SentimentAnalysisResults> res, ResultType type, Series s)
@@ -132,6 +133,17 @@ namespace SCC300cs
             for (int i = 0; i < res.Count; i++)
             {
                 dgvSenti.Rows.Add(i, res[i].Compound, res[i].Positive, res[i].Negative, res[i].Neutral, sents[i]);
+            }
+        }
+
+        private void Add100RandomToTable(List<SentimentAnalysisResults> res)
+        {
+            Random rnd = new Random();
+            for (int i = 0; i < 100; i++)
+            {
+                int ind = rnd.Next(res.Count - 1);
+                dgvSenti.Rows.Add(i, res[ind].Compound, res[ind].Positive, res[ind].Negative, res[ind].Neutral, sents[ind]);
+                res.RemoveAt(ind);
             }
         }
 
@@ -276,6 +288,24 @@ namespace SCC300cs
                 {
                     chart.SaveImage(sfd.FileName + ".jpeg", ChartImageFormat.Jpeg);
                 }
+            }
+        }
+
+        private void chkBoxHideSenti_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkBoxHideSenti.Checked)
+            {
+                dgvSenti.Columns[1].Visible = false;
+                dgvSenti.Columns[2].Visible = false;
+                dgvSenti.Columns[3].Visible = false;
+                dgvSenti.Columns[4].Visible = false;
+            }
+            else
+            {
+                dgvSenti.Columns[1].Visible = true;
+                dgvSenti.Columns[2].Visible = true;
+                dgvSenti.Columns[3].Visible = true;
+                dgvSenti.Columns[4].Visible = true;
             }
         }
     }

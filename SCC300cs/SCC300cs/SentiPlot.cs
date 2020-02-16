@@ -108,7 +108,7 @@ namespace SCC300cs
             for (int ind = 0; ind < chaps.Length; ind++)
             {
                 ch = htmlTags.Replace(chaps[ind], "");                           //remove all remaining HTML tags
-                inputChapters.Add(ch);
+                inputChapters.Add(LoadFromTxt(ch));
                 ret += LoadFromTxt(ch + " ");
             }
             return ret;
