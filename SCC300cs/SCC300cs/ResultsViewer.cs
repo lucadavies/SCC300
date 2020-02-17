@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using VaderSharp;
@@ -14,6 +15,7 @@ namespace SCC300cs
         double granularity = -1;
         int chapters = 0;
         int chapterOffset = 0;
+        Regex jpeg = new Regex(".jpeg$");
         private enum ResultType
         {
             COMPOUND,
@@ -85,6 +87,7 @@ namespace SCC300cs
             PlotResults(allRes, ResultType.POSITIVE, chart.Series["Positive"]);
             PlotResults(allRes, ResultType.NEUTRAL, chart.Series["Neutral"]);
             PlotResults(allRes, ResultType.NEGATIVE, chart.Series["Negative"]);
+            chart.ChartAreas[0].AxisX.Title += "\n\n[Block size " + (granularity == -1 ? 1 : Convert.ToInt32(Math.Ceiling(granularity * allRes.Count))) + " sents. / " + sents.Count + "]";
             AddResultsToTable(allRes);
             //Add100RandomToTable(allRes);
         }
@@ -280,13 +283,18 @@ namespace SCC300cs
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "JPEG files (*.txt)|*jpeg";
+                sfd.Filter = "JPEG files (*.jpeg)|*jpeg";
                 sfd.FilterIndex = 0;
                 sfd.RestoreDirectory = true;
                 sfd.FileName = textName;
+                sfd.OverwritePrompt = true;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
-                    chart.SaveImage(sfd.FileName + ".jpeg", ChartImageFormat.Jpeg);
+                    if (!(jpeg.IsMatch(sfd.FileName)))
+                    {
+                        sfd.FileName += ".jpeg";
+                    }
+                    chart.SaveImage(sfd.FileName, ChartImageFormat.Jpeg);
                 }
             }
         }
