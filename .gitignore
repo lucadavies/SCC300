@@ -261,3 +261,4 @@ paket-files/
 __pycache__/
 *.pyc
 /Docs/Graphs
+Docs/Report/Shape of Stories.synctex.gz
