@@ -9,6 +9,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 
 \usepackage{natbib}
 \usepackage{graphicx}
+\usepackage{float}
 
 \begin{document}
 
@@ -101,40 +102,36 @@ This section will detail the design and implementation of the tool used to carry
         The implemented interface did not need to be excessively complex or particularly appealing as it mainly served to function as a harness to conduct the study, with more importance placed on the code-behind and results. \\
         To provide quick results and ease of programming, I used the Windows Forms suite to produce a visually simple but functional interface. It has two screens: a screen to load the desired text to be processed and to set the granularity of the analysis, and a screen to present the processed results. The following sections provide an overview of these screens.
     \subsubsection{Text Selection \& Options}
-    Figure (x) shows the main presented screen, after having loaded an HTML file (Hamlet in this case) which has been parsed to produce plaintext, having stripped out all the unneeded HTML tags.
-        \begin{figure}
-            \centering
-            \includegraphics{Misc/sentiplot}
+    Figure \ref{fig:sentiplot} shows the main presented screen, after having loaded an HTML file (Hamlet in this case) which has been parsed to produce plaintext, having stripped out all the unneeded HTML tags.
+        \begin{figure}[H]
+            \includegraphics[width=1\textwidth]{Misc/sentiplot}
             \caption{Main Sentiplot window}
             \label{fig:sentiplot}
         \end{figure}
     \subsubsection{Results Display}
-        Figure x shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint. \\
+        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint. \\
         For every sentence analysed VADER returns four sentiment scores: positive, neutral and negative (each holding a -1 to 1 score regarding match to that sentiment), and compound which acts as a single representation for the sentiment in the sentence parsed. Each of these scores have their own graph which may have their visibility toggled on and off with the check boxes in the bottom left. (Default is compound alone, as it proved the most indictive of sentiment, as advised by VADER documentation.) This graph can be saved to a JPG by clicking the save button.
-        \begin{figure}
-            \centering
-            \includegraphics{Misc/resultsviewer}
+        \begin{figure}[H]
+            \includegraphics[width=1\textwidth]{Misc/resultsviewer}
             \caption{ResultsViewer window}
             \label{fig:resultsviewer}
         \end{figure}
-        Figure x shows the Table tab of the results screen. This simply lists each individual sentence token in the input with VADER’s output value for the four scores mentioned previously. The table’s default ordering in by sentence index, or the chronological order in the text, but the it may be order by any of the fields shown.
-        \begin{figure}
-            \centering
-            \includegraphics{Misc/resultstable}
+        Figure \ref{fig:resultstable} shows the Table tab of the results screen. This simply lists each individual sentence token in the input with VADER’s output value for the four scores mentioned previously. The table’s default ordering in by sentence index, or the chronological order in the text, but the it may be order by any of the fields shown.
+        \begin{figure}[H]
+            \includegraphics[width=1\textwidth]{Misc/resultstable}
             \caption{ResultsViewer window showing table}
             \label{fig:resultstable}
         \end{figure}
-        Figure x shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labelled with their relevant sentence(s), expandable by hovering the mouse over the label.
-        \begin{figure}
-            \centering
-            \includegraphics{Misc/resultschapters}
+        Figure \ref{fig:resultschapters} shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labelled with their relevant sentence(s), expandable by hovering the mouse over the label.
+        \begin{figure}[H]
+            \includegraphics[width=1\textwidth]{Misc/resultschapters}
             \caption{ResultsViewer window showing chapter graphs}
             \label{fig:resultschapters}
         \end{figure}
 \section{Experimentation}
 The following section covers the various experimentation and analysis carried out using Sentiplot as a tool for Sentiment Analysis and graphing accordingly.
     \subsection{Analysis Block Size}
-        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). \\
+        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text. Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity. \\
         The following options are provided:
         \begin{itemize}
             \item 1 sentence
@@ -149,20 +146,25 @@ The following section covers the various experimentation and analysis carried ou
             \item 50\%
             \item 100\%
         \end{itemize}
-            VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block). \\
-            By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from. \\
-            By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, however, at this level of coarseness, the data is compressed so much so that much of the detail is lost, smoothing the curve that should be shown beyond useful limits. \\
-            Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts.
+        \begin{figure}
+            \includegraphics[width=0.5\textwidth]{Graphs/Blocksize/Cinderella/cinderellaGran}
+            \centering
+            \caption{Each graph shows the result of decreasing the granularity of analysis and show how there appears to be a sweet spot. In this case, four of the highest options summed only a single sentence due to short length of the text. Only one of these has been included.}
+            \label{fig:cinderellaGran}
+        \end{figure}
+        VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block). \\
+        By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from. \\
+        By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, however, at this level of coarseness, the data is compressed so much so that much of the detail is lost, smoothing the curve that should be shown beyond useful limits. \\
+        Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts. \\
+        \\
+        With this being said, it's possible, that a different tool may have been better suited to this task than VADER due to it's native design choice to parse text the length of Tweets, not entire corpora.
     \subsection{Hand Analysis Vs. VADER}
+        VADER also lacks any context processing - it cannot understand running themes in texts in order to better understand the sentiment behind that which is being said.
     \subsection{Reader Analysis \& Reflection}
     \subsection{Shakespeare: Comedies Vs. Tragedies}
     \subsection{Early Modern Vs. Modern English}
+        VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji.
 \section{Conclusion}
-
-
-
-\section{Conclusion}
-
 \bibliographystyle{plain}
 \bibliography{references}
 \end{document}
