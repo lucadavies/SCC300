@@ -19,9 +19,12 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
     This is an abstract
 \section{Introduction}
     \subsection{Test}
-        Writer Kurt Vonnegut suggested at various points in his career that all stories may be categorised into a relatively small number of basic archetypes based upon the emotional ups and downs experienced within the narrative. He gave each of these novel names such as Man-In-Hole and Boy-Meets-Girl as a simple reference for each. \\
-        Literature is one of the defining features of the human race. No other creature on Earth can writes, let alone writes about itself. Humanity takes this a step further again, making up fictitious stories, some rooted in reality, some with no basis at all in which we dream and imagine worlds and situations that may never be possible to achieve. Through written word we express emotion. All emotions, happiness, sadness, anger and fear; love, hate, awe and grief – everything humans can feel, we write about. We create characters to express and receive these emotions, they act as vehicles to transfer their feelings to a reader. With all this freedom to write and create without bound, are we actually as free as we perceive? \\
-        Vonnegut suggests that all stories are members of one of a very small number of categories of story that define roughly how the emotional progression of that story pans out. Do writers naturally and unknowingly write literature that falls into these types or is each story as unique as the next, taking its readers along its own path as they go? \\
+        Writer Kurt Vonnegut suggested at various points in his career that all stories may be categorised into a relatively small number of basic archetypes based upon the emotional ups and downs experienced within the narrative. He gave each of these novel names such as Man-In-Hole and Boy-Meets-Girl as a simple reference for each.
+
+        Literature is one of the defining features of the human race. No other creature on Earth can writes, let alone writes about itself. Humanity takes this a step further again, making up fictitious stories, some rooted in reality, some with no basis at all in which we dream and imagine worlds and situations that may never be possible to achieve. Through written word we express emotion. All emotions, happiness, sadness, anger and fear; love, hate, awe and grief – everything humans can feel, we write about. We create characters to express and receive these emotions, they act as vehicles to transfer their feelings to a reader. With all this freedom to write and create without bound, are we actually as free as we perceive?
+
+        Vonnegut suggests that all stories are members of one of a very small number of categories of story that define roughly how the emotional progression of that story pans out. Do writers naturally and unknowingly write literature that falls into these types or is each story as unique as the next, taking its readers along its own path as they go?
+
         This concept and these questions drew me toward this project proposal. Not only is it a fascinating endeavour to map the emotions of a novel, but as an exploration of the freedom of writers to convey emotions and of how humans often generate categories and groups without even trying.
     \subsection{Motivation}
     \subsection{Aims \& Objectives}
@@ -34,8 +37,10 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
         \end{itemize}
 \section{Background}
     \subsection{Overview}
-        This chapter will examine and summarise existing literature and studies in this area and topic. That is, natural language processing and sentiment analysis as a tool for extracting statistical data that describe emotions in (mainly) fictional works of literature. \\
-        The processes involved for finding useful information included searching for online articles and pre-existing projects while searching libraries to use in the implementation, Google Scholar, Lancaster University Library OneSearch and Kurt Vonnegut’s own lectures on this topic. \\
+        This chapter will examine and summarise existing literature and studies in this area and topic. That is, natural language processing and sentiment analysis as a tool for extracting statistical data that describe emotions in (mainly) fictional works of literature.
+
+        The processes involved for finding useful information included searching for online articles and pre-existing projects while searching libraries to use in the implementation, Google Scholar, Lancaster University Library OneSearch and Kurt Vonnegut’s own lectures on this topic.
+
         Existing projects will help to prove the developed application is performing up to standard (or not) and can be used as a side-by-side comparison of literature processed for this report and by these projects as well as to examine the processing of literature unavailable for the purposes of this report.
     \subsection{Kurt Vonnegut on ``The Shape of Stories''}
         Vonnegut described a number of potential story types as displayed below in figure something.
@@ -52,8 +57,10 @@ This section will detail the design and implementation of the tool used to carry
     \subsection{Languages \& Libraries}
     This section briefly discusses the choice of programming language and NLP/SA tools used in the Sentiplot tool.
         \subsubsection{Top-level Language}
-        When selecting which language would be most appropriate to use for this project, my major considerations were my prior knowledge of potential languages and their ease of creation of a pleasant user interface. Availability of NLP tools in each language was also to be considered, but as the end implementation shows, this was not imperative due to cross-platform and cross-language capabilities of the chosen combination of languages and tools. \\
-        A listing of considered languages follows:\\
+        When selecting which language would be most appropriate to use for this project, my major considerations were my prior knowledge of potential languages and their ease of creation of a pleasant user interface. Availability of NLP tools in each language was also to be considered, but as the end implementation shows, this was not imperative due to cross-platform and cross-language capabilities of the chosen combination of languages and tools.
+
+        A listing of considered languages follows:
+
         \begin{itemize}
             \item Java
             \begin{itemize}
@@ -76,15 +83,19 @@ This section will detail the design and implementation of the tool used to carry
         \end{itemize}
         Taking all these points into consideration C\# was selected, due to its pros specific to myself and the availability of non-native libraries via APIs. This permitted me to use the full Microsoft Visual Studio suite for development, including the Windows Forms designer.
         \subsubsection{Natural Language Processing Tools}
-        Various tools across a wide array of languages are freely available to provide standard NLP functions and advanced processing capabilities. \\
-        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split only and the actual sentiment analysis was performed by VADER. \\
+        Various tools across a wide array of languages are freely available to provide standard NLP functions and advanced processing capabilities.
+
+        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split only and the actual sentiment analysis was performed by VADER.
+
         Both the CoreNLP and VADER libraries are non-native to C\# but have easy to use APIs for direct manipulation of their types and methods outside of their native environments. CoreNLP has an in-house developed API for C\# and VADER has a third-party API called \emph{VADERSharp}.
     \subsection{Implementation}
         \subsubsection{Structure}
-            The application is written in C\# .NET interfacing with both Java and Python libraries via APIs as detailed in the previous section. Windows Forms was chosen for the interface as a quick and easy to build platform, stable on Windows with seamless integration into C\# and the .NET framework. \\
+            The application is written in C\# .NET interfacing with both Java and Python libraries via APIs as detailed in the previous section. Windows Forms was chosen for the interface as a quick and easy to build platform, stable on Windows with seamless integration into C\# and the .NET framework.
+
             The application is composed of two forms, each with their designer code. The first allows the user to select a file to load text from and set processing granularity. The second presents the results of the analysis in multiple ways and provides facility to save these results as images of the output graphs.
         \subsubsection{Sentiplot Form (Main Form}
-            This is the main form for the application. It is loaded on start-up and contains all needed information or otherwise calls other classes to complete its task. \\
+            This is the main form for the application. It is loaded on start-up and contains all needed information or otherwise calls other classes to complete its task.
+
             Its key functions include:
             \begin{itemize}
                 \item Initialising the CoreNLP pipeline ot tokenise the input text
@@ -92,14 +103,16 @@ This section will detail the design and implementation of the tool used to carry
                 \item Parsing the content of the input file to prepare it for processing using regular expressions and simple character-based splitting
             \end{itemize}
         \subsubsection{ResultsViewer}
-            This form displays the results of VADER's processing of the input text. It displays a graph of the entire text from start to finish, a full list of all tokenised sentences and their associated sentiment scores (in tabular form) and individual graphs for each chapter in the text (HTML file only). \\
+            This form displays the results of VADER's processing of the input text. It displays a graph of the entire text from start to finish, a full list of all tokenised sentences and their associated sentiment scores (in tabular form) and individual graphs for each chapter in the text (HTML file only).
+
             \begin{itemize}
                 \item Handling the output data and feeding it into the main chart and table
                 \item Allow hiding/showing of each different type of sentiment score for the main graph
                 \item Dynamically producing more tabs on the form to show each succesive group of five chapters
             \end{itemize}
     \subsection{User Interface}
-        The implemented interface did not need to be excessively complex or particularly appealing as it mainly served to function as a harness to conduct the study, with more importance placed on the code-behind and results. \\
+        The implemented interface did not need to be excessively complex or particularly appealing as it mainly served to function as a harness to conduct the study, with more importance placed on the code-behind and results.
+
         To provide quick results and ease of programming, I used the Windows Forms suite to produce a visually simple but functional interface. It has two screens: a screen to load the desired text to be processed and to set the granularity of the analysis, and a screen to present the processed results. The following sections provide an overview of these screens.
     \subsubsection{Text Selection \& Options}
     Figure \ref{fig:sentiplot} shows the main presented screen, after having loaded an HTML file (Hamlet in this case) which has been parsed to produce plaintext, having stripped out all the unneeded HTML tags.
@@ -109,7 +122,8 @@ This section will detail the design and implementation of the tool used to carry
             \label{fig:sentiplot}
         \end{figure}
     \subsubsection{Results Display}
-        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint. \\
+        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint.
+
         For every sentence analysed VADER returns four sentiment scores: positive, neutral and negative (each holding a -1 to 1 score regarding match to that sentiment), and compound which acts as a single representation for the sentiment in the sentence parsed. Each of these scores have their own graph which may have their visibility toggled on and off with the check boxes in the bottom left. (Default is compound alone, as it proved the most indictive of sentiment, as advised by VADER documentation.) This graph can be saved to a JPG by clicking the save button.
         \begin{figure}[H]
             \includegraphics[width=1\textwidth]{Misc/resultsviewer}
@@ -131,7 +145,8 @@ This section will detail the design and implementation of the tool used to carry
 \section{Experimentation}
 The following section covers the various experimentation and analysis carried out using Sentiplot as a tool for Sentiment Analysis and graphing accordingly.
     \subsection{Analysis Block Size}
-        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text. Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity. \\
+        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text. Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity.
+
         The following options are provided:
         \begin{itemize}
             \item 1 sentence
@@ -152,11 +167,15 @@ The following section covers the various experimentation and analysis carried ou
             \caption{Each graph shows the result of decreasing the granularity of analysis and show how there appears to be a sweet spot. In this case, four of the highest options summed only a single sentence due to short length of the text. Only one of these has been included.}
             \label{fig:cinderellaGran}
         \end{figure}
-        VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block). \\
-        By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from. \\
-        By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, however, at this level of coarseness, the data is compressed so much so that much of the detail is lost, smoothing the curve that should be shown beyond useful limits. \\
-        Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts. \\
-        \\
+        VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block).
+
+        By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from.
+
+        By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, however, at this level of coarseness, the data is compressed so much so that much of the detail is lost, smoothing the curve that should be shown beyond useful limits.
+
+        Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts.
+
+        
         With this being said, it's possible, that a different tool may have been better suited to this task than VADER due to it's native design choice to parse text the length of Tweets, not entire corpora.
     \subsection{Hand Analysis Vs. VADER}
         VADER also lacks any context processing - it cannot understand running themes in texts in order to better understand the sentiment behind that which is being said.
