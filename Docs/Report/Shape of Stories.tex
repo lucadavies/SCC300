@@ -2,8 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \graphicspath{{../}}
-\title{Using Natural Language Processing to Analyse the Shape of Stories}
-\author{%
+\title{\textbf{Using Natural Language Processing to Analyse the Shape of Stories}}
+\author{
 Luca Davies \\ BSc. (Hons.) Computer Science}
 \date{March 2020}
 
@@ -12,13 +12,23 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 \usepackage{float}
 
 \begin{document}
-
 \maketitle
 \newpage
-\section{Abstract}
+\section*{Declaration}
+    I certify that the material contained in this dissertation is my own work and does not contain unreferenced or unacknowledged material. I also warrant that the above statement applies to the implementation of the project and all associated documentation. Regarding the electronically submitted work, I consent to this being stored electronically and copied for assessment purposes, including the School’s use of plagiarism detection systems in order to check the integrity of assessed work. \\
+    I agree to my dissertation being placed in the public domain, with my name explicitly included as the author of the work. \\
+    
+    \noindent
+    Name: \\
+    Date:
+\newpage
+\section*{Abstract}
     This is an abstract
+\newpage
+\tableofcontents
+\newpage
 \section{Introduction}
-    \subsection{Test}
+    \subsection{Overview}
         Writer Kurt Vonnegut suggested at various points in his career that all stories may be categorised into a relatively small number of basic archetypes based upon the emotional ups and downs experienced within the narrative. He gave each of these novel names such as Man-In-Hole and Boy-Meets-Girl as a simple reference for each.
 
         Literature is one of the defining features of the human race. No other creature on Earth can writes, let alone writes about itself. Humanity takes this a step further again, making up fictitious stories, some rooted in reality, some with no basis at all in which we dream and imagine worlds and situations that may never be possible to achieve. Through written word we express emotion. All emotions, happiness, sadness, anger and fear; love, hate, awe and grief – everything humans can feel, we write about. We create characters to express and receive these emotions, they act as vehicles to transfer their feelings to a reader. With all this freedom to write and create without bound, are we actually as free as we perceive?
@@ -26,6 +36,8 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
         Vonnegut suggests that all stories are members of one of a very small number of categories of story that define roughly how the emotional progression of that story pans out. Do writers naturally and unknowingly write literature that falls into these types or is each story as unique as the next, taking its readers along its own path as they go?
 
         This concept and these questions drew me toward this project proposal. Not only is it a fascinating endeavour to map the emotions of a novel, but as an exploration of the freedom of writers to convey emotions and of how humans often generate categories and groups without even trying.
+
+        With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the physchological analysis (\cite{sentimentVsEmotionAnalysis})
     \subsection{Motivation}
     \subsection{Aims \& Objectives}
         The aims of this report are as such:
@@ -35,6 +47,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
             \item Otherwise attempt to identify trends the texts processed
             \item Study the produced graphs and compare expectation surrounding the source text
         \end{itemize}
+\newpage
 \section{Background}
     \subsection{Overview}
         This chapter will examine and summarise existing literature and studies in this area and topic. That is, natural language processing and sentiment analysis as a tool for extracting statistical data that describe emotions in (mainly) fictional works of literature.
@@ -52,6 +65,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
         \end{figure}
     \subsection{The Hedonometer Project}
         The Hedonometer project was established to gauge happiness, the world over, starting with Twitter and other social media outlets. The project’s scope has since widened to process corpora direct from books, film scripts, news outlets and other foreign language literature.
+\newpage
 \section{Sentiplot Tool}
 This section will detail the design and implementation of the tool used to carry out this study, \emph{Sentiplot}. 
     \subsection{Languages \& Libraries}
@@ -93,7 +107,7 @@ This section will detail the design and implementation of the tool used to carry
             The application is written in C\# .NET interfacing with both Java and Python libraries via APIs as detailed in the previous section. Windows Forms was chosen for the interface as a quick and easy to build platform, stable on Windows with seamless integration into C\# and the .NET framework.
 
             The application is composed of two forms, each with their designer code. The first allows the user to select a file to load text from and set processing granularity. The second presents the results of the analysis in multiple ways and provides facility to save these results as images of the output graphs.
-        \subsubsection{Sentiplot Form (Main Form}
+        \subsubsection{Sentiplot Form (Main Form)}
             This is the main form for the application. It is loaded on start-up and contains all needed information or otherwise calls other classes to complete its task.
 
             Its key functions include:
@@ -142,10 +156,11 @@ This section will detail the design and implementation of the tool used to carry
             \caption{ResultsViewer window showing chapter graphs}
             \label{fig:resultschapters}
         \end{figure}
+\newpage
 \section{Experimentation}
 The following section covers the various experimentation and analysis carried out using Sentiplot as a tool for Sentiment Analysis and graphing accordingly.
     \subsection{Analysis Block Size}
-        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text. Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity.
+        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text.
 
         The following options are provided:
         \begin{itemize}
@@ -161,12 +176,15 @@ The following section covers the various experimentation and analysis carried ou
             \item 50\%
             \item 100\%
         \end{itemize}
+        This set of experiements varied the analysis blocksize for a given text and comparedthe output graphs for the entire text with a view to identifying a specific curve for the text. The comparison is qualitative, employing only human visual reference as opposed to any mathematical function. The purpose of this part of the study was as a forerunner to further analysis and experimentation to find the best setting or the best range of settings for either specific or genrically for all texts to produce a coherent sentimnet curve.
         \begin{figure}
             \includegraphics[width=0.5\textwidth]{Graphs/Blocksize/Cinderella/cinderellaGran}
             \centering
             \caption{Each graph shows the result of decreasing the granularity of analysis and show how there appears to be a sweet spot. In this case, four of the highest options summed only a single sentence due to short length of the text. Only one of these has been included.}
             \label{fig:cinderellaGran}
         \end{figure}
+        Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity.
+
         VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block).
 
         By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from.
@@ -178,12 +196,20 @@ The following section covers the various experimentation and analysis carried ou
         
         With this being said, it's possible, that a different tool may have been better suited to this task than VADER due to it's native design choice to parse text the length of Tweets, not entire corpora.
     \subsection{Hand Analysis Vs. VADER}
+        This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. The motivation behind this was to understand if VADER's output results were trustable, totally incorrect, or somewhere in the middle.
+
         VADER also lacks any context processing - it cannot understand running themes in texts in order to better understand the sentiment behind that which is being said.
     \subsection{Reader Analysis \& Reflection}
+    \label{subsec:reader}
+        This section covers the analysis of a range of Shakespeare plays by human readers (mostly identified to be Theatre and/or Literature students) and their personal comparison of the the Sentiplot output with their own expectations of what a graph of a given play should be. The goal here was to bring a human element to the reviewing of Sentiplot and VADER. A breif background of the study was given to each person who answered any of the questions provided. Some asked further questions and subsequently commented on the techniques used for analysis and graph production.
     \subsection{Shakespeare: Comedies Vs. Tragedies}
+    \label{subsec:comVsTrag}
+        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comeidies \emph{should} show generally more positive curves and similarly, tragedies \emph{should} show more negative curves accordingly. To attempt to display this, three comedies (\emph{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\emph{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their repsective graphs. There is some debate on the specific genre of \emph{The Tempest}, it now often being referred to as a \"late romance\", a subsection of Shakespeare's comedies leaning more toward a \"tragicomedy\" in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
     \subsection{Early Modern Vs. Modern English}
-        VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji.
+        VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test of VADER was able perform equally or at all as well on a differnt form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}.
+\newpage
 \section{Conclusion}
+\newpage
 \bibliographystyle{plain}
-\bibliography{references}
+\bibliography{ref}
 \end{document}
