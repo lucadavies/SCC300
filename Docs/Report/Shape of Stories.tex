@@ -23,7 +23,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
     Date:
 \newpage
 \section*{Abstract}
-    This is an abstract
+    This report examines the application of Natural Language Processing and Sentiment Analysis to fictional texts in an attempt to summarise narrative arcs as a curve on axes of time against positive/negative sentiment. VADER is used to process text for sentiment analysis and further experimentation is carried out to analyse how suitable VADER may be for this task.
 \newpage
 \tableofcontents
 \newpage
@@ -37,7 +37,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 
         This concept and these questions drew me toward this project proposal. Not only is it a fascinating endeavour to map the emotions of a novel, but as an exploration of the freedom of writers to convey emotions and of how humans often generate categories and groups without even trying.
 
-        With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the physchological analysis (\cite{sentimentVsEmotionAnalysis})
+        With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the psychological analysis (\cite{sentimentVsEmotionAnalysis})
     \subsection{Motivation}
     \subsection{Aims \& Objectives}
         The aims of this report are as such:
@@ -79,8 +79,8 @@ This section will detail the design and implementation of the tool used to carry
             \item Java
             \begin{itemize}
                 \item Strong language knowledge and familiarity
-                \item JavaFX and Swing availabile for interfaces
-                \item Native lanuage of Stanford CoreNLP
+                \item JavaFX and Swing available for interfaces
+                \item Native language of Stanford CoreNLP
             \end{itemize}
             \item Python
             \begin{itemize}
@@ -92,7 +92,7 @@ This section will detail the design and implementation of the tool used to carry
             \begin{itemize}
                 \item Strongest language knowledge and familiarity
                 \item Extreme ease in creating interfaces via Windows Form using Visual Studio
-                \item Cross-platform variants of CoreNLP and VADER availabile via simple packages
+                \item Cross-platform variants of CoreNLP and VADER available via simple packages
             \end{itemize}
         \end{itemize}
         Taking all these points into consideration C\# was selected, due to its pros specific to myself and the availability of non-native libraries via APIs. This permitted me to use the full Microsoft Visual Studio suite for development, including the Windows Forms designer.
@@ -122,7 +122,7 @@ This section will detail the design and implementation of the tool used to carry
             \begin{itemize}
                 \item Handling the output data and feeding it into the main chart and table
                 \item Allow hiding/showing of each different type of sentiment score for the main graph
-                \item Dynamically producing more tabs on the form to show each succesive group of five chapters
+                \item Dynamically producing more tabs on the form to show each successive group of five chapters
             \end{itemize}
     \subsection{User Interface}
         The implemented interface did not need to be excessively complex or particularly appealing as it mainly served to function as a harness to conduct the study, with more importance placed on the code-behind and results.
@@ -136,7 +136,7 @@ This section will detail the design and implementation of the tool used to carry
             \label{fig:sentiplot}
         \end{figure}
     \subsubsection{Results Display}
-        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint.
+        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labeled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint.
 
         For every sentence analysed VADER returns four sentiment scores: positive, neutral and negative (each holding a -1 to 1 score regarding match to that sentiment), and compound which acts as a single representation for the sentiment in the sentence parsed. Each of these scores have their own graph which may have their visibility toggled on and off with the check boxes in the bottom left. (Default is compound alone, as it proved the most indictive of sentiment, as advised by VADER documentation.) This graph can be saved to a JPG by clicking the save button.
         \begin{figure}[H]
@@ -150,7 +150,7 @@ This section will detail the design and implementation of the tool used to carry
             \caption{ResultsViewer window showing table}
             \label{fig:resultstable}
         \end{figure}
-        Figure \ref{fig:resultschapters} shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labelled with their relevant sentence(s), expandable by hovering the mouse over the label.
+        Figure \ref{fig:resultschapters} shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labeled with their relevant sentence(s), expandable by hovering the mouse over the label.
         \begin{figure}[H]
             \includegraphics[width=1\textwidth]{Misc/resultschapters}
             \caption{ResultsViewer window showing chapter graphs}
@@ -160,7 +160,7 @@ This section will detail the design and implementation of the tool used to carry
 \section{Experimentation}
 The following section covers the various experimentation and analysis carried out using Sentiplot as a tool for Sentiment Analysis and graphing accordingly.
     \subsection{Analysis Block Size}
-        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have acutally reflected the curve of the text.
+        Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have actually reflected the curve of the text.
 
         The following options are provided:
         \begin{itemize}
@@ -176,9 +176,9 @@ The following section covers the various experimentation and analysis carried ou
             \item 50\%
             \item 100\%
         \end{itemize}
-        This set of experiements varied the analysis blocksize for a given text and comparedthe output graphs for the entire text with a view to identifying a specific curve for the text. The comparison is qualitative, employing only human visual reference as opposed to any mathematical function. The purpose of this part of the study was as a forerunner to further analysis and experimentation to find the best setting or the best range of settings for either specific or genrically for all texts to produce a coherent sentimnet curve.
+        This set of experiments varied the analysis blocksize for a given text and compared the output graphs for the entire text with a view to identifying a specific curve for the text. The comparison is qualitative, employing only human visual reference as opposed to any mathematical function. The purpose of this part of the study was as a forerunner to further analysis and experimentation to find the best setting or the best range of settings for either specific or generically for all texts to produce a coherent sentiment curve.
         \begin{figure}
-            \includegraphics[width=0.5\textwidth]{Graphs/Blocksize/Cinderella/cinderellaGran}
+            \includegraphics[width=0.5\textwidth]{Figures/Blocksize/Cinderella/cinderellaGran}
             \centering
             \caption{Each graph shows the result of decreasing the granularity of analysis and show how there appears to be a sweet spot. In this case, four of the highest options summed only a single sentence due to short length of the text. Only one of these has been included.}
             \label{fig:cinderellaGran}
@@ -187,7 +187,7 @@ The following section covers the various experimentation and analysis carried ou
 
         VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block).
 
-        By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependant). Due to this, the resultant graph is highly spiked and difficult to garner information from.
+        By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependent). Due to this, the resultant graph is highly spiked and difficult to garner information from.
 
         By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, however, at this level of coarseness, the data is compressed so much so that much of the detail is lost, smoothing the curve that should be shown beyond useful limits.
 
@@ -196,17 +196,32 @@ The following section covers the various experimentation and analysis carried ou
         
         With this being said, it's possible, that a different tool may have been better suited to this task than VADER due to it's native design choice to parse text the length of Tweets, not entire corpora.
     \subsection{Hand Analysis Vs. VADER}
-        This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. The motivation behind this was to understand if VADER's output results were trustable, totally incorrect, or somewhere in the middle.
+        This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. I attempted to avoid trying to emulate the way VADER would process the text, instead scoring each sentence as I would as a reader of the text: "Would I feel positively and negatively after reading this sentence?" or, similar.
+        
+        The motivation behind this was to understand if VADER's output results were trustable, totally incorrect, or somewhere in the middle. 
 
         VADER also lacks any context processing - it cannot understand running themes in texts in order to better understand the sentiment behind that which is being said.
     \subsection{Reader Analysis \& Reflection}
     \label{subsec:reader}
-        This section covers the analysis of a range of Shakespeare plays by human readers (mostly identified to be Theatre and/or Literature students) and their personal comparison of the the Sentiplot output with their own expectations of what a graph of a given play should be. The goal here was to bring a human element to the reviewing of Sentiplot and VADER. A breif background of the study was given to each person who answered any of the questions provided. Some asked further questions and subsequently commented on the techniques used for analysis and graph production.
+        This section covers the analysis of a range of Shakespeare plays by human readers (mostly identified to be Theatre and/or Literature students) and their personal comparison of the the Sentiplot output with their own expectations of what a graph of a given play should be. The goal here was to bring a human element to the reviewing of Sentiplot and VADER. A brief background of the study was given to each person who answered any of the questions provided. Some asked further questions and subsequently commented on the techniques used for analysis and graph production.
+        \subsubsection{Reader Analysis}
+            Readers were first asked if they felt they knew each play well enough to attempt to plot major emotional events from each on a graph. Consequently some participants opted to answer questions only on a few of the six presented plays. In total, 22 result sets to compare a human's analysis with VADER were gathered.
+
+            Each participant was given a blank set of axes (with the same scale as was used for VADER's results). They were asked to draw what they thought a curve of each play would look like, based upon any and all major events they can recall. They were then asked to label and/or explain any notable troughs and peaks in their curves. A small selection of the curves drawn are shown in figure \ref{fig:readerVsVader}, paired with the corresponding output form VADER.
+            \begin{figure}
+                \includegraphics[width=1\textwidth]{Figures/Survey/readerVsVader}
+                \centering
+                \caption{Readers (top of each pair) in general drew curves bearing little to no similarity to those produced by VADER (bottom in each pair)}
+                \label{fig:readerVsVader}
+            \end{figure}
+            In general, all the curves drawn by participants were grossly different to the VADER output for the same texts. All VADER's curves stayed mostly in the range of +/-0.25 on the Sentiment axis, whereas most participants drew curves using nearly the full extent of the y-axis. This is not to say that VADER doesn't register any sentences as reaching the more extreme values: when examining the per-sentence scores in the table view, it does, but these values get flattened when they are grouped together. On closer inspection, taking Macbeth as an example, approximately 30\% of the sentences were outside the +/-0.25 range, however  just over 60\% of those \emph{within} the range were zeros, registered by VADER as completely neutral sentences. When taking averages, these high volumes of zero-scored sentences will have reduced the impact on the output graph of higher scores greatly.
+
+            Even with this failure, attempting to look at relaitve differences along the two curve sets (those drawn, and those produced by VADER) still doesn't yield much similarlity. The only immediately obvious correlation is, again, in Macbeth where both VADER and a participant show a sharp dip at around the halfway mark (labeled on the drawn curve as "murder"). This is nearly the only obvious match, however.
     \subsection{Shakespeare: Comedies Vs. Tragedies}
     \label{subsec:comVsTrag}
-        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comeidies \emph{should} show generally more positive curves and similarly, tragedies \emph{should} show more negative curves accordingly. To attempt to display this, three comedies (\emph{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\emph{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their repsective graphs. There is some debate on the specific genre of \emph{The Tempest}, it now often being referred to as a \"late romance\", a subsection of Shakespeare's comedies leaning more toward a \"tragicomedy\" in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
+        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \emph{should} show generally more positive curves and similarly, tragedies \emph{should} show more negative curves accordingly. To attempt to display this, three comedies (\emph{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\emph{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their repsective graphs. There is some debate on the specific genre of \emph{The Tempest}, it now often being referred to as a \"late romance\", a subsection of Shakespeare's comedies leaning more toward a \"tragicomedy\" in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
     \subsection{Early Modern Vs. Modern English}
-        VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test of VADER was able perform equally or at all as well on a differnt form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}.
+        VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test of VADER was able perform equally or at all as well on a different form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}.
 \newpage
 \section{Conclusion}
 \newpage

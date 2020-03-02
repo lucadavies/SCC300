@@ -1,0 +1,27 @@
+\contentsline {section}{\numberline {1}Introduction}{5}%
+\contentsline {subsection}{\numberline {1.1}Overview}{5}%
+\contentsline {subsection}{\numberline {1.2}Motivation}{5}%
+\contentsline {subsection}{\numberline {1.3}Aims \& Objectives}{5}%
+\contentsline {section}{\numberline {2}Background}{7}%
+\contentsline {subsection}{\numberline {2.1}Overview}{7}%
+\contentsline {subsection}{\numberline {2.2}Kurt Vonnegut on ``The Shape of Stories''}{7}%
+\contentsline {subsection}{\numberline {2.3}The Hedonometer Project}{7}%
+\contentsline {section}{\numberline {3}Sentiplot Tool}{9}%
+\contentsline {subsection}{\numberline {3.1}Languages \& Libraries}{9}%
+\contentsline {subsubsection}{\numberline {3.1.1}Top-level Language}{9}%
+\contentsline {subsubsection}{\numberline {3.1.2}Natural Language Processing Tools}{10}%
+\contentsline {subsection}{\numberline {3.2}Implementation}{10}%
+\contentsline {subsubsection}{\numberline {3.2.1}Structure}{10}%
+\contentsline {subsubsection}{\numberline {3.2.2}Sentiplot Form (Main Form)}{10}%
+\contentsline {subsubsection}{\numberline {3.2.3}ResultsViewer}{10}%
+\contentsline {subsection}{\numberline {3.3}User Interface}{11}%
+\contentsline {subsubsection}{\numberline {3.3.1}Text Selection \& Options}{11}%
+\contentsline {subsubsection}{\numberline {3.3.2}Results Display}{12}%
+\contentsline {section}{\numberline {4}Experimentation}{15}%
+\contentsline {subsection}{\numberline {4.1}Analysis Block Size}{15}%
+\contentsline {subsection}{\numberline {4.2}Hand Analysis Vs. VADER}{17}%
+\contentsline {subsection}{\numberline {4.3}Reader Analysis \& Reflection}{17}%
+\contentsline {subsubsection}{\numberline {4.3.1}Reader Analysis}{18}%
+\contentsline {subsection}{\numberline {4.4}Shakespeare: Comedies Vs. Tragedies}{19}%
+\contentsline {subsection}{\numberline {4.5}Early Modern Vs. Modern English}{19}%
+\contentsline {section}{\numberline {5}Conclusion}{20}%
