@@ -48,8 +48,11 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
             \item Otherwise attempt to identify trends the texts processed
             \item Study the produced graphs and compare expectation surrounding the source text
         \end{itemize}
+    \subsection{Report Structure}
+        The reminader of this report will disucss relevant background and context \ref{sec:background}, the design and implementation of the Sentiplot tool (section \ref{sec:sentiplot}), followed by a detailing of the experimentation carried out (section \ref{sec:experimentation}). The report will then be concluded by an analysis of the results acquired from this experimentation in section \ref{sec:conclusion}.
 \newpage
 \section{Background}
+\label{sec:background)}
     \subsection{Overview}
         This chapter will examine and summarise existing literature and studies in this area and topic. That is, natural language processing and sentiment analysis as a tool for extracting statistical data that describe emotions in (mainly) fictional works of literature.
 
@@ -74,10 +77,12 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
         The Hedonometer project was established to gauge happiness, the world over, starting with Twitter and other social media outlets. The project’s scope has since widened to process corpora direct from books, film scripts, news outlets and other foreign language literature.
 \newpage
 \section{Sentiplot Tool}
+\label{sec:sentiplot}
 This section will detail the design and implementation of the tool used to carry out this study, \emph{Sentiplot}. 
     \subsection{Languages \& Libraries}
     This section briefly discusses the choice of programming language and NLP/SA tools used in the Sentiplot tool.
         \subsubsection{Top-level Language}
+        \label{subsec:language}
         When selecting which language would be most appropriate to use for this project, my major considerations were my prior knowledge of potential languages and their ease of creation of a pleasant user interface. Availability of NLP tools in each language was also to be considered, but as the end implementation shows, this was not imperative due to cross-platform and cross-language capabilities of the chosen combination of languages and tools.
 
         A listing of considered languages follows:
@@ -106,12 +111,24 @@ This section will detail the design and implementation of the tool used to carry
         \subsubsection{Natural Language Processing Tools}
         Various tools across a wide array of languages are freely available to provide standard NLP functions and advanced processing capabilities.
 
-        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split only and the actual sentiment analysis was performed by VADER.
+        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split the input only, and the actual sentiment analysis was performed by VADER.
 
         Both the CoreNLP and VADER libraries are non-native to C\# but have easy to use APIs for direct manipulation of their types and methods outside of their native environments. CoreNLP has an in-house developed API for C\# and VADER has a third-party API called \emph{VADERSharp}.
+    \subsection{Design \& Development}
+    \label{subsec:dnd}
+        Sentiplot was developed over the course of two academic terms between early October 2019 and late January 2020. The first few weeks involved mainly research into what language was to be used and what NLP/SA tools or toolkits would provide the best mix of suitability-to-task and ease of use. The initial framework and basic features were developed using a waterfall type methodology before later, more experimental features were developed in a more ad hoc manner using an agile development process \emph{after} the main program with built.
+        
+        The base applicaition was projected to take 4-5 weeks to develop from scratch and the smaller experimental features added after to each take aroudn a week. In reality, this first stage of developement occupied the majority of the time from the start of November through till mid December. Then each of the experimental features pushed on frm there, rolling into the next term, rather than all being finished before the Christmas holidays. Thankfully this did not cause major issues as there was an excess of time set aside for write up in the second term. Final bits of development including housekeeping and codestyling wrapped up approaching week two of February 2020, still allowing time for this report write-up.
+
+        As in discussed in section \ref{subsec:language}, C\# was the language used and Windows Forms was the user interface framework chosen. A full Visual Studio (Community) development suite was used to design, build and test the application which allowed for relatively switft and easy development due to the neat integration bewteen the technologies. Had a different, less familair language/framework been adopted, further schedule overruns may have occured. StanfordCoreNLP was at one point the NLP tool of choice, however, dificulty and delay in marrying its Java libraries to C\# and setting up its processing pipeline are in large part what encouraged the eventual swap to VADER in early December.
+        
+        As the language and framworks use lend themselves to it, the application is built with an object-oriented pattern in mind, however this doesn't come to light much as the application is somewhat self-contained - no other classes or applications need interface with it, Sentiplot only uses simple API calls to any external libraries.
+
+        The overall internal structure of Sentiplot is not massively complicated. It is detailed in section \ref{subsec:implementation}.
     \subsection{Implementation}
+    \label{subsec:implementation}
         \subsubsection{Structure}
-            The application is written in C\# .NET interfacing with both Java and Python libraries via APIs as detailed in the previous section. Windows Forms was chosen for the interface as a quick and easy to build platform, stable on Windows with seamless integration into C\# and the .NET framework.
+            The application is written in C\# .NET interfacing with both Java and Python libraries via APIs as detailed in sections \ref{subsec:language} and \ref{subsec:dnd}. Windows Forms was chosen for the interface as a quick and easy to build platform, stable on Windows with seamless integration into C\# and the .NET framework.
 
             The application is composed of two forms, each with their designer code. The first allows the user to select a file to load text from and set processing granularity. The second presents the results of the analysis in multiple ways and provides facility to save these results as images of the output graphs.
         \subsubsection{Sentiplot Form (Main Form)}
@@ -185,7 +202,7 @@ The following section covers the various experimentation and analysis carried ou
         \end{itemize}
         This set of experiments varied the analysis blocksize for a given text and compared the output graphs for the entire text with a view to identifying a specific curve for the text. The comparison is qualitative, employing only human visual reference as opposed to any mathematical function. The purpose of this part of the study was as a forerunner to further analysis and experimentation to find the best setting or the best range of settings for either specific or generically for all texts to produce a coherent sentiment curve.
         \begin{figure}
-            \includegraphics[width=0.5\textwidth]{Figures/Blocksize/Cinderella/cinderellaGran}
+            \includegraphics[width=1\textwidth]{Figures/Blocksize/Cinderella/cinderellaGran}
             \centering
             \caption{Each graph shows the result of decreasing the granularity of analysis and show how there appears to be a sweet spot. In this case, four of the highest options summed only a single sentence due to short length of the text. Only one of these has been included.}
             \label{fig:cinderellaGran}
@@ -231,6 +248,7 @@ The following section covers the various experimentation and analysis carried ou
         VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test of VADER was able perform equally or at all as well on a different form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}.
 \newpage
 \section{Conclusion}
+\label{sec:conclusion}
 \newpage
 \bibliographystyle{plain}
 \bibliography{ref}
