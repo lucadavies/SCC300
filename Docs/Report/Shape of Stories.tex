@@ -39,7 +39,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 
         With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the psychological analysis (\cite{sentimentVsEmotionAnalysis}) and employs machine learning and artificial intelligence to further predict and understand the emotions presented in text.
     \subsection{Motivation}
-        At it's core, this study is novel. It is interest driven - to attempt to show that stories can be categorised in a very simple and easy manner based upon the emotional arcs they lead readers across is an interesting new way to sort fiction. There may not be any significant \emph{need} to categorise literature in this way, however it has the potential to lead to further studies.
+        At it's core, this study is novel. It is interest driven - to attempt to show that stories can be categorised in a very simple and easy manner based upon the emotional arcs they lead readers across is an interesting new way to sort fiction. There may not be any exlicit \textit{need} to categorise literature in this way, however it has the potential to lead to further studies that examine just how it is that humans create literature and nay patterns we follow.
     \subsection{Aims \& Objectives}
         The aims of this report are as such:
         \begin{itemize}
@@ -61,7 +61,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 
         Existing projects will help to prove the developed application is performing up to standard (or not) and can be used as a side-by-side comparison of literature processed for this report and by these projects as well as to examine the processing of literature unavailable for the purposes of this report.
     \subsection{Natural Language Processing \& Sentiment Analysis}
-        Natural Language Processing (NLP) is a very broad field concerned with, at a high level, the understanding of human language by computers. It fuses linguistics with computer science to not just parse but to \emph{understand} human language, to understand it in such a way that meaning can be deduced and emotion and sentiment can be extracted, even when not fully clear.
+        Natural Language Processing (NLP) is a very broad field concerned with, at a high level, the understanding of human language by computers. It fuses linguistics with computer science to not just parse but to \textit{understand} human language, to understand it in such a way that meaning can be deduced and emotion and sentiment can be extracted, even when not fully clear.
 
         Via the beginnings of machine translation, NLP has existed as a research field for decades, even before the current name was coined. Breakthrough projects like ELIZA made progress in the field, but it wasn't until the 1980s that statistical methods began to be used. Prior to this, large sets of hand-written rules governed how NLP systems worked, which, although sometimes effective, limited the overall progress to the manual effort put into the models and rules. In modern NLP toolkits, models are still prevalent, but instead of them being assembled by hand, they are often formed using machine learning techniques based upon employing training data, test data and then real language data.
 
@@ -79,7 +79,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 \newpage
 \section{Sentiplot Tool}
 \label{sec:sentiplot}
-This section will detail the design and implementation of the tool used to carry out this study, \emph{Sentiplot}. 
+This section will detail the design and implementation of the tool used to carry out this study, \textit{Sentiplot}. 
     \subsection{Languages \& Libraries}
     This section briefly discusses the choice of programming language and NLP/SA tools used in the Sentiplot tool.
         \subsubsection{Top-level Language}
@@ -114,10 +114,10 @@ This section will detail the design and implementation of the tool used to carry
 
         Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split the input only, and the actual sentiment analysis was performed by VADER.
 
-        Both the CoreNLP and VADER libraries are non-native to C\# but have easy to use APIs for direct manipulation of their types and methods outside of their native environments. CoreNLP has an in-house developed API for C\# and VADER has a third-party API called \emph{VADERSharp}.
+        Both the CoreNLP and VADER libraries are non-native to C\# but have easy to use APIs for direct manipulation of their types and methods outside of their native environments. CoreNLP has an in-house developed API for C\# and VADER has a third-party API called \textit{VADERSharp}.
     \subsection{Design \& Development}
     \label{subsec:dnd}
-        Sentiplot was developed over the course of two academic terms between early October 2019 and late January 2020. The first few weeks involved mainly research into what language was to be used and what NLP/SA tools or toolkits would provide the best mix of suitability-to-task and ease of use. The initial framework and basic features were developed using a waterfall type methodology before later, more experimental features were developed in a more ad hoc manner using an agile development process \emph{after} the main program with built.
+        Sentiplot was developed over the course of two academic terms between early October 2019 and late January 2020. The first few weeks involved mainly research into what language was to be used and what NLP/SA tools or toolkits would provide the best mix of suitability-to-task and ease of use. The initial framework and basic features were developed using a waterfall type methodology before later, more experimental features were developed in a more ad hoc manner using an agile development process \textit{after} the main program with built.
         
         The base applicaition was projected to take 4-5 weeks to develop from scratch and the smaller experimental features added after to each take aroudn a week. In reality, this first stage of developement occupied the majority of the time from the start of November through till mid December. Then each of the experimental features pushed on frm there, rolling into the next term, rather than all being finished before the Christmas holidays. Thankfully this did not cause major issues as there was an excess of time set aside for write up in the second term. Final bits of development including housekeeping and codestyling wrapped up approaching week two of February 2020, still allowing time for this report write-up.
 
@@ -138,7 +138,7 @@ This section will detail the design and implementation of the tool used to carry
             Its key functions include:
             \begin{itemize}
                 \item Initialising the CoreNLP pipeline ot tokenise the input text
-                \item Generating an OpenFileDialog object to allow the user to select a \emph{.txt} or \emph{.html} file
+                \item Generating an OpenFileDialog object to allow the user to select a \textit{.txt} or \textit{.html} file
                 \item Parsing the content of the input file to prepare it for processing using regular expressions and simple character-based splitting
             \end{itemize}
         \subsubsection{ResultsViewer}
@@ -210,7 +210,7 @@ The following section covers the various experimentation and analysis carried ou
         \end{figure}
         Figure \ref{fig:cinderellaGran} show the differing graphs that may be produced by changing the granularity.
 
-        VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \emph{N} sentences where \emph{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \emph{N} sentences beyond the previous (i.e. at the end of the analysed block).
+        VADER is designed for parsing short lengths of text (less than 140 characters, as per a Tweet), so in order to produce more coarse graphs than single-sentence, VADER is still fed text on a per-sentence basis with the results summed up to \textit{N} sentences where \textit{N} is the corresponding number of sentences for a given granularity setting for a given text. The relevant data point is then plotted \textit{N} sentences beyond the previous (i.e. at the end of the analysed block).
 
         By default, every sentence of the text is plotted as its own point. This gives highly detailed graph but it very difficult to discern any sort of shape. Sentence to sentence, sentiment can vary wildly from the most negative in one to the most positive in the next (context and corpus dependent). Due to this, the resultant graph is highly spiked and difficult to garner information from.
 
@@ -239,12 +239,12 @@ The following section covers the various experimentation and analysis carried ou
                 \caption{Readers (top of each pair) in general drew curves bearing little to no similarity to those produced by VADER (bottom in each pair)}
                 \label{fig:readerVsVader}
             \end{figure}
-            In general, all the curves drawn by participants were grossly different to the VADER output for the same texts. All VADER's curves stayed mostly in the range of +/-0.25 on the Sentiment axis, whereas most participants drew curves using nearly the full extent of the y-axis. This is not to say that VADER doesn't register any sentences as reaching the more extreme values: when examining the per-sentence scores in the table view, it does, but these values get flattened when they are grouped together. On closer inspection, taking Macbeth as an example, approximately 30\% of the sentences were outside the +/-0.25 range, however  just over 60\% of those \emph{within} the range were zeros, registered by VADER as completely neutral sentences. When taking averages, these high volumes of zero-scored sentences will have reduced the impact on the output graph of higher scores greatly.
+            In general, all the curves drawn by participants were grossly different to the VADER output for the same texts. All VADER's curves stayed mostly in the range of +/-0.25 on the Sentiment axis, whereas most participants drew curves using nearly the full extent of the y-axis. This is not to say that VADER doesn't register any sentences as reaching the more extreme values: when examining the per-sentence scores in the table view, it does, but these values get flattened when they are grouped together. On closer inspection, taking Macbeth as an example, approximately 30\% of the sentences were outside the +/-0.25 range, however  just over 60\% of those \textit{within} the range were zeros, registered by VADER as completely neutral sentences. When taking averages, these high volumes of zero-scored sentences will have reduced the impact on the output graph of higher scores greatly.
 
             Even with this failure, attempting to look at relaitve differences along the two curve sets (those drawn, and those produced by VADER) still doesn't yield much similarlity. The only immediately obvious correlation is, again, in Macbeth where both VADER and a participant show a sharp dip at around the halfway mark (labeled on the drawn curve as "murder"). This is nearly the only obvious match, however.
     \subsection{Shakespeare: Comedies Vs. Tragedies}
     \label{subsec:comVsTrag}
-        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \emph{should} show generally more positive curves and similarly, tragedies \emph{should} show more negative curves accordingly. To attempt to display this, three comedies (\emph{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\emph{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their repsective graphs. There is some debate on the specific genre of \emph{The Tempest}, it now often being referred to as a \"late romance\", a subsection of Shakespeare's comedies leaning more toward a \"tragicomedy\" in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
+        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \textit{should} show generally more positive curves and similarly, tragedies \textit{should} show more negative curves accordingly. To attempt to display this, three comedies (\textit{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\textit{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their repsective graphs. There is some debate on the specific genre of \textit{The Tempest}, it now often being referred to as a \"late romance\", a subsection of Shakespeare's comedies leaning more toward a \"tragicomedy\" in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
     \subsection{Early Modern Vs. Modern English}
         VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it understands and can analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test of VADER was able perform equally or at all as well on a different form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}.
 \newpage

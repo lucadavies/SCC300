@@ -15,7 +15,7 @@ namespace SCC300cs
     {
         string textName;
         string inputText;
-        List<string> inputChapters;
+        List<string> inputChapters = new List<string>();
         double granularity = -1;
         List<string> sents;
         List<List<SentimentAnalysisResults>> chapterResultsList;
@@ -53,7 +53,7 @@ namespace SCC300cs
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Filter = "Text files (*.txt,*.html)|*.txt;*.html|All files (*.*)|*.*";
+                ofd.Filter = "Text files (*.txt,*.html, *.xml)|*.txt;*.html;*.xml|All files (*.*)|*.*";
                 ofd.FilterIndex = 0;
                 ofd.RestoreDirectory = true;
 
@@ -85,7 +85,6 @@ namespace SCC300cs
             Regex pre = new Regex("<pre(.|\\r\\n)+?</pre>");                            //match whole <pre></pre> sections
             Regex headers = new Regex("<h[0-9]>");                                  //match on header sections to get chapters
             Regex htmlTags = new Regex("<[^>]*>");                                  //match on html tags
-            inputChapters = new List<string>();
            try
             {
                 bgWkrLoad.ReportProgress(0);
@@ -112,6 +111,14 @@ namespace SCC300cs
                 ret += LoadFromTxt(ch + " ");
             }
             return ret;
+        }
+
+        private string loadFromXML(string input)
+        {
+            Regex tags = new Regex("<[^>]*>");
+            string t = LoadFromTxt(tags.Replace(HttpUtility.HtmlDecode(input), ""));
+            inputChapters.Add(LoadFromTxt(t));
+            return t;
         }
 
         private void BtnProcess_Click(object sender, EventArgs e)
@@ -170,7 +177,7 @@ namespace SCC300cs
             lblGran.Text = (granularity == -1 ? "1 Sentence" : granularity * 100 + "%");
         }
 
-        private void BgWkrProcess_DoWork(object sender, DoWorkEventArgs e)
+        private void BgWkrProcess_DoWork(object sen300der, DoWorkEventArgs e)
         {
             bgWkrProcess.ReportProgress(0);
             Document doc;
@@ -243,6 +250,10 @@ namespace SCC300cs
             else if (e.Argument.Equals(".html"))
             {
                 e.Result = LoadFromHTML(inputText);
+            }
+            else if (e.Argument.Equals(".xml")) ;
+            {
+                e.Result = loadFromXML(inputText);
             }
         }
 
