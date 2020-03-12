@@ -85,7 +85,8 @@ namespace SCC300cs
             Regex pre = new Regex("<pre(.|\\r\\n)+?</pre>");                            //match whole <pre></pre> sections
             Regex headers = new Regex("<h[0-9]>");                                  //match on header sections to get chapters
             Regex htmlTags = new Regex("<[^>]*>");                                  //match on html tags
-           try
+            inputChapters = new List<string>();
+            try
             {
                 bgWkrLoad.ReportProgress(0);
                 input = body.Split(input)[1];                                       //split on "body>" to give three sections, pre-, mid- and post-body, take 1 for content
@@ -116,6 +117,7 @@ namespace SCC300cs
         private string loadFromXML(string input)
         {
             Regex tags = new Regex("<[^>]*>");
+            inputChapters = new List<string>();
             string t = LoadFromTxt(tags.Replace(HttpUtility.HtmlDecode(input), ""));
             inputChapters.Add(LoadFromTxt(t));
             return t;
@@ -251,7 +253,7 @@ namespace SCC300cs
             {
                 e.Result = LoadFromHTML(inputText);
             }
-            else if (e.Argument.Equals(".xml")) ;
+            else if (e.Argument.Equals(".xml"))
             {
                 e.Result = loadFromXML(inputText);
             }

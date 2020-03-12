@@ -128,7 +128,7 @@ namespace SCC300cs
                     num++;
                 }
             }
-            LabelBestWorst(s, totNum);
+            //LabelBestWorst(s, totNum);
         }
 
         private void AddResultsToTable(List<SentimentAnalysisResults> res)
