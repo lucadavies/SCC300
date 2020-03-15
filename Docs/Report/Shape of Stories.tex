@@ -1,5 +1,7 @@
-\documentclass[a4paper]{article}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[font={small,it}]{caption}
 \usepackage{graphicx}
 \graphicspath{{../}}
 \title{\textbf{Using Natural Language Processing to Analyse the Shape of Stories}}
@@ -14,6 +16,23 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 \begin{document}
 \maketitle
 \newpage
+\section*{TO DO LIST}
+    \begin{itemize}
+        \item Plus-minus symbol HOW???
+        \item Fill out Introduction more
+        \item Fill out background (with references)
+        \item Anymore to add to Design/Dev section?
+        \item Redo Cinderella hand analysis + write up anything interesting
+        \item More on Reader Reflection (if poss.)
+        \item More on Early Modern vs Modern English
+        \item Comedy vs Tragedies
+        \item Conclusion
+            \begin{itemize}
+                \item Summary
+                \item Relfetion
+            \end{itemize}
+    \end{itemize}
+
 \section*{Declaration}
     I certify that the material contained in this dissertation is my own work and does not contain unreferenced or unacknowledged material. I also warrant that the above statement applies to the implementation of the project and all associated documentation. Regarding the electronically submitted work, I consent to this being stored electronically and copied for assessment purposes, including the School’s use of plagiarism detection systems in order to check the integrity of assessed work. \\
     I agree to my dissertation being placed in the public domain, with my name explicitly included as the author of the work. \\
@@ -50,7 +69,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
             \item Assess VADER's ability to process text outside its design remit (e.g. early-modern English)
         \end{itemize}
     \subsection{Report Structure}
-        The reminader of this report will disucss relevant background and context \ref{sec:background}, the design and implementation of the Sentiplot tool (section \ref{sec:sentiplot}), followed by a detailing of the experimentation carried out (section \ref{sec:experimentation}). The report will then be concluded by an analysis of the results acquired from this experimentation in section \ref{sec:conclusion}.
+        The reminader of this report will disucss relevant background and context, the design and implementation of the Sentiplot tool, followed by a detailing of the experimentation carried out. The report will then be concluded by an analysis of the results acquired from this experimentation.
 \newpage
 \section{Background}
 \label{sec:background)}
@@ -187,20 +206,26 @@ The following section covers the various experimentation and analysis carried ou
     \subsection{Analysis Block Size}
         Sentiplot incorporates one primary setting for its analysis of texts: the granularity slider. This allows the user to select varying degrees of granularity for the produced graphs (as a percentage of the text being analysed). This allowed analysis of texts at a number detail levels to find which produced the most obvious curves to conform with Vonnegut's story curves. This may have introduced a small amount of positive-results bias, accepting those granularities that appear most curve-like for a given text instead of what may have actually reflected the curve of the text.
 
-        The following options are provided:
-        \begin{itemize}
-            \item 1 sentence
-            \item 0.1\%
-            \item 0.2\%
-            \item 0.5\%
-            \item 1\%
-            \item 2\%
-            \item 5\%
-            \item 10\%
-            \item 25\%
-            \item 50\%
-            \item 100\%
-        \end{itemize}
+        The options provided and their effectiveness are shown in figure \ref{fig:granChart}.
+        
+        \begin{figure}[hbt]
+            \begin{center}
+                \begin{tabular}{ |c|c|c| } 
+                \hline
+                \textbf{Too Fine} & \textbf{Acceptable} & \textbf{Too Coarse} \\ 
+                \hline
+                1 Sentence & 0.2\% & 5\% \\ 
+                0.1\% & 0.5\% & 10\% \\
+                & 1\% & 25\% \\
+                & 2\% & 50\% \\
+                &  & 100\% \\        
+                \hline
+                \end{tabular}
+            \end{center}
+            \centering
+            \caption{Various granularities are available for processing text, this table shows those that proved the most effective and those that did not.}
+            \label{fig:granChart}
+        \end{figure}
         This set of experiments varied the analysis blocksize for a given text and compared the output graphs for the entire text with a view to identifying a specific curve for the text. The comparison is qualitative, employing only human visual reference as opposed to any mathematical function. The purpose of this part of the study was as a forerunner to further analysis and experimentation to find the best setting or the best range of settings for either specific or generically for all texts to produce a coherent sentiment curve.
         \begin{figure}
             \includegraphics[width=1\textwidth]{Figures/Blocksize/Cinderella/cinderellaGran}
@@ -216,17 +241,26 @@ The following section covers the various experimentation and analysis carried ou
 
         By contrast, using the more coarse options of 25\% and upward produce graphs that do show a clear line, the hope being the larger regions that have an average higher/lower sentiment score can then be picked out. However, at this level of coarseness, the data is compressed so much so that most of the detail is lost, smoothing the curve beyond useful limits for purposes of analysis
 
-        Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts. Although the choice to use percentages for the granularity setting was made to better cater to both ong and shor texts, those that are particularly long (>5000 sentences) and those that are particularly short (<200 sentences) may require different settings to best show the data and thus the curve. This is due to the fact that a longer novel does not necessarily have longer chapters and/or longer sections that could be identified as having a partiular bias in sentiment. 
+        Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts. Although the choice to use percentages for the granularity setting was made to better cater to both long and short texts, those that are particularly long (>5000 sentences) and those that are particularly short (<200 sentences) may require different settings to best show the data and thus the curve. This is due to the fact that a longer novel does not necessarily have longer chapters and/or longer sections that could be identified as having a partiular bias in sentiment.
         
-        With all this being said, it's possible, that a different tool may have been better suited overall to this task than VADER is, due, at least in part, to it's native design choice to parse text the length of Tweets, not entire corpora.
+        With all this being said, it's possible, that a different tool may have been better suited overall to this task than VADER is, due, at least in part, to it's native design choice to parse text the length of Tweets, not entire corpora. Sentiplot could be redesigned to pass VADER each block as a whole instead of summing the individual sentence values instead, although it is to be assumed that this would yield less accurate results as this is not how VADER was intended to be used.
     \subsection{Hand Analysis Vs. VADER}
         This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. I attempted to avoid trying to emulate the way VADER would process the text, instead scoring each sentence as I would as a reader of the text: "Would I feel positively and negatively after reading this sentence?" or, similar - a human approach.
         
         The motivation behind this was to understand if VADER's output results were trustful, totally incorrect, or somewhere in the middle. It's easy to blindly follow what a program says but NLP and Sentiment Analysis is still very much a field that cannot yet directly emulate the processes of the human brain.
-	
-	The results obtained, although they are based on one person's own judgement (hence not necessarily reliable), were disappointing to say the least. To determine similarity, a threshold difference of +-0.2 was chosen to mark the boundary between results that matched (VADER / human score), and results did not. From this, of the 100 sentences taken from Cinderella, only 23\% matched. In the case of Macbeth, 51\% matched, but the majority of the increase is likely due to the fact of Macbeth being a script - namely, there were many sentences that were just a name, or just a stage direction alone and thus was very easy to be rated neutral (or, zero) by both a human and VADER. 
+    
+        \begin{figure}[hbt]
+            \includegraphics[width=1\textwidth]{Figures/HandAnalysis/Macbeth}
+            \centering
+            \caption{An excerpt from the table of human-analysed sentiment scores along side VADER's scores with the difference (highlighted green for a match, red otherwise) shown. The original sentences from Macbeth are shown for reference.}
+            \label{fig:handMacbeth}
+        \end{figure}
+        
+        The results obtained, although they are based on one person's own judgement (and hence are not necessarily reliable), were disappointing to say the least. To determine similarity, a threshold difference of +-0.25 was chosen to mark the boundary between results that correlated with each other, and results did not. From this, of the 100 sentences taken from Cinderella, only 27\% matched. In the case of Macbeth, 50\% matched, but it is possible to theorise that majority of the increase is likely due to the fact of Macbeth being a script - namely, there were many sentences that were just a name, or just a stage direction alone and thus was very easy to be rated neutral (or, zero) by both a human and VADER. However, in the 100 sentences, 29 names, stage directions or similar were present, of which 10 matched (mainly at or near zero), decreasing the effective percentage of matched sentences to somewhere in the range 21\%-40\%. There were some cases where a plain name resulted in an extreme score (see rows 4 and 9 in figure \ref{fig:handMacbeth}). Some of the scores assigned by VADER also seem to make little to no sesne whatsoever, for example, row 7 in figure \ref{fig:handMacbeth}: the full sentence directly includes (without negation), the words ``bloody'', ``avaricious'', ``false'', ``deceitful'', ``malicious'', and ``sin'', and yet VADER scores the sentence all but neutral, while most human readers would likely rate this one of the most negative in the data set.
 
-        VADER also lacks any context processing - it cannot understand running themes in texts in order to better understand the sentiment behind that which is being said.
+        Though not in the previous example, it is possible that some of these erroneous results may stem from the fact that the way VADER is being utilised in Sentiplot means that it has no context for any given sentence, they are all processed stand-alone and so VADER cannot build up any running themes or patterns to aid in analysis.
+
+        To conclude, this experiment raised potential issue with the usage of VADER, suggesting an alteration in Sentiplot's implementation but also questioned the overall effectiveness of VADER as a sentiment analysis tool given some rather unusual results upon close inspection. The next section partially opens up this discussion to a wider audience, allowing comment on the final results produced by VADER and some comments on its processes.
     \subsection{Reader Analysis \& Reflection}
     \label{subsec:reader}
         This section covers the analysis of a range of Shakespeare plays by human readers (mostly identified to be Theatre and/or Literature students) and their personal comparison of the the Sentiplot output with their own expectations of what a graph of a given play should be. The goal here was to bring a human element to the reviewing of Sentiplot and VADER. A brief background of the study, its goals, and task was given to each person who answered any of the questions provided. Some asked further questions and subsequently commented on the techniques used for analysis and graph production.
