@@ -22,6 +22,7 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
         \item Fill out Introduction more
         \item Fill out background (with references)
         \item Anymore to add to Design/Dev section?
+        \item Chapter dividing???
         \item Redo Cinderella hand analysis + write up anything interesting
         \item Tidy Reader Reflection
         \item More on Early Modern vs Modern English
@@ -248,6 +249,32 @@ The following section covers the various experimentation and analysis carried ou
         Through trial-and-error experimentation, the ideal setting was found to lie between 0.2\% and 2\%, erring toward the 2\% for most texts. Although the choice to use percentages for the granularity setting was made to better cater to both long and short texts, those that are particularly long (>5000 sentences) and those that are particularly short (<200 sentences) may require different settings to best show the data and thus the curve. This is due to the fact that a longer novel does not necessarily have longer chapters and/or longer sections that could be identified as having a partiular bias in sentiment.
         
         With all this being said, it's possible, that a different tool may have been better suited overall to this task than VADER is, due, at least in part, to it's native design choice to parse text the length of Tweets, not entire corpora. Sentiplot could be redesigned to pass VADER each block as a whole instead of summing the individual sentence values instead, although it is to be assumed that this would yield less accurate results as this is not how VADER was intended to be used.
+    \subsection{Curve Identification}
+        The original inspiration behind this project stemmed from Kurt Vonnegut's lecture on the ``The Shape of Stories'' and atteming to test his theory by plotting the sentiment results of various texts on a graph against time. This is what drove the initial development of Sentiplot and this study as a whole. However after inital results were produced by Sentiplot, one of two things became somewhat clear: eiter Vonnegut's theories were wrong, or VADER was not up to the task at hand. Which, remains to be seen and is likely best left to further research. Nevertheless, this meant the aims of the project began to shift more toward NLP for processing literature in general (as opposed to its normal domain of opinion mining) and analysing those results. Consequently potential developements for curve identification were not developed to completion, namely, an algorithm to statistically compare the produced graphs with those predicted by Vonnegut, was never written. Despite this, mathematical plots were extraced from the six distinct curves mentioned in figure \ref{fig:storyTypes} (exlcuding `Which Way Is Up?' and `New Testament' for the fact of being a flat line and identical to `Cinderella', respecitvely) by using an online point plotting tool (see \cite{webPlotDigitizer}). The raw CSV data is provided in the additional documents to this report.
+
+        The following sections breifly explore the potential loose identifications of curves in a number of texts processed by the Sentiplot tool.
+        \subsubsection{Whole Text Analysis}
+            A small variety of both novels and scripts of varying legnths were processed to produce their curves. As mentioned above, there was not an immediately obvious correlations between many of the texts' graphs and those predicted by Vonnegut. \textit{Great Expectations}, \textit{Metamorphosis} and \textit{Cinderella} were the three `novels' processed in decreasing order of length. \textit{Great Expectation} was the longest text processed with just shy of 10,000 sentence, however the only curve it could be sit to fit at face value is `Which Way Is Up?', or a flat line. There's variation, but only minor. Analysis of the curve from a larger perspective, one could argue it does \textit{almost} fit Vonnegut's predicted `New Testament' curve, albeit with an extremely reduced y-axis scale, and loss of all complex features of the graph.
+
+            Kafka's \textit{Metamorphosis} shows a simialr situation: the prediction is `From Bad To Worse', an ever decreasing parabola of sorts, however Sentiplot's output is at closest match, neutral, but at worst seemsto have a few peaks and troughs of particularly negaitve \textit{and} positve sentiment.
+
+            \textit{Cinderella} is the one graph that acutally does bear somewhat of a resemblance to Vonnegut's prediction, being not too far removed from the rises and falls of his `Cinderella' curve, if slightly less extreme. See figure \ref{fig:cinderellaComp} for the produced graph overlaid with a representation of Vonnegut's curve transformed to fit the axes. The lack of of the harsh drop at ~70\% may also be explained by the fact that block size averaging smooths out harsh changes such as this.
+            \begin{figure}[hb]
+                \includegraphics[width=1\textwidth]{Figures/Curve/CinderellaComp}
+                \centering
+                \caption{The curve produced for \textit{Cinderella} matches smoewhat closely with Vonnegut's prediction.} 
+                \label{fig:cinderellaComp}
+            \end{figure}
+        \subsubsection{Chapter Analysis}
+            This functionality was implemented in Sentiplot to further examine not only if stories had curves at all, but to see if any such curves could be discerned within smaller narrative sections of a larger text. The method is not greatly complex, dividing a text into chapters and simply running and graphing and plotting each chapter individually to ease analysis.
+
+            Each chapter is plotted using the same granularity as the main text, this being a percentage of the input text length. Here, this percentage is applied to the length of the chapter itself. Depending on average chapter length this can mean that specific a granularity many have to be chosen to examine chapters. Being much shorter than the full text, the 1\% often used for a whole text can lead to single-sentence processing for many chapters.
+            \begin{figure}
+                \includegraphics[width=1\textwidth]{Figures/Chap/Macbeth}
+                \centering
+                \caption{``Chapters'' 26 to 30 of \textit{Macbeth} showing five overlayed curves. Chapter 26 (light blue) shows potential shape albeit somewhat extreme.} 
+                \label{fig:handMacbeth}
+            \end{figure}
     \subsection{Hand Analysis Vs. VADER}
         This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. I attempted to avoid trying to emulate the way VADER would process the text, instead scoring each sentence as I would as a reader of the text: "Would I feel positively and negatively after reading this sentence?" or, similar - a human approach.
         
@@ -297,13 +324,13 @@ The following section covers the various experimentation and analysis carried ou
 
         VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it can understand and analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test if VADER was able perform equally or at all as well on a different form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}. The assumption is that VADER will perform better on modernised texts, as that is what its models have been trained to process.
         
-        The original Project Gutenberg texts of the plays gave graphs that did not hold much variation - processing the moderised text overall gave similar graphs at first glance, similar but with exaggerated peaks and troughs with the overall form is still held. However, finer inspection will show that in fact, there's a number of new features visible in most plays that were not present in the original text. For example: in the latter 40\% of the original text of \textit{The Tempest}, the graph has less and less varitation, staying practically in the range of zero to 0.1 - in direct opposition, the varded text has a number of large peaks and troughs, with a maximum magnitude score of approximately positive 0.3. Similarly, in \textit{A Midsummer Nights Dream}, just after the halfway mark, there appears to be a fairly distinctive negative period for a while, a feature that isn't shown at all on the original text (in fact, it appears to go become more \textit{positive}).
+        The original Project Gutenberg texts of the plays gave graphs that did not hold much variation - processing the moderised text overall gave similar graphs at first glance, similar but with exaggerated peaks and troughs with the overall form is still held. However, finer inspection will show that in fact, there's a number of new features visible in most plays that were not present in the original text. For example: in the latter 40\% of the original text of \textit{The Tempest}, the graph has less varitation, staying practically in the range of zero to 0.1 - in direct opposition, the varded text has a number of sizable peaks and troughs, with a maximum magnitude score of approximately positive 0.3. Similarly, in \textit{A Midsummer Nights Dream}, just after the halfway mark, there appears to be a fairly distinctive negative period for a while, a feature that isn't shown at all on the original text (in fact, it appears to go become more \textit{positive}).
 
-        These new additions seen in most graphs demonstrate VADER's limited ability to process non-modern English text, causing it produce values erring much more toward neutral zero-values than it should. It is still reasonable to attribute the restricted nature of the these original graphs, at least partially, to the nature of the text, them being scripts, not novels, however it can still be seen on that modern English is processed to give more meaningful results as shown in the huge variation (nearly full -1 to 1) of the graph of Cinderella in figure \ref{fig:cinderellaGran}. Upon close inspection of the graphs of the other modernised texts, it can also be seen that some of them are not \textit{just} exaggerated, but also show new features, and in some cases show the opposite to the originals. For example: DO THIS BIT
+        These new additions seen in most graphs demonstrate VADER's limited ability to process non-modern English text, causing it produce values erring much more toward neutral zero-values than it should. It is still reasonable to attribute the restricted nature of the these original graphs, at least partially, to the nature of the text, them being scripts, not novels, however it can still be seen that processing modern English is gives more meaningful results. This is evidenced in the huge variation (nearly full -1 to 1) of the graph of Cinderella in figure \ref{fig:cinderellaGran} which is also written in modern English.
         \begin{figure}
-            \includegraphics[width=1\textwidth]{Figures/EMvsM/EMvsM}
+            \includegraphics[width=1\textwidth]{Figures/EMvsM/EMvsMAll}
             \centering
-            \caption{Original (early modern English) text graphed on the left, along shide hand-modernised text on the right for four plays.}
+            \caption{Original (early modern English) text graphed on the left, along shide hand-modernised text on the right for the six varded texts.}
             \label{fig:emvsm}
         \end{figure}
     \subsection{Shakespeare: Comedies Vs. Tragedies}
@@ -312,7 +339,11 @@ The following section covers the various experimentation and analysis carried ou
 \newpage
 \section{Project Gutenberg Formating}
 \label{sec:gutenbergFormat}
-        THERE IS NO STANDARD D':
+        This section will examine the problems that were encountered using and processing corpora from Project Gutenberg. Chosen as the primary source of corpora, Project Gutenberg provides free, uncopyrighted literature for use in multiple formats. Early in development, Sentiplot had the capability to process plain text files only as this was deemed the simplest and easiest way to input text into the application. This was later found to be inadequet for the purposes of identifying and seperately processing individual chapters.
+
+        By chance, it was found that the HTML text provided by Project Gutenberg for both \textit{Macbeth} and \textit{Hamlet} (two of texts used to test the program during development) used HTML header tags to format Act and Scene numbers. It was also fonud that the preamble and postamble were enclosed in <pre>...</pre> tags exclusively in this texts. An HTML file parser was then built in to Sentiplot to strip out unneeded information (pre/postamble, HTML tags, etc), decode it, and divide into chapter sections based upon these header tags. This worked for a number of texts, however, not all. It was taken for granted and assumed that Project Gutenberg used this as a standard format for all HTML file published - unfortunately this was not the case and sound of the graphs shown in this report are erroneous due to this.
+        
+        Some of the texts lack any chapters that are able to be analysed and most have multiple chapters that either contain a majority of preamble/postamble or, are a single line of text or whitespace.
 \newpage
 \section{Conclusion}
 	This is a conclusion.
