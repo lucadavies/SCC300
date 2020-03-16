@@ -365,6 +365,7 @@ The following section covers the various experimentation and analysis carried ou
 \section{Conclusion}
     This final section will wrap up this report, covering its failures, successes and lessons learnt.
     \subsection{Review of Aims}
+        The following list repeats the aims listed at the start of this report, with each aim followed by an overview of relevant results obtained.
         \begin{itemize}
             \item \textcolor{gray}{\textit{Design and develop an application to process a range of corpora to produce a graphing of the emotional arc during its literary course (as produced using SA)}}
             
@@ -384,13 +385,15 @@ The following section covers the various experimentation and analysis carried ou
             This aim was fulfilled directly via the processing of the varded Shakespeare texts. It was shown that VADER does indeed perform better on modern English.
         \end{itemize}
     \subsection{Revisions to System}
-        Given the results obtained from VADER, it is likely that a different sentiment analysis engine may produce better results. This is caused by a number of reasons, not least that VADER was originally designed for short input texts (the length of a Tweet) but also that it was trained for modern English, not the early-modern English found in Shakespeare's plays.
+        Given the results obtained from VADER, it is likely that a different sentiment analysis engine may produce better results. This stems from a number of reasons, not least that VADER was originally designed for short input texts (the length of a Tweet) but also that it was trained on modern English text, not the early-modern English found in Shakespeare's plays. More advanced and versatile NLP and sentiment analysis tools may be better able to yield results on the topic
 
         As detailed in section \ref{sec:gutenbergFormat}, the format of corpora taken from Project Gutenberg varied in such a way that the Sentiplot tool was unable to effectively and reliable strip away unwanted text bloat before submitting it to be processed. This visually affected results at key points (the beginning and end of some graphs), causing confusion and misunderstanding amongst some of the participants in section \ref{subsec:reader}. An alternate, more consistent source of corpora must be found or the Sentiplot tool must be developed further to account for this inconsistency. This may mean that chapter analysis may have to be scrapped or very much non-trivial algorithms must be implemented to correctly divide texts at appropriate chapter boundaries.
     \subsection{Future Research}
-        There is scope for further research here, particularly around the comparison of NLP tool performance on different variations of English as in section \ref{subsec:EMvME}. This showed promise in the very obvious and clear improved performance when processing the varded text over the original.
+        There is scope for further research here, particularly around the comparison of NLP tool performance on different variations of English as in section \ref{subsec:EMvME}. This showed promise in the very obvious and clear improved performance when processing the varded text over the original. It could be explored if other tools perform better on this form of English by default, or failing that, if user-trainable tools could be taught how to process early-modern English to an equal standard.
     \subsection{Closing Statement}
-        Ahhh, yes what goes here...?
+        The initial goal of this study may have changed significantly early on, however this report has made fresh footprints in the region of NLP for alternative forms English and was able to show some of the limitations of simple NLP, particularly when processing literature in forms other than standard novels.
+        
+        Overall the study has made progress in a small in a number of areas of NLP and Sentiment Analysis.
 \label{sec:conclusion}
 \newpage
 \bibliographystyle{plain}
