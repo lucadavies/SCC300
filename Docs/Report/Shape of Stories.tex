@@ -3,11 +3,12 @@
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage[font={small,it}]{caption}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \graphicspath{{../}}
 \title{\textbf{Using Natural Language Processing to Analyse the Shape of Stories}}
 \author{
-Luca Davies \\ BSc. (Hons.) Computer Science}
-\date{March 2020}
+Luca Davies \\ B.Sc. (Hons.) Computer Science}
+\date{20th March 2020}
 
 \usepackage{natbib}
 \usepackage{graphicx}
@@ -17,25 +18,31 @@ Luca Davies \\ BSc. (Hons.) Computer Science}
 \maketitle
 \newpage
 \section*{TO DO LIST}
+\subsubsection*{Hi Paul, obviously this won't be in the final report! :) \\ RFC on the below if I'm missing anything}
     \begin{itemize}
-        \item Plus-minus symbol HOW???
-        \item Fill out Introduction more
-        \item Fill out background (with references)
+        \item Plus-minus symbol HOW??? \textbackslash pm doesn't work, with/without the siunitx package
+        \item Fill out Introduction more 
+        \item Fill out background (with references, but how many.........)
         \item Anymore to add to Design/Dev section?
         \item Chapter dividing???
-        \item Redo Cinderella hand analysis + write up anything interesting
-        \item Tidy Reader Reflection
+        \item Redo Cinderella hand analysis (didn't store each individual sentence...) + write up anything interesting
         \item More on Early Modern vs Modern English
             \begin{itemize}
                 \item Reference Jonathan Culpeper
             \end{itemize}
         \item Comedy vs Tragedies
+            \begin{itemize}
+                \item Assuming this is still needed?
+            \end{itemize}
+        \item Project Gutenberg INCONSISTENT HTML FORMAT
+            \begin{itemize}
+                \item Could this be somewhere else, like an appendix or is it fine in the main body?
+            \end{itemize}
         \item Conclusion
             \begin{itemize}
                 \item Summary
                 \item Reflection
             \end{itemize}
-        \item Project Gutenberg INCONSISTENT HTML FORMAT
     \end{itemize}
 
 \section*{Declaration}
@@ -187,7 +194,7 @@ This section will detail the design and implementation of the tool used to carry
             \label{fig:sentiplot}
         \end{figure}
     \subsubsection{Results Display}
-        Figure \ref{fig:resultsviewer} shows the results screen for Hamlet, initially showing the graph of the entire text. The maximum and minimum points are labeled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint.
+        Figure \ref{fig:resultsviewer} shows the results screen for \textit{Hamlet}, initially showing the graph of the entire text. The maximum and minimum points are labelled with the start of the related sentence. Hovering the mouse over these labels shows the entire sentence or sentences that produced that datapoint.
 
         For every sentence analysed VADER returns four sentiment scores: positive, neutral and negative (each holding a -1 to 1 score regarding match to that sentiment), and compound which acts as a single representation for the sentiment in the sentence parsed. Each of these scores have their own graph which may have their visibility toggled on and off with the check boxes in the bottom left. (Default is compound alone, as it proved the most indicative of sentiment, as advised by VADER documentation.) This graph can be saved to a JPG by clicking the save button.
         \begin{figure}[H]
@@ -201,7 +208,7 @@ This section will detail the design and implementation of the tool used to carry
             \caption{ResultsViewer window showing table}
             \label{fig:resultstable}
         \end{figure}
-        Figure \ref{fig:resultschapters} shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labeled with their relevant sentence(s), expandable by hovering the mouse over the label.
+        Figure \ref{fig:resultschapters} shows one of the chapter tabs from the results screen. Each of graphs the compound sentiment score of up to 5 chapters from the processed text. Again, maxima and minima are labelled with their relevant sentence(s), expandable by hovering the mouse over the label.
         \begin{figure}[H]
             \includegraphics[width=1\textwidth]{Misc/resultschapters}
             \caption{ResultsViewer window showing chapter graphs}
@@ -252,9 +259,10 @@ The following section covers the various experimentation and analysis carried ou
         
         With all this being said, it's possible, that a different tool may have been better suited overall to this task than VADER is, due, at least in part, to it's native design choice to parse text the length of Tweets, not entire corpora. Sentiplot could be redesigned to pass VADER each block as a whole instead of summing the individual sentence values instead, although it is to be assumed that this would yield less accurate results as this is not how VADER was intended to be used.
     \subsection{Curve Identification}
-        The original inspiration behind this project stemmed from Kurt Vonnegut's lecture on the ``The Shape of Stories'' and attempting to test his theory by plotting the sentiment results of various texts on a graph against time. This is what drove the initial development of Sentiplot and this study as a whole. However after initial results were produced by Sentiplot, one of two things became somewhat clear: either Vonnegut's theories were wrong, or VADER was not up to the task at hand. Which, remains to be seen and is likely best left to further research. Nevertheless, this meant the aims of the project began to shift more toward NLP for processing literature in general (as opposed to its normal domain of opinion mining) and analysing those results. Consequently potential developments for curve identification were not developed to completion, namely, an algorithm to statistically compare the produced graphs with those predicted by Vonnegut, was never written. Despite this, mathematical plots were extracted from the six distinct curves mentioned in figure \ref{fig:storyTypes} (excluding `Which Way Is Up?' and `New Testament' for the fact of being a flat line and identical to `Cinderella', respectively) by using an online point plotting tool (see \cite{webPlotDigitizer}). The raw CSV data is provided in the additional documents to this report.
+    \label{subsec:curves}
+        The original inspiration behind this project stemmed from Kurt Vonnegut's lecture on the ``The Shape of Stories'' and attempting to test his theory by plotting the sentiment results of various texts on a graph against time. This is what drove the initial development of Sentiplot and this study as a whole. However after initial results were produced by Sentiplot, one of two things became somewhat clear: either Vonnegut's theories were wrong, or VADER was not up to the task at hand. Which, remains to be seen and is likely best left to further research. Nevertheless, this meant that the aims of the project began to shift more toward NLP for processing literature in general (as opposed to its normal domain of opinion mining) and analysing those results. Consequently potential developments for curve identification were not developed to completion, namely, an algorithm to statistically compare the produced graphs with those predicted by Vonnegut, was never written. Despite this, mathematical plots were extracted from the six distinct curves mentioned in figure \ref{fig:storyTypes} (excluding `Which Way Is Up?' and `New Testament' for the fact of being a flat line and identical to `Cinderella', respectively) by using an online point plotting tool (see \cite{webPlotDigitizer}). The raw CSV data is provided in the additional documents to this report.
 
-        The following sections briefly explore the potential loose identifications of curves in a number of texts processed by the Sentiplot tool.
+        Due to the above mentioned reasons, in-depth analysis into finding curves in corpora was scaled back compared to original plans. The following sections briefly explore the potential loose identifications of curves in a number of texts processed by the Sentiplot tool.
         \subsubsection{Whole Text Analysis}
             A small variety of both novels and scripts of varying lengths were processed to produce their curves. As mentioned above, there was not an immediately obvious correlations between many of the texts' graphs and those predicted by Vonnegut. 
             
@@ -265,23 +273,24 @@ The following section covers the various experimentation and analysis carried ou
                 \caption{The curve produced for \textit{Cinderella} matches somewhat closely with Vonnegut's prediction.} 
                 \label{fig:cinderellaComp}
             \end{figure}
-            A number of Shakespeare plays were also processed in an initial attempt to match one of Vonnegut's suggestions in his lecture via the `curve' (supposedly a flat line) produced for Hamlet. Although there were some minor exceptions, the majority of these texts produced highly restricted and unvarying graphs
+            A number of Shakespeare plays were also processed in an initial attempt to match one of Vonnegut's suggestions in his lecture via the `curve' (supposedly a flat line) produced for \textit{Hamlet}. Although there were some minor exceptions, the majority of these texts produced highly restricted and unvarying graphs. The reasons for this are discussed in more detail in section \ref{subsec:reader}. Needless to say, this makes it very difficult to even begin to classify any of the curves according to any of Vonnegut’s types. Although unsuccessful at face-value, this prompted further experimentation in the form of section \ref{subsec:EMvME} in which modernised variants of the six plays are processed instead of the originals.
             \begin{figure}
                 \includegraphics[width=1\textwidth]{Figures/Curve/ShakespeareOverlaid}
                 \centering
-                \caption{The graphs of six plays overlaid on top of one another. At very few times do any of the graphs exceed +/-0.25} 
-                \label{fig:ShakespearOverlaid}
+                \caption{The graphs of six plays overlaid on top of one another. Rarely do any of the graphs exceed +/-0.25.} 
+                \label{fig:ShakespeareOverlaid}
             \end{figure}
         \subsubsection{Chapter Analysis}
-            This functionality was implemented in Sentiplot to further examine not only if stories had curves at all, but to see if any such curves could be discerned within smaller narrative sections of a larger text. The method is not greatly complex, dividing a text into chapters and simply running and graphing and plotting each chapter individually to ease analysis.
+            This functionality was implemented in Sentiplot to further examine not only if stories had curves at all, but to see if any such curves could be discerned within smaller narrative sections of a larger text. The method is not greatly complex, dividing a text into chapters and simply graphing and plotting each chapter individually to ease analysis.
 
-            Each chapter is plotted using the same granularity as the main text, this being a percentage of the input text length. Here, this percentage is applied to the length of the chapter itself. Depending on average chapter length this can mean that specific a granularity many have to be chosen to examine chapters. Being much shorter than the full text, the 1\% often used for a whole text can lead to single-sentence processing for many chapters.
+            Each chapter is plotted using the same granularity as the main text, this being a percentage of the input text length. Here, this percentage is applied to the length of the chapter itself. Depending on average chapter length this can mean that specific a granularity may have to be chosen to examine chapters. Being much shorter than the full text, the 1\% often used for a whole text can lead to single-sentence processing for many chapters and thus yield erratic graphs.
             \begin{figure}
                 \includegraphics[width=1\textwidth]{Figures/Chap/Macbeth}
                 \centering
                 \caption{``Chapters'' 26 to 30 of \textit{Macbeth} showing five overlaid curves. Chapter 26 (light blue) shows potential shape albeit somewhat extreme.} 
-                \label{fig:handMacbeth}
+                \label{fig:macbethChap}
             \end{figure}
+            Figure \ref{fig:macbethChap} shows one of the chapter tabs from processing \textit{Macbeth} with a higher percentage granularity than would normally be used, for the sake of giving useful results in the chapters screen. It can be seen here that there is a potential for curves to be found here, though given the majority negative results elsewhere, it's highly likely any matches would be either coincidence or subject to positive-result bias.
     \subsection{Hand Analysis Vs. VADER}
         This test was performed by selecting a 100 random sentences from two texts (Macbeth and Cinderella), analysing them each individually by hand and estimating a combined positive/negative sentiment score in the same range as that produced by VADER. I attempted to avoid trying to emulate the way VADER would process the text, instead scoring each sentence as I would as a reader of the text: "Would I feel positively and negatively after reading this sentence?" or, similar - a human approach.
         
@@ -290,11 +299,11 @@ The following section covers the various experimentation and analysis carried ou
         \begin{figure}[hbt]
             \includegraphics[width=1\textwidth]{Figures/HandAnalysis/Macbeth}
             \centering
-            \caption{An excerpt from the table of human-analysed sentiment scores along side VADER's scores with the difference (highlighted green for a match, red otherwise) shown. The original sentences from Macbeth are shown for reference.}
+            \caption{An excerpt from the table of human-analysed sentiment scores along side VADER's scores with the difference (highlighted green for a match, red otherwise) shown. The original sentences from \textit{Macbeth} are shown for reference.}
             \label{fig:handMacbeth}
         \end{figure}
         
-        The results obtained, although they are based on one person's own judgement (and hence are not necessarily reliable), were disappointing to say the least. To determine similarity, a threshold difference of +/-0.25 was chosen to mark the boundary between results that correlated with each other, and results did not. From this, of the 100 sentences taken from Cinderella, only 27\% matched. In the case of Macbeth, 50\% matched, but it is possible to theorise that majority of the increase is likely due to the fact of Macbeth being a script - namely, there were many sentences that were just a name, or just a stage direction alone and thus was very easy to be rated neutral (or, zero) by both a human and VADER. However, in the 100 sentences, 29 names, stage directions or similar were present, of which 10 matched (mainly at or near zero), decreasing the effective percentage of matched sentences to somewhere in the range 21\%-40\%. There were some cases where a plain name resulted in an extreme score (see rows 4 and 9 in figure \ref{fig:handMacbeth}). Some of the scores assigned by VADER also seem to make little to no sense whatsoever, for example, row 7 in figure \ref{fig:handMacbeth}: the full sentence directly includes (without negation), the words ``bloody'', ``avaricious'', ``false'', ``deceitful'', ``malicious'', and ``sin'', and yet VADER scores the sentence all but neutral, while most human readers would likely rate this one of the most negative in the data set.
+        The results obtained, although they are based on one person's own judgement (and hence are not necessarily reliable), were disappointing to say the least. To determine similarity, a threshold difference of +/-0.25 was chosen to mark the boundary between results that correlated with each other, and results did not. From this, of the 100 sentences taken from Cinderella, only 27\% matched. In the case of Macbeth, 50\% matched, but it is possible to theorise that majority of the increase is likely due to the fact of \textit{Macbeth} being a script - namely, there were many sentences that were just a name, or just a stage direction alone and thus was very easy to be rated neutral (or, zero) by both a human and VADER. However, in the 100 sentences, 29 names, stage directions or similar were present, of which 10 matched (mainly at or near zero), decreasing the effective percentage of matched sentences to somewhere in the range 21\%-40\%. There were some cases where a plain name resulted in an extreme score (see rows 4 and 9 in figure \ref{fig:handMacbeth}). Some of the scores assigned by VADER also seem to make little to no sense whatsoever, for example, row 7 in figure \ref{fig:handMacbeth}: the full sentence directly includes (without negation), the words ``bloody'', ``avaricious'', ``false'', ``deceitful'', ``malicious'', and ``sin'', and yet VADER scores the sentence all but neutral, while most human readers would likely rate this one of the most negative in the data set.
 
         Though not in the previous example, it is possible that some of these erroneous results may stem from the fact that the way VADER is being utilised in Sentiplot means that it has no context for any given sentence, they are all processed stand-alone and so VADER cannot build up any running themes or patterns to aid in analysis.
 
@@ -312,28 +321,29 @@ The following section covers the various experimentation and analysis carried ou
                 \caption{Readers (top of each pair) in general drew curves bearing little to no similarity to those produced by VADER (bottom in each pair)}
                 \label{fig:readerVsVader}
             \end{figure}
-            In general, all the curves drawn by participants were wildly different to the VADER output for the same texts. All VADER's curves stayed mostly in the range of +/-0.25 on the Sentiment axis, whereas most participants drew curves using nearly the full extent of the y-axis. It was to be expected that participants would use the full axis, but it was not expected before setting out on this experiment that VADER's graphs would be quite so restricted. This is not to say that VADER doesn't register any sentences as reaching the more extreme values: when examining the per-sentence scores in the table view, it does, but these values get flattened when they are grouped together. On closer inspection, taking Macbeth as an example, approximately 30\% of the sentences were outside the +/-0.25 range, however  just over 60\% of those \textit{within} that range were zeros: registered by VADER as completely neutral sentences. When taking averages, these high volumes of zero-scored sentences reduced the impact on the output graph of higher scores greatly.
+            In general, all the curves drawn by participants were wildly different to the VADER output for the same texts. All VADER's curves stayed mostly in the range of +/-0.25 on the Sentiment axis, whereas most participants drew curves using nearly the full extent of the y-axis. It was to be expected that participants would use the full axis, but it was not expected before setting out on this experiment that VADER's graphs would be quite so restricted. This is not to say that VADER doesn't register any sentences as reaching the more extreme values: when examining the per-sentence scores in the table view, it does, but these values get flattened when they are grouped together. On closer inspection, taking \textit{Macbeth} as an example, approximately 30\% of the sentences were outside the +/-0.25 range, however  just over 60\% of those \textit{within} that range were zeros: registered by VADER as completely neutral sentences. When taking averages, these high volumes of zero-scored sentences reduced the impact on the output graph of higher scores greatly.
 
-            Even with this failure, attempting to look at relative differences along the two curve sets (those drawn, and those produced by VADER) still doesn't yield much similarity. The only immediately obvious correlation is, again, in Macbeth where both VADER and a participant show a sharp dip at around the halfway mark (labeled on the drawn curve as "murder"). This is nearly the only obvious match.
+            Even with this failure, attempting to look at relative differences along the two curve sets (those drawn, and those produced by VADER) still doesn't yield much similarity. The only immediately obvious correlation is, again, in \textit{Macbeth} where both VADER and a participant show a sharp dip at around the halfway mark (labelled on the drawn curve as "murder"). This is nearly the only obvious match.
             
-            Kurt Vonnegut suggested in his lecture that Hamlet ought to have a somewhat flat curve. Sentiplot supports this at least visually, however, some of the drawn graphs show a very clear descent, logically coupling Hamlet's madness with negative sentiment. Sentiplot does in fact also show some extreme peaks and troughs, however these are momentary in the overall context of the script, and thus are averaged out and do not appear in the final output. Depending on the scope at which you examine, but Sentiplot has elements of agreement with both Vonnegut's flat prediction \textit{and} participant's more curved graphs.
+            Kurt Vonnegut suggested in his lecture that \textit{Hamlet} ought to have a somewhat flat curve. Sentiplot supports this at least visually, however, some of the drawn graphs show a very clear descent, logically coupling Hamlet's madness with negative sentiment. Sentiplot does in fact also show some extreme peaks and troughs, however these are momentary in the overall context of the script, and thus are averaged out and do not appear in the final output. Depending on the scope at which you examine, but Sentiplot has elements of agreement with both Vonnegut's flat prediction \textit{and} participant's more curved graphs.
 			\subsubsection{Reader Reflection}
                 Participants were later asked to comment on the similarity (or dissimilarity) between their own graphs and those from VADER. There was a general consensus that VADER's graphs lacked the ability to show various details and intricacies of the literature or were otherwise just plain wrong. 
-                One participant noted the failure of the system pickup on tonal dissonances within a Midsummer Night's Dream - this is assumably a reference to the multiple plot lines within the play and their sometimes conflicting emotional tones. If VADER had a greater capability to distinguish plot lines and characters within a text from one another, it's highly likely that each plot within a text would have its own curve.
+                One participant noted the failure of the system pickup on tonal dissonances within a \textit{A Midsummer Nights Dream} - this is assumedly a reference to the multiple plot lines within the play and their sometimes conflicting emotional tones. If VADER had a greater capability to distinguish plot lines and characters within a text from one another, it's highly likely that each plot within a text would have its own curve.
                 
-                It was also said that the Sentiplot graphs failed to pick up on even the extremities of character emotions (namely in Romeo and Juliet) and also in the overall tone of a play (Hamlet, showing as being relatively neutral when expected to be generally negative).
+                It was also said that the Sentiplot graphs failed to pick up on even the extremities of character emotions (namely in \textit{Romeo and Juliet}) and also in the overall tone of a play (Hamlet, showing as being relatively neutral when expected to be generally negative).
 
-                Another participant mentioned that they felt undertones in the text were totally lost in the graphs (though this is perhaps to be expected) and that they failed to differentiation between specific known periods of happy/sad narrative segments. One specific example of this is seen at the end of Romeo and Juliet - a decidedly negative section of literature, at least at surface level. Of the two responses for Romeo and Juliet received, both finish the play below zero, with one plummeting the sentiment score down to maximum negative. By contrast, VADER's graph actually \textit{rises} at the end, the second highest point in the entire graph. This is a major error, of course, but after seeing the results, the text processed was examined closer and it was found that Sentiplot had failed to strip out the sizable Project Gutenberg pre- and postamble in the processed HTML file. It was the postamble (making up the final 5\% of the text) that gave rise to this upward spike where there was otherwise a negative trend that met readers expectations. Unfortunately it was found that this was not an isolated issue and is covered in more detail in section \ref{sec:gutenbergFormat}.
+                Another participant mentioned that they felt undertones in the text were totally lost in the graphs (though this is perhaps to be expected) and that they failed to differentiation between specific known periods of happy/sad narrative segments. One specific example of this is seen at the end of \textit{Romeo and Juliet} - a decidedly negative section of literature, at least at surface level. Of the two responses for \textit{Romeo and Juliet} received, both finish the play below zero, with one plummeting the sentiment score down to maximum negative. By contrast, VADER's graph actually \textit{rises} at the end, the second highest point in the entire graph. This is a major error, of course, but after seeing the results, the text processed was examined closer and it was found that Sentiplot had failed to strip out the sizable Project Gutenberg pre- and postamble in the processed HTML file. It was the postamble (making up the final 5\% of the text) that gave rise to this upward spike where there was otherwise a negative trend that met readers expectations. Unfortunately it was found that this was not an isolated issue and is covered in more detail in section \ref{sec:gutenbergFormat}.
                 
                 A few participants noted that some of VADER's graph appeared to have little to no correlation with the text at all, with some attributing this to a computer program's lack of the ability to experience or empathise with literary art. It was also suggested that a theatrical script is likely to be a less than ideal format for attempting to produce a curve in this way, with one participant pointing out that scripts do not contain significant amounts of description - they only contain dialogue, with a small (albeit, varying) amount of description present in the stage directions; novels on the other hand innately contain description as it is the primary information is conveyed to the reader.
     \subsection{Early Modern Vs. Modern English}
+    \label{subsec:EMvME}
         In this experiment, ``varded'' variants of six Shakespearean plays were processed by Sentiplot. The varded texts are modern English variants of Shakespeare's texts, the goal here being to compare just how much of an impact the difference in language (early-modern English vs. modern English) has on the ability of VADER to analyse sentiment.
 
         VADER is not trained to work on the likes of formal literature. In fact, it is trained to work on highly modern and informal text, to such an extent that it can understand and analyse Internet slang and emoji. Due to this fact, this experiment was carried out to test if VADER was able perform equally or at all as well on a different form of English, that being the Early Modern English found in the Shakespeare plays processed for sections \ref{subsec:reader} and \ref{subsec:comVsTrag}. The assumption is that VADER will perform better on modernised texts, as that is what its models have been trained to process.
         
         The original Project Gutenberg texts of the plays gave graphs that did not hold much variation - processing the modernised text overall gave similar graphs at first glance, similar but with exaggerated peaks and troughs with the overall form is still held. However, finer inspection will show that in fact, there's a number of new features visible in most plays that were not present in the original text. For example: in the latter 40\% of the original text of \textit{The Tempest}, the graph has less variation, staying practically in the range of zero to 0.1 - in direct opposition, the varded text has a number of sizable peaks and troughs, with a maximum magnitude score of approximately positive 0.3. Similarly, in \textit{A Midsummer Nights Dream}, just after the halfway mark, there appears to be a fairly distinctive negative period for a while, a feature that isn't shown at all on the original text (in fact, it appears to go become more \textit{positive}).
 
-        These new additions seen in most graphs demonstrate VADER's limited ability to process non-modern English text, causing it produce values erring much more toward neutral zero-values than it should. It is still reasonable to attribute the restricted nature of the these original graphs, at least partially, to the nature of the text, them being scripts, not novels, however it can still be seen that processing modern English is gives more meaningful results. This is evidenced in the huge variation (nearly full -1 to 1) of the graph of Cinderella in figure \ref{fig:cinderellaGran} which is also written in modern English.
+        These new additions seen in most graphs demonstrate VADER's limited ability to process non-modern English text, causing it produce values erring much more toward neutral zero-values than it should. It is still reasonable to attribute the restricted nature of the these original graphs, at least partially, to the nature of the text, them being scripts, not novels, however it can still be seen that processing modern English is gives more meaningful results. This is evidenced in the huge variation (nearly full -1 to 1) of the graph of \textit{Cinderella} in figure \ref{fig:cinderellaGran} which is also written in modern English.
         \begin{figure}
             \includegraphics[width=1\textwidth]{Figures/EMvsM/EMvsMAll}
             \centering
@@ -342,7 +352,7 @@ The following section covers the various experimentation and analysis carried ou
         \end{figure}
     \subsection{Shakespeare: Comedies Vs. Tragedies}
     \label{subsec:comVsTrag}
-        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \textit{should} show generally more positive curves and similarly, tragedies \textit{should} show more negative curves accordingly. To attempt to display this, three comedies (\textit{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\textit{Macbeth, Hamlet, Romeo \& Juliet}) were processed to give their respective graphs. There is some debate on the specific genre of \textit{The Tempest}, it now often being referred to as a ``late romance'', a subsection of Shakespeare's comedies leaning more toward a ``tragicomedy'' in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
+        As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \textit{should} show generally more positive curves and similarly, tragedies \textit{should} show more negative curves accordingly. To attempt to display this, three comedies (\textit{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\textit{Macbeth, Hamlet, Romeo and Juliet}) were processed to give their respective graphs. There is some debate on the specific genre of \textit{The Tempest}, it now often being referred to as a ``late romance'', a subsection of Shakespeare's comedies leaning more toward a ``tragicomedy'' in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
 \newpage
 \section{Project Gutenberg Formatting}
 \label{sec:gutenbergFormat}
@@ -353,7 +363,34 @@ The following section covers the various experimentation and analysis carried ou
         Some of the texts lack any chapters that are able to be analysed and most have multiple chapters that either contain a majority of preamble/postamble or, are a single line of text or whitespace.
 \newpage
 \section{Conclusion}
-	This is a conclusion.
+    This final section will wrap up this report, covering its failures, successes and lessons learnt.
+    \subsection{Review of Aims}
+        \begin{itemize}
+            \item \textcolor{gray}{\textit{Design and develop an application to process a range of corpora to produce a graphing of the emotional arc during its literary course (as produced using SA)}}
+            
+            The Sentiplot tool functionally fulfilled this aim acceptably.
+
+            \item \textcolor{gray}{\textit{Analyse a range of corpora for compliance with Kurt Vonnegut’s theories and story shapes}}
+            
+            A small variety of corpora was processed for compliance and similarity. There was certainly scope for more texts to be analysed, however the lack of positive results and the inconsistencies of Project Gutenberg's format (see figures \ref{subsec:curves} \& \ref{sec:gutenbergFormat}) prompted a halt to in-depth experimentation.
+            \item \textcolor{gray}{\textit{Otherwise attempt to identify potential trends in the texts processed, such as obvious geometric differences between literature generally considered happy/sad}}
+            
+            Of the texts produced, \textit{Cinderella} was the sole text to produce a visibly similar graph to to that predicted by Kurt Vonnegut. This aim was attempted and was found unsuccessful.
+            \item \textcolor{gray}{\textit{Present graphs of texts to readers who are familiar with the text to assess if their perceptions of the text align with the SA graphs}}
+            
+            A survey of readers was carried out, obtaining 22 sets of results that was used for side-by-side analysis with VADER's graphs but also for self-analysis and comments around the Sentiplot tool.
+            \item \textcolor{gray}{\textit{Assess VADER's ability to process text outside its design remit (e.g. early-modern English)}}
+            
+            This aim was fulfilled directly via the processing of the varded Shakespeare texts. It was shown that VADER does indeed perform better on modern English.
+        \end{itemize}
+    \subsection{Revisions to System}
+        Given the results obtained from VADER, it is likely that a different sentiment analysis engine may produce better results. This is caused by a number of reasons, not least that VADER was originally designed for short input texts (the length of a Tweet) but also that it was trained for modern English, not the early-modern English found in Shakespeare's plays.
+
+        As detailed in section \ref{sec:gutenbergFormat}, the format of corpora taken from Project Gutenberg varied in such a way that the Sentiplot tool was unable to effectively and reliable strip away unwanted text bloat before submitting it to be processed. This visually affected results at key points (the beginning and end of some graphs), causing confusion and misunderstanding amongst some of the participants in section \ref{subsec:reader}. An alternate, more consistent source of corpora must be found or the Sentiplot tool must be developed further to account for this inconsistency. This may mean that chapter analysis may have to be scrapped or very much non-trivial algorithms must be implemented to correctly divide texts at appropriate chapter boundaries.
+    \subsection{Future Research}
+        There is scope for further research here, particularly around the comparison of NLP tool performance on different variations of English as in section \ref{subsec:EMvME}. This showed promise in the very obvious and clear improved performance when processing the varded text over the original.
+    \subsection{Closing Statement}
+        Ahhh, yes what goes here...?
 \label{sec:conclusion}
 \newpage
 \bibliographystyle{plain}
