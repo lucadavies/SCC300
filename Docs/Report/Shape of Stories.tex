@@ -4,15 +4,18 @@
 \usepackage[font={small,it}]{caption}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{pdfpages}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{url}
 \graphicspath{{../}}
+\bibliographystyle{agsm}
+
 \title{\textbf{Using Natural Language Processing to Analyse the Shape of Stories}}
 \author{
 Luca Davies \\ B.Sc. (Hons.) Computer Science}
 \date{20th March 2020}
-
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{float}
 
 \begin{document}
 \maketitle
@@ -20,28 +23,40 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
 \section*{TO DO LIST}
 \subsubsection*{Hi Paul, obviously this won't be in the final report! :) \\ RFC on the below if I'm missing anything}
     \begin{itemize}
-        \item Plus-minus symbol HOW??? \textbackslash pm doesn't work, with/without the siunitx package
         \item Fill out Introduction more 
-        \item Fill out background (with references, but how many.........)
-        \item Anymore to add to Design/Dev section?
-        \item Chapter dividing???
         \item Redo Cinderella hand analysis (didn't store each individual sentence...) + write up anything interesting
         \item More on Early Modern vs Modern English
             \begin{itemize}
                 \item Reference Jonathan Culpeper
             \end{itemize}
-        \item Comedy vs Tragedies
-            \begin{itemize}
-                \item Assuming this is still needed?
-            \end{itemize}
-        \item Project Gutenberg INCONSISTENT HTML FORMAT
-            \begin{itemize}
-                \item Could this be somewhere else, like an appendix or is it fine in the main body?
-            \end{itemize}
+        \item Comedy vs Tragedies (time permitting)
         \item Conclusion
             \begin{itemize}
                 \item Summary
                 \item Reflection
+            \end{itemize}
+        \item Paul's Recommendations
+            \begin{itemize}
+                \item Add reference + quote explaining NLP
+                \item Expand SA outline in Background (also see above)
+                \item Add to above section regarding an overview of available NLP/SA toolkits
+                \item Explain why CoreNLP was slow sec Top level language
+                \item Justify use of waterfall/agile sec design/dev
+                \item Create / include design diagram for Sentiplot sec design/dev
+                \item Add summary to sec Sentiplot Tool (or UI... (or ResDisplay...))
+                \item Add overview of sec Experimentation
+                \item TF is ``vard'', actually explain it!!
+                \item Consider what to do about the buggered input corpora from Gutenberg (re: section \ref{subsec:EMvME} and different length/block size)
+                \item Move Gutenberg format chapter to a new section `Data' between current 3/4
+                \begin{itemize}
+                    \item Describe whole dataset
+                    \item Why these corpora?
+                \end{itemize}
+                \item Conclusion intro needs to be much better (duh you wrote it while basically asleep)
+                \item Elaborate on Sentiplot success in conclusion
+                \item Reflection: SA in general as a method?
+                \item Reflection: Actual execution, what to do differently
+                \item Be bolder in closing statement, you have actually done some cool stuff!
             \end{itemize}
     \end{itemize}
 
@@ -50,17 +65,17 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
     I agree to my dissertation being placed in the public domain, with my name explicitly included as the author of the work. \\
     
     \noindent
-    Name: \\
-    Date:
+    Name: Luca Davies\\
+    Date: 20/03/2020
 \newpage
 \section*{Abstract}
-    This report examines the application of Natural Language Processing and Sentiment Analysis to fictional texts in an attempt to summarise narrative arcs as a curve on axes of time against positive/negative sentiment. VADER is used to process text for sentiment analysis and further experimentation is carried out to analyse how suitable VADER may be for this task. Corpora was mainly sourced from Project Gutenberg. A tool was developed to carry out a range of experiments on sentiment analysis that employed VADER as it's sentiment analysis engine. Experimentation was carried out in the context of sentiment analysis around the following topics: the coarseness of sentiment analysis; the accuracy of VADER at sentence level via hand-tagging; sentiment analysis vs. analysis by human readers; early-modern English vs. modern English; Shakespearean comedies vs. tragedies. It was discovered that a more powerful and versatile sentiment analysis engine would likely be needed to produce more readable curves and that a more flexible tool would prove useful for processing different text styles, such as scripts.
+    This report examines the application of Natural Language Processing and Sentiment Analysis to fictional texts in an attempt to summarise narrative arcs as a curve on axes of time against positive/negative sentiment. VADER is used to process text for sentiment analysis and further experimentation is carried out to analyse how suitable VADER may be for this task. Corpora was mainly sourced from Project Gutenberg. A tool was developed to carry out a range of experiments on sentiment analysis that employed VADER as its sentiment analysis engine. Both quantitative and qualitative experimentation were carried out in the context of sentiment analysis around the following topics: the coarseness of sentiment analysis; the accuracy of VADER at sentence level via hand-tagging; sentiment analysis vs. analysis by human readers; early-modern English vs. modern English. It was found that Shakespearean texts proved difficult to process and so testing was also conduced using texts that had undergone spelling normalisation. It was discovered that a more powerful and versatile sentiment analysis engine would likely be needed to produce more readable curves and that a more flexible tool would prove useful for processing different text styles, such as scripts.
 \newpage
 \tableofcontents
 \newpage
 \section{Introduction}
     \subsection{Overview}
-        Writer Kurt Vonnegut suggested at various points in his career that all stories may be categorised into a relatively small number of basic archetypes based upon the emotional ups and downs experienced within the narrative. He gave each of these novel names such as Man-In-Hole and Boy-Meets-Girl as a simple reference for each. \cite{vonnegutLecture}
+        Writer Kurt Vonnegut suggested at various points in his career that all stories may be categorised into a relatively small number of basic archetypes based upon the emotional ups and downs experienced within the narrative. He gave each of these novel names such as Man-In-Hole and Boy-Meets-Girl as a simple reference for each. \citep{vonnegutLecture}
 
         Literature is one of the defining features of the human race. No other creature on Earth can writes, let alone writes about itself. Humanity takes this a step further again, making up fictitious stories, some rooted in reality, some with no basis at all in which we dream and imagine worlds and situations that may never be possible to achieve. Through written word we express emotion. All emotions, happiness, sadness, anger and fear; love, hate, awe and grief – everything humans can feel, we write about. We create characters to express and receive these emotions, they act as vehicles to transfer their feelings to a reader. With all this freedom to write and create without bound, are we actually as free as we perceive?
 
@@ -68,11 +83,11 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
 
         This concept and these questions drew me toward this project proposal. Not only is it a fascinating endeavour to map the emotions of a novel, but as an exploration of the freedom of writers to convey emotions and of how humans often generate categories and groups without even trying.
 
-        With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the psychological analysis (\cite{sentimentVsEmotionAnalysis}) and employs machine learning and artificial intelligence to further predict and understand the emotions presented in text.
+        With the high-level view clarified, it's important to note the tools within natural language processing that are relevant, namely that in this study, sentiment analysis takes the spotlight. Emotional analysis is a more in-depth field that shifts focus toward the psychological analysis (\citep{sentimentVsEmotionAnalysis}) and employs machine learning and artificial intelligence to further predict and understand the emotions presented in text.
     \subsection{Motivation}
-        At it's core, this study is novel. It is interest driven - to attempt to show that stories can be categorised in a very simple and easy manner based upon the emotional arcs they lead readers across is an interesting new way to sort fiction. There may not be any explicit \textit{need} to categorise literature in this way, however it has the potential to lead to further studies that examine just how it is that humans create literature and nay patterns we follow.
+        At it's core, this study is novel. It is interest driven - to attempt to show that stories can be categorised in a very simple and easy manner based upon the emotional arcs they lead readers across is an interesting new way to sort fiction. There may not be any explicit \textit{need} to categorise literature in this way, however it has the potential to lead to further studies that examine just how it is that humans create literature and any patterns we follow.
 
-        As the project progressed, the goals shifted somewhat, leading to slightly differing goals, less focused on curve matching, and more on the use of natural language processing in literature as a whole.
+        As the project progressed, the goals shifted somewhat, leading to slightly differing aims, less focused on curve matching, and more on the use of natural language processing in literature as a whole. In some ways, the project was self-driven following initial results of attempting to identify curves. After it was proved difficult, the next steps naturally became to analyse quite why it was so difficult and to understand factors (such as the language and type of corpora used) that may be involved in the process.
     \subsection{Aims \& Objectives}
         The aims of this report are as such:
         \begin{itemize}
@@ -83,7 +98,7 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
             \item Assess VADER's ability to process text outside its design remit (e.g. early-modern English)
         \end{itemize}
     \subsection{Report Structure}
-        The remainder of this report will discuss relevant background and context, the design and implementation of the Sentiplot tool, followed by a detailing of the experimentation carried out. The report will then be concluded by an analysis of the results acquired from this experimentation.
+        The remainder of this report will discuss relevant background and context, the design and implementation of the Sentiplot tool, followed by a detailing of the experimentation carried out. The report will then be concluded by an analysis of the results acquired from this experimentation. \citep{reagan2016emotional}
 \newpage
 \section{Background}
 \label{sec:background)}
@@ -104,7 +119,7 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
         \begin{figure}
             \centering
             \includegraphics{Misc/VonnegutShapes}
-            \caption{Vonnegut's Story Types}
+            \caption{Vonnegut's Story Types \citep{vonnegutThesis}}
             \label{fig:storyTypes}
         \end{figure}
     \subsection{The Hedonometer Project}
@@ -112,9 +127,9 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
 \newpage
 \section{Sentiplot Tool}
 \label{sec:sentiplot}
-This section will detail the design and implementation of the tool used to carry out this study, \textit{Sentiplot}. 
+The experimentation required to undertake this study necessitated the need to develop a tool to process corpora and subsequently display it in a readable and analysable manner. The \textit{Sentiplot} filled this role: capable of parsing text from plain text files, Project Gutenberg formatted HTML and varded Shakespeare XML files (see section \ref{subsec:EMvME}). This section will detail the design and implementation of \textit{Sentiplot} during the course of the project. 
     \subsection{Languages \& Libraries}
-    This section briefly discusses the choice of programming language and NLP/SA tools used in the Sentiplot tool.
+    Within reason, any language could have been used to perform this study, however, ease of of programmability and extendibility were also high up in the list of priorities. Familiarity with a given language and it's immediately available tools and APIs held significant sway during the selection process. Together with this, the appropriate NLP and SA toolkits had to be selected to provide a good balance between usability and performance which \textit{also} needed to be language compatible. This section briefly discusses the choice of programming language and NLP/SA tools used in the Sentiplot tool.
         \subsubsection{Top-level Language}
         \label{subsec:language}
         When selecting which language would be most appropriate to use for this project, my major considerations were my prior knowledge of potential languages and their ease of creation of a pleasant user interface. Availability of NLP tools in each language was also to be considered, but as the end implementation shows, this was not imperative due to cross-platform and cross-language capabilities of the chosen combination of languages and tools.
@@ -215,6 +230,18 @@ This section will detail the design and implementation of the tool used to carry
             \label{fig:resultschapters}
         \end{figure}
 \newpage
+\section{Data}
+    Blah blah blah data from project Gutenberg etc blah blah blah
+    \subsection{Selected Corpora}
+        Some stuff was chosen ooooh.
+    \subsection{Project Gutenberg Formatting}
+    \label{subsec:gutenbergFormat}
+            This section will examine the problems that were encountered using and processing corpora from Project Gutenberg. Chosen as the primary source of corpora, Project Gutenberg provides free, uncopyrighted literature for use in multiple formats. Early in development, Sentiplot had the capability to process plain text files only as this was deemed the simplest and easiest way to input text into the application. This was later found to be inadequate for the purposes of identifying and separately processing individual chapters.
+
+            By chance, it was found that the HTML text provided by Project Gutenberg for both \textit{Macbeth} and \textit{Hamlet} (two of texts used to test the program during development) used HTML header tags to format Act and Scene numbers. It was also found that the preamble and postamble were enclosed in \textless pre \textgreater \dots \textless /pre \textgreater tags exclusively in this texts. An HTML file parser was then built in to Sentiplot to strip out unneeded information (pre/postamble, HTML tags, etc), decode it, and divide into chapter sections based upon these header tags. This worked for a number of texts, however, not all. It was taken for granted and assumed that Project Gutenberg used this as a standard format for all HTML file published - unfortunately this was not the case and sound of the graphs shown in this report are erroneous due to this.
+            
+            Some of the texts lack any chapters that are able to be analysed and most have multiple chapters that either contain a majority of preamble/postamble or, are a single line of text or whitespace.
+\newpage
 \section{Experimentation}
 The following section covers the various experimentation and analysis carried out using Sentiplot as a tool for Sentiment Analysis and graphing accordingly.
     \subsection{Analysis Block Size}
@@ -260,7 +287,7 @@ The following section covers the various experimentation and analysis carried ou
         With all this being said, it's possible, that a different tool may have been better suited overall to this task than VADER is, due, at least in part, to it's native design choice to parse text the length of Tweets, not entire corpora. Sentiplot could be redesigned to pass VADER each block as a whole instead of summing the individual sentence values instead, although it is to be assumed that this would yield less accurate results as this is not how VADER was intended to be used.
     \subsection{Curve Identification}
     \label{subsec:curves}
-        The original inspiration behind this project stemmed from Kurt Vonnegut's lecture on the ``The Shape of Stories'' and attempting to test his theory by plotting the sentiment results of various texts on a graph against time. This is what drove the initial development of Sentiplot and this study as a whole. However after initial results were produced by Sentiplot, one of two things became somewhat clear: either Vonnegut's theories were wrong, or VADER was not up to the task at hand. Which, remains to be seen and is likely best left to further research. Nevertheless, this meant that the aims of the project began to shift more toward NLP for processing literature in general (as opposed to its normal domain of opinion mining) and analysing those results. Consequently potential developments for curve identification were not developed to completion, namely, an algorithm to statistically compare the produced graphs with those predicted by Vonnegut, was never written. Despite this, mathematical plots were extracted from the six distinct curves mentioned in figure \ref{fig:storyTypes} (excluding `Which Way Is Up?' and `New Testament' for the fact of being a flat line and identical to `Cinderella', respectively) by using an online point plotting tool (see \cite{webPlotDigitizer}). The raw CSV data is provided in the additional documents to this report.
+        The original inspiration behind this project stemmed from Kurt Vonnegut's lecture on the ``The Shape of Stories'' and attempting to test his theory by plotting the sentiment results of various texts on a graph against time. This is what drove the initial development of Sentiplot and this study as a whole. However after initial results were produced by Sentiplot, one of two things became somewhat clear: either Vonnegut's theories were wrong, or VADER was not up to the task at hand. Which, remains to be seen and is likely best left to further research. Nevertheless, this meant that the aims of the project began to shift more toward NLP for processing literature in general (as opposed to its normal domain of opinion mining) and analysing those results. Consequently potential developments for curve identification were not developed to completion, namely, an algorithm to statistically compare the produced graphs with those predicted by Vonnegut, was never written. Despite this, mathematical plots were extracted from the six distinct curves mentioned in figure \ref{fig:storyTypes} (excluding `Which Way Is Up?' and `New Testament' for the fact of being a flat line and identical to `Cinderella', respectively) by using an online point plotting tool (see \citep{webPlotDigitizer}). The raw CSV data is provided in the additional documents to this report.
 
         Due to the above mentioned reasons, in-depth analysis into finding curves in corpora was scaled back compared to original plans. The following sections briefly explore the potential loose identifications of curves in a number of texts processed by the Sentiplot tool.
         \subsubsection{Whole Text Analysis}
@@ -332,7 +359,7 @@ The following section covers the various experimentation and analysis carried ou
                 
                 It was also said that the Sentiplot graphs failed to pick up on even the extremities of character emotions (namely in \textit{Romeo and Juliet}) and also in the overall tone of a play (Hamlet, showing as being relatively neutral when expected to be generally negative).
 
-                Another participant mentioned that they felt undertones in the text were totally lost in the graphs (though this is perhaps to be expected) and that they failed to differentiation between specific known periods of happy/sad narrative segments. One specific example of this is seen at the end of \textit{Romeo and Juliet} - a decidedly negative section of literature, at least at surface level. Of the two responses for \textit{Romeo and Juliet} received, both finish the play below zero, with one plummeting the sentiment score down to maximum negative. By contrast, VADER's graph actually \textit{rises} at the end, the second highest point in the entire graph. This is a major error, of course, but after seeing the results, the text processed was examined closer and it was found that Sentiplot had failed to strip out the sizable Project Gutenberg pre- and postamble in the processed HTML file. It was the postamble (making up the final 5\% of the text) that gave rise to this upward spike where there was otherwise a negative trend that met readers expectations. Unfortunately it was found that this was not an isolated issue and is covered in more detail in section \ref{sec:gutenbergFormat}.
+                Another participant mentioned that they felt undertones in the text were totally lost in the graphs (though this is perhaps to be expected) and that they failed to differentiation between specific known periods of happy/sad narrative segments. One specific example of this is seen at the end of \textit{Romeo and Juliet} - a decidedly negative section of literature, at least at surface level. Of the two responses for \textit{Romeo and Juliet} received, both finish the play below zero, with one plummeting the sentiment score down to maximum negative. By contrast, VADER's graph actually \textit{rises} at the end, the second highest point in the entire graph. This is a major error, of course, but after seeing the results, the text processed was examined closer and it was found that Sentiplot had failed to strip out the sizable Project Gutenberg pre- and postamble in the processed HTML file. It was the postamble (making up the final 5\% of the text) that gave rise to this upward spike where there was otherwise a negative trend that met readers expectations. Unfortunately it was found that this was not an isolated issue and is covered in more detail in section \ref{subsec:gutenbergFormat}.
                 
                 A few participants noted that some of VADER's graph appeared to have little to no correlation with the text at all, with some attributing this to a computer program's lack of the ability to experience or empathise with literary art. It was also suggested that a theatrical script is likely to be a less than ideal format for attempting to produce a curve in this way, with one participant pointing out that scripts do not contain significant amounts of description - they only contain dialogue, with a small (albeit, varying) amount of description present in the stage directions; novels on the other hand innately contain description as it is the primary information is conveyed to the reader.
     \subsection{Early Modern Vs. Modern English}
@@ -354,14 +381,6 @@ The following section covers the various experimentation and analysis carried ou
     \label{subsec:comVsTrag}
         As mentioned in section \ref{subsec:reader}, Shakespeare plays have been a key source of analysis text. These have generally yielded somewhat restricted graphs. The motivation for these tests came from the thought to force the ability to tell apart different plays by their genre. Namely to comedies \textit{should} show generally more positive curves and similarly, tragedies \textit{should} show more negative curves accordingly. To attempt to display this, three comedies (\textit{Twelfth Night, The Tempest, A Midsummer Night's Dream}) and three tragedies (\textit{Macbeth, Hamlet, Romeo and Juliet}) were processed to give their respective graphs. There is some debate on the specific genre of \textit{The Tempest}, it now often being referred to as a ``late romance'', a subsection of Shakespeare's comedies leaning more toward a ``tragicomedy'' in genre. Nonetheless it ought to still produce a difference in curve to that of the three tragedies.
 \newpage
-\section{Project Gutenberg Formatting}
-\label{sec:gutenbergFormat}
-        This section will examine the problems that were encountered using and processing corpora from Project Gutenberg. Chosen as the primary source of corpora, Project Gutenberg provides free, uncopyrighted literature for use in multiple formats. Early in development, Sentiplot had the capability to process plain text files only as this was deemed the simplest and easiest way to input text into the application. This was later found to be inadequate for the purposes of identifying and separately processing individual chapters.
-
-        By chance, it was found that the HTML text provided by Project Gutenberg for both \textit{Macbeth} and \textit{Hamlet} (two of texts used to test the program during development) used HTML header tags to format Act and Scene numbers. It was also found that the preamble and postamble were enclosed in <pre>...</pre> tags exclusively in this texts. An HTML file parser was then built in to Sentiplot to strip out unneeded information (pre/postamble, HTML tags, etc), decode it, and divide into chapter sections based upon these header tags. This worked for a number of texts, however, not all. It was taken for granted and assumed that Project Gutenberg used this as a standard format for all HTML file published - unfortunately this was not the case and sound of the graphs shown in this report are erroneous due to this.
-        
-        Some of the texts lack any chapters that are able to be analysed and most have multiple chapters that either contain a majority of preamble/postamble or, are a single line of text or whitespace.
-\newpage
 \section{Conclusion}
     This final section will wrap up this report, covering its failures, successes and lessons learnt.
     \subsection{Review of Aims}
@@ -373,7 +392,7 @@ The following section covers the various experimentation and analysis carried ou
 
             \item \textcolor{gray}{\textit{Analyse a range of corpora for compliance with Kurt Vonnegut’s theories and story shapes}}
             
-            A small variety of corpora was processed for compliance and similarity. There was certainly scope for more texts to be analysed, however the lack of positive results and the inconsistencies of Project Gutenberg's format (see figures \ref{subsec:curves} \& \ref{sec:gutenbergFormat}) prompted a halt to in-depth experimentation.
+            A small variety of corpora was processed for compliance and similarity. There was certainly scope for more texts to be analysed, however the lack of positive results and the inconsistencies of Project Gutenberg's format (see figures \ref{subsec:curves} \& \ref{subsec:gutenbergFormat}) prompted a halt to in-depth experimentation.
             \item \textcolor{gray}{\textit{Otherwise attempt to identify potential trends in the texts processed, such as obvious geometric differences between literature generally considered happy/sad}}
             
             Of the texts produced, \textit{Cinderella} was the sole text to produce a visibly similar graph to to that predicted by Kurt Vonnegut. This aim was attempted and was found unsuccessful.
@@ -387,7 +406,7 @@ The following section covers the various experimentation and analysis carried ou
     \subsection{Revisions to System}
         Given the results obtained from VADER, it is likely that a different sentiment analysis engine may produce better results. This stems from a number of reasons, not least that VADER was originally designed for short input texts (the length of a Tweet) but also that it was trained on modern English text, not the early-modern English found in Shakespeare's plays. More advanced and versatile NLP and sentiment analysis tools may be better able to yield results on the topic
 
-        As detailed in section \ref{sec:gutenbergFormat}, the format of corpora taken from Project Gutenberg varied in such a way that the Sentiplot tool was unable to effectively and reliable strip away unwanted text bloat before submitting it to be processed. This visually affected results at key points (the beginning and end of some graphs), causing confusion and misunderstanding amongst some of the participants in section \ref{subsec:reader}. An alternate, more consistent source of corpora must be found or the Sentiplot tool must be developed further to account for this inconsistency. This may mean that chapter analysis may have to be scrapped or very much non-trivial algorithms must be implemented to correctly divide texts at appropriate chapter boundaries.
+        As detailed in section \ref{subsec:gutenbergFormat}, the format of corpora taken from Project Gutenberg varied in such a way that the Sentiplot tool was unable to effectively and reliable strip away unwanted text bloat before submitting it to be processed. This visually affected results at key points (the beginning and end of some graphs), causing confusion and misunderstanding amongst some of the participants in section \ref{subsec:reader}. An alternate, more consistent source of corpora must be found or the Sentiplot tool must be developed further to account for this inconsistency. This may mean that chapter analysis may have to be scrapped or very much non-trivial algorithms must be implemented to correctly divide texts at appropriate chapter boundaries.
     \subsection{Future Research}
         There is scope for further research here, particularly around the comparison of NLP tool performance on different variations of English as in section \ref{subsec:EMvME}. This showed promise in the very obvious and clear improved performance when processing the varded text over the original. It could be explored if other tools perform better on this form of English by default, or failing that, if user-trainable tools could be taught how to process early-modern English to an equal standard.
     \subsection{Closing Statement}
@@ -396,6 +415,11 @@ The following section covers the various experimentation and analysis carried ou
         Overall the study has made progress in a small in a number of areas of NLP and Sentiment Analysis.
 \label{sec:conclusion}
 \newpage
-\bibliographystyle{plain}
 \bibliography{ref}
+\newpage
+\section*{Appendix}
+    \subsection*{Appendix 1: Project Proposal}
+        \includepdf[pages=-]{Proposal/SCC.300 Project Proposal}
+    \subsection*{Appendix 2: Participants Study Questionnaire}
+        \includegraphics[width=1.5\textwidth, angle=90, origin=c]{Figures/Survey/Questionnaire}
 \end{document}
