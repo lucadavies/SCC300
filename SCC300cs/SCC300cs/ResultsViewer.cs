@@ -76,6 +76,10 @@ namespace SCC300cs
             chapterOffset += res.Count;
         }
 
+        /// <summary>
+        /// Add all (types of) datapoints to graph
+        /// </summary>
+        /// <param name="res"> List of (list of sentiment results) for each chapter</param>
         private void GraphAll(List<List<SentimentAnalysisResults>> res)
         {
             List<SentimentAnalysisResults> allRes = new List<SentimentAnalysisResults>();
@@ -92,6 +96,12 @@ namespace SCC300cs
             //Add100RandomToTable(allRes);
         }
 
+        /// <summary>
+        /// Add sentiment analysis results to a Series
+        /// </summary>
+        /// <param name="res"></param>
+        /// <param name="type"></param>
+        /// <param name="s"></param>
         private void PlotResults(List<SentimentAnalysisResults> res, ResultType type, Series s)
         {
             double totScore = 0;
@@ -131,6 +141,10 @@ namespace SCC300cs
             //LabelBestWorst(s, totNum);
         }
 
+        /// <summary>
+        /// Add sentiment analysis results to the table tab
+        /// </summary>
+        /// <param name="res"></param>
         private void AddResultsToTable(List<SentimentAnalysisResults> res)
         {
             for (int i = 0; i < res.Count; i++)
@@ -139,6 +153,10 @@ namespace SCC300cs
             }
         }
 
+        /// <summary>
+        /// Written for benefit of hand analysis
+        /// </summary>
+        /// <param name="res"></param>
         private void Add100RandomToTable(List<SentimentAnalysisResults> res)
         {
             Random rnd = new Random();
@@ -150,7 +168,11 @@ namespace SCC300cs
             }
         }
 
-        public void NewTab(string name)
+        /// <summary>
+        /// Add a new chapter tab (containing 5 chapters)
+        /// </summary>
+        /// <param name="name"></param>
+        private void NewTab(string name)
         {
             TabPage t = new TabPage
             {
@@ -185,6 +207,11 @@ namespace SCC300cs
             tabCtrlResults.TabPages.Add(t);
         }
 
+        /// <summary>
+        /// Highlights the highest and lowest scores
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="totNum"></param>
         private void LabelBestWorst(Series s, int totNum)
         {
             if (s.Points.Count > 0)

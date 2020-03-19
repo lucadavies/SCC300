@@ -68,6 +68,11 @@ namespace SCC300cs
             }
         }
 
+        /// <summary>
+        /// Loads text direct from raw text
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         private string LoadFromTxt(string i)
         {
             Regex rgx = new Regex("\\s+");
@@ -75,7 +80,8 @@ namespace SCC300cs
         }
 
         /// <summary>
-        /// Project Gutenberg appears to not hold a standard format (RE: pre tags)
+        /// Loads text from Porject Gutenberg HTML files
+        /// Attempts to remove preamble / post amble but format is inconsistent: nothing can be done. Similar situation for chapters
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -114,7 +120,12 @@ namespace SCC300cs
             return ret;
         }
 
-        private string loadFromXML(string input)
+        /// <summary>
+        /// Loads text from XML (added for benefit of processing VARDed text), essentially a less restricted HTML parser.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private string LoadFromXML(string input)
         {
             Regex tags = new Regex("<[^>]*>");
             inputChapters = new List<string>();
@@ -179,6 +190,11 @@ namespace SCC300cs
             lblGran.Text = (granularity == -1 ? "1 Sentence" : granularity * 100 + "%");
         }
 
+        /// <summary>
+        /// Actually performs sentimnet analysis
+        /// </summary>
+        /// <param name="sen300der"></param>
+        /// <param name="e"></param>
         private void BgWkrProcess_DoWork(object sen300der, DoWorkEventArgs e)
         {
             bgWkrProcess.ReportProgress(0);
@@ -235,6 +251,11 @@ namespace SCC300cs
             }
         }
 
+        /// <summary>
+        /// Creates a new ResultsViewer when processing complete
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BgWkrProcess_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             new ResultsViewer(textName, sents, chapterResultsList, granularity);
@@ -255,7 +276,7 @@ namespace SCC300cs
             }
             else if (e.Argument.Equals(".xml"))
             {
-                e.Result = loadFromXML(inputText);
+                e.Result = LoadFromXML(inputText);
             }
         }
 
