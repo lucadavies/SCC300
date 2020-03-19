@@ -28,9 +28,8 @@ Luca Davies \\ B.Sc. (Hons.) Computer Science}
         \item Comedy vs Tragedies (time permitting)
         \item Paul's Recommendations
             \begin{itemize}
-                \item Explain why CoreNLP was slow sec Top level language
                 \item Create / include design diagram for Sentiplot sec design/dev
-                \item Consider what to do about the buggered input corpora from Gutenberg (re: section \ref{subsec:EMvME} and different length/block size)
+                \item Consider what to do about the bad-format input corpora from Gutenberg (re: section \ref{subsec:EMvME} and different length/block size), nothing I can do...?
             \end{itemize}
     \end{itemize}
 
@@ -150,7 +149,7 @@ The experimentation required to undertake this study necessitated the need to de
         \label{subsec:nlpTools}
         Various tools across a wide array of languages are freely available to provide standard NLP functions and advanced processing capabilities.
 
-        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. The pipeline was modified to tokenise and sentence-split the input only, and the actual sentiment analysis was performed by VADER.
+        Initially a full CoreNLP pipeline was employed to process corpora but this proved to be extremely slow, loading around 2 gigabytes of models very slowly into memory before even processing anything. This is due to the various part-of-speech tagging and additional NLP tasks the pipeline had been setup to perform. These operation require usage of extensive models as reference for the application to run against. The pipeline was modified and optimised such that it only tokenised and sentence-split the input, and the actual sentiment analysis was performed by VADER.
 
         Both the CoreNLP and VADER libraries are non-native to C\# but have easy to use APIs for direct manipulation of their types and methods outside of their native environments. CoreNLP has an in-house developed API for C\# and VADER has a third-party API called \textit{VADERSharp}.
     \subsection{Design \& Development}
