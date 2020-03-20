@@ -75,7 +75,7 @@ namespace SCC300cs
         /// <returns></returns>
         private string LoadFromTxt(string i)
         {
-            Regex rgx = new Regex("\\s+");
+            Regex rgx = new Regex("\\s+"); //matches whitespace
             return rgx.Replace(i, " ");
         }
 
@@ -193,9 +193,9 @@ namespace SCC300cs
         /// <summary>
         /// Actually performs sentimnet analysis
         /// </summary>
-        /// <param name="sen300der"></param>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BgWkrProcess_DoWork(object sen300der, DoWorkEventArgs e)
+        private void BgWkrProcess_DoWork(object sender, DoWorkEventArgs e)
         {
             bgWkrProcess.ReportProgress(0);
             Document doc;
